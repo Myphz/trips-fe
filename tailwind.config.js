@@ -5,7 +5,7 @@ export default {
     colors: {
       primary: "#00A991",
 
-      black: "#000",
+      black: "#161616",
       white: "#FFF",
 
       success: "#E6F6F4",
@@ -13,8 +13,10 @@ export default {
       error: "#B60B0B",
       tab: "#37E0C8",
 
+      "bg-dark": "#1A1A1A",
       "primary-dark": "#007F6D",
       "gray-dark": "#EAEAEA",
+      "white-dark": "#FFF",
     },
     fontFamily: {
       headers: "'Ubuntu', sans-serif",

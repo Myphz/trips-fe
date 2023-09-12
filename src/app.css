@@ -3,3 +3,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg {
+  @apply bg-white dark:bg-bg-dark;
+}
+
+.primary {
+  @apply bg-primary dark:bg-primary-dark;
+}
+
+.gray {
+  @apply text-gray dark:text-gray-dark;
+}
+
+.text {
+  @apply text-black dark:text-white-dark;
+}

@@ -1,5 +1,6 @@
 {
   "jsxSingleQuote": false,
   "printWidth": 120,
-  "pluginSearchDirs": false
+  "pluginSearchDirs": false,
+  "plugins": ["prettier-plugin-svelte", "prettier-plugin-tailwindcss"]
 }

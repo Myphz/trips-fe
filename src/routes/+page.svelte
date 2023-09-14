@@ -1,6 +1,11 @@
-<div class="flex justify-between items-center">
-  <h1 class="text-h1 font-headers">My Trips</h1>
+<script lang="ts">
+  import { Combobox } from "$lib/components";
+  let selected = "";
+</script>
+
+<div class="flex items-center justify-between">
+  <h1 class="font-headers text-h1">My Trips</h1>
   <button>
-    <img src="/plus.svg" alt="plus" class="h-6 aspect-square" />
+    <img src="/plus.svg" alt="plus" class="aspect-square h-6" />
   </button>
 </div>

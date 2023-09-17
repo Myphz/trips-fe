@@ -1,7 +1,5 @@
 <script lang="ts">
-  import { Combobox } from "$lib/components";
-  import Select from "$lib/components/Select.svelte";
-  let selected = "";
+  import Card from "$lib/components/Card.svelte";
 </script>
 
 <div class="flex items-center justify-between">
@@ -9,6 +7,5 @@
   <button>
     <img src="/plus.svg" alt="plus" class="aspect-square h-6" />
   </button>
-
-  <Select options={[{ label: "a", value: "yes" }]} label="ya" />
 </div>
+<Card />

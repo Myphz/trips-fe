@@ -19,3 +19,7 @@
 .text {
   @apply text-black dark:text-white;
 }
+
+*:focus-visible {
+  outline: none;
+}

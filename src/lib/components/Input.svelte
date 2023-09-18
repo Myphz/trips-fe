@@ -5,9 +5,14 @@
 </script>
 
 <label class="gray group relative block h-10 w-full text-small">
-  <input class="absolute inset-0 mt-auto h-8 w-full rounded-md border border-primary p-2" {required} {name} />
+  <input
+    class="peer absolute inset-0 mt-auto h-8 w-full rounded-md border border-primary p-2"
+    {required}
+    {name}
+    placeholder=""
+  />
   <div
-    class="bg label-transition absolute left-2 top-3 rounded-md px-1 group-focus-within:-top-0 group-focus-within:text-xs"
+    class="bg label-transition absolute left-2 top-0 rounded-md px-1 text-xs group-focus-within:!top-0 group-focus-within:!text-xs peer-placeholder-shown:top-3 peer-placeholder-shown:text-small"
   >
     {placeholder}{required ? "*" : ""}
   </div>

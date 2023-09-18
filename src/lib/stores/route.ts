@@ -1,8 +1,7 @@
 import { writable, type Writable } from "svelte/store";
 
 export const routeParams = {
-  a: writable(0),
-  b: writable(""),
+  infoId: writable(0),
 };
 
 type RouteParams = typeof routeParams;

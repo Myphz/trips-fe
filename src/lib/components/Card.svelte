@@ -1,10 +1,9 @@
 <script lang="ts">
-  import Redirect from "./Redirect.svelte";
-  import Stars from "./Stars.svelte";
+  import { Stars, Redirect } from ".";
   import { InformationCircle } from "svelte-heros";
 </script>
 
-<Redirect href="/info" params={{ a: 2 }}>
+<Redirect href="/info" params={{ infoId: 2 }}>
   <article class="relative flex h-52 w-full rounded-xl text-white">
     <img
       class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover"

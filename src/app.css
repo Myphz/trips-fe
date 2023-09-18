@@ -20,6 +20,16 @@
   @apply text-black dark:text-white;
 }
 
+.visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 input {
   background: inherit;
 }
@@ -30,4 +40,8 @@ input {
 
 button {
   user-select: none;
+}
+
+.epic-transition {
+  transition: all 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
 }

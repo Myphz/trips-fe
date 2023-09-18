@@ -20,6 +20,10 @@
   @apply text-black dark:text-white;
 }
 
+input {
+  background: inherit;
+}
+
 *:focus-visible {
   outline: none;
 }

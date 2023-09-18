@@ -1,7 +1,7 @@
 <script lang="ts">
   import { routeParams } from "$lib/stores/route";
 
-  const { infoId } = routeParams;
+  const { entityId } = routeParams;
 </script>
 
-<div>{$infoId}</div>
+<div>{$entityId}</div>

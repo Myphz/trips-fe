@@ -1,8 +1,11 @@
 import { writable, type Writable } from "svelte/store";
 
 export const routeParams = {
-  infoId: writable(0),
+  entityId: writable(0),
 };
+
+export const MAIN_PAGE_TITLE = "My Trips";
+export const pageTitle = writable(MAIN_PAGE_TITLE);
 
 type RouteParams = typeof routeParams;
 
@@ -14,4 +17,8 @@ export const setRouteParams = (params: Partial<RoutesUnwrapped>) => {
     // @ts-ignore
     routeParams[key].set(val);
   });
+};
+
+export const setPageTitle = (title: string) => {
+  pageTitle.set(title);
 };

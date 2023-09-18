@@ -5,3 +5,4 @@ export { default as Select } from "./Select.svelte";
 export { default as Header } from "./Header.svelte";
 export { default as Stars } from "./Stars.svelte";
 export { default as Textarea } from "./Textarea.svelte";
+export { default as Redirect } from "./Redirect.svelte";

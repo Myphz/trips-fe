@@ -7,7 +7,5 @@
     {@html Logo}
   </div>
 
-  <button>
-    <img src="/user-avatar.svg" alt="avatar" class="aspect-square h-9" />
-  </button>
+  <button>avatar</button>
 </header>

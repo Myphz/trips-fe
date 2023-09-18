@@ -1,12 +1,25 @@
 <script lang="ts">
+  import { twMerge } from "tailwind-merge";
+
   export let placeholder: string;
   export let required = true;
   export let name: string;
+
+  let invalid = false;
 </script>
 
 <label class="gray group relative block h-10 w-full text-small">
   <input
-    class="peer absolute inset-0 mt-auto h-8 w-full rounded-md border border-primary p-2"
+    class={twMerge(
+      "peer absolute inset-0 mt-auto h-8 w-full rounded-md border border-primary p-2",
+      invalid && "border-error",
+    )}
+    on:invalid={() => {
+      invalid = true;
+    }}
+    on:input={() => {
+      if (invalid) invalid = false;
+    }}
     {required}
     {name}
     placeholder=""

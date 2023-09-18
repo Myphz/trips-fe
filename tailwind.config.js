@@ -32,7 +32,11 @@ export default {
       small: "1rem",
       xs: "0.75rem",
     },
-    extend: {},
+    extend: {
+      minHeight: {
+        textarea: "8rem",
+      },
+    },
   },
   plugins: [],
 };

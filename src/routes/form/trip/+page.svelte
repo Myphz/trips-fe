@@ -1,6 +1,6 @@
 <script lang="ts">
   import { routeParams, setPageTitle } from "$lib/stores/route";
-  import { Input, Form, Select, Combobox } from "$lib/components";
+  import { Input, Form, Select, Combobox, PhotoUploader } from "$lib/components";
 
   const { entityId } = routeParams;
 
@@ -32,4 +32,6 @@
     ]}
     label="People"
   />
+
+  <PhotoUploader />
 </Form>

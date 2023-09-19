@@ -1,6 +1,6 @@
 <script lang="ts">
   import { DatePicker } from "@capacitor-community/date-picker";
-  import { format } from "date-fns";
+  import { format, parse } from "date-fns";
   import { getContext } from "svelte";
   import { Calendar } from "svelte-heros";
   import { twMerge } from "tailwind-merge";
@@ -10,11 +10,20 @@
 
   const ctx = getContext<Record<string, Date>>("defaultValues") ?? {};
 
+  const DATE_FORMAT = "yyyy-MM-dd";
+
   // Defaults to current date
-  let value = ctx[name] ? format(ctx[name], "yyy-MM-dd") : format(new Date(), "yyyy-MM-dd");
+  let value = ctx[name] ? format(ctx[name], DATE_FORMAT) : format(new Date(), DATE_FORMAT);
 
   const onClick = async () => {
-    const { value: dateValue } = await DatePicker.present({ mode: "date", format: "yyyy-MM-dd" });
+    const parsed = new Date(value);
+    const { value: dateValue } = await DatePicker.present({
+      mode: "date",
+      format: DATE_FORMAT,
+      date: parsed.toISOString(),
+    });
+
+    if (!dateValue) return;
     value = dateValue;
   };
 </script>

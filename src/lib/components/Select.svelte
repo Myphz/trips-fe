@@ -41,7 +41,12 @@
           {label}
         </span>
 
-        <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+        <span
+          class={twMerge(
+            "epic-transition pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2",
+            $listbox.expanded && "-translate-x-1/4 rotate-180",
+          )}
+        >
           <ChevronDown />
         </span>
       </button>
@@ -50,7 +55,7 @@
         <ul
           transition:fade={{ duration: 100 }}
           use:listbox.items
-          class="bg absolute max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary"
+          class="bg absolute z-20 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary"
         >
           {#each options as option}
             {@const active = $listbox.active === option}

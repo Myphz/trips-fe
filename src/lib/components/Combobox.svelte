@@ -1,43 +1,65 @@
-<script lang="ts" generics="T">
+<script lang="ts">
+  import { getContext } from "svelte";
+  import { twMerge } from "tailwind-merge";
+
   import { createCombobox } from "svelte-headlessui";
   import { fade } from "svelte/transition";
   import { Check, ChevronDown } from "svelte-heros";
 
-  type Option<T> = {
+  type Option = {
     label: string;
-    value: T;
+    value: string;
   };
 
-  export let options: Option<T>[];
+  export let options: Option[];
   export let label: string;
-  export let selected = "";
+  export let name: string;
 
-  const combobox = createCombobox({ label });
+  const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
+  const selected = ctx[name] ? options.find((opt) => opt.value === ctx[name]) : null;
+  const combobox = createCombobox(selected ? { selected } : {});
 
   $: filtered = options.filter((option) =>
     option.label.toLowerCase().replace(/\s+/g, "").includes($combobox.filter.toLowerCase().replace(/\s+/g, "")),
   );
-
-  $: selected = $combobox.selected?.value;
 </script>
 
-<div class="flex w-full flex-col items-center justify-center">
-  <div class="fixed top-16 w-72">
-    <div class="relative mt-1">
+<div class="group flex w-full flex-col items-center justify-center text-small text-gray">
+  <input class="visually-hidden" value={$combobox.selected?.value ?? ""} {name} />
+
+  <div class="w-full">
+    <div class="relative h-[32px]">
       <div
-        class="focus-visible:ring-offset-teal-300 sm:text-sm relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2"
+        class={twMerge(
+          "relative flex h-full w-full cursor-default items-center rounded-md border border-primary text-left",
+          $combobox.expanded && "rounded-b-none border-b-primary",
+        )}
       >
         <input
           use:combobox.input
-          class="text-sm text-gray-900 w-full border-none py-2 pl-3 pr-10 leading-5 focus:ring-0"
+          class="px-3"
           value={$combobox.selected?.label ?? ""}
           on:focusout={(e) => {
             // @ts-ignore
             e.target.value = $combobox.selected?.label ?? "";
           }}
         />
+        <span
+          class={twMerge(
+            "bg epic-transition absolute top-1 mx-3 flex w-fit items-center truncate group-focus-within:-top-2 group-focus-within:text-xs",
+            ($combobox.selected?.value || $combobox.expanded) && "-top-2 text-xs",
+          )}
+        >
+          {label}
+        </span>
 
-        <button use:combobox.button class="absolute inset-y-0 right-0 flex items-center pr-2">
+        <button
+          use:combobox.button
+          class={twMerge(
+            "epic-transition absolute inset-y-0 right-0 flex items-center pr-2",
+            $combobox.expanded && "-translate-x-1/4 rotate-180",
+          )}
+        >
           <ChevronDown />
         </button>
       </div>
@@ -46,15 +68,15 @@
         <ul
           transition:fade={{ duration: 100 }}
           use:combobox.items
-          class="text-base sm:text-sm absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+          class="bg absolute z-20 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary"
         >
           {#each filtered as value}
             {@const active = $combobox.active === value}
             {@const selected = $combobox.selected === value}
             <li
-              class="relative cursor-pointer select-none py-2 pl-10 pr-4 {active || selected
+              class="relative cursor-pointer select-none py-1 pl-10 pr-4 {active || selected
                 ? 'bg-primary text-white'
-                : 'text-gray-900'}"
+                : ''}"
               use:combobox.item={{ value }}
             >
               <span class="block truncate {selected ? 'font-medium' : 'font-normal'}">{value.label}</span>

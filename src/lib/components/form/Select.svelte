@@ -23,11 +23,11 @@
 <div class="group flex w-full flex-col items-center justify-center text-small text-gray">
   <input class="visually-hidden" value={$listbox.selected?.value ?? ""} {name} />
   <div class="w-full">
-    <div class="relative h-[32px]">
+    <div class="relative h-10">
       <button
         use:listbox.button
         class={twMerge(
-          "relative h-full w-full cursor-default rounded-md border border-primary text-left",
+          "relative mt-2 h-8 w-full cursor-default rounded-md border border-primary text-left",
           $listbox.expanded && "rounded-b-none border-b-primary",
         )}
       >

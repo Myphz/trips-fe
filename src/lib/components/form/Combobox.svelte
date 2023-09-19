@@ -28,10 +28,10 @@
   <input class="visually-hidden" value={$combobox.selected?.value ?? ""} {name} />
 
   <div class="w-full">
-    <div class="relative h-[32px]">
+    <div class="relative h-10">
       <div
         class={twMerge(
-          "relative flex h-full w-full cursor-default items-center rounded-md border border-primary text-left",
+          "relative mt-2 flex h-8 w-full cursor-default items-center rounded-md border border-primary text-left",
           $combobox.expanded && "rounded-b-none border-b-primary",
         )}
       >

@@ -10,12 +10,16 @@
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
 
   let ref: HTMLInputElement;
-  let value = ctx[name] ?? null;
+  const startValue = ctx[name] ?? null;
   let invalid = false;
 
   onMount(() => {
-    ref.value = value;
+    ref.value = startValue;
   });
+
+  const onInput = () => {
+    ref.value = ref.value.trimStart();
+  };
 </script>
 
 <label class="gray group relative block h-10 w-full text-small">
@@ -34,6 +38,7 @@
     {type}
     {required}
     {name}
+    on:input={onInput}
     placeholder=""
   />
   <div

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { routeParams, setPageTitle } from "$lib/stores/route";
   import { Input, Form, Select, Combobox, PhotoUploader, Datepicker } from "$lib/components/form";
+  import PeopleSelector from "$lib/components/form/PeopleSelector.svelte";
 
   const { entityId } = routeParams;
 
@@ -8,7 +9,10 @@
   setPageTitle(isEdit ? "Edit a trip" : "Add a trip");
 
   let test: any;
-  const onSubmit = (data: { id: string }) => (test = data);
+  const onSubmit = (data: { id: string }) => {
+    test = data;
+    console.log(data);
+  };
 </script>
 
 <Form {onSubmit} defaultValues={{ destination: "ciao", testoz: "2", wewe: "3" }}>
@@ -21,20 +25,15 @@
     name="currency"
     label="Currency"
     options={[
-      { label: "a", value: "2" },
+      { label: "Daniel", value: "2" },
       { label: "b", value: "3" },
     ]}
-  />
-  <Combobox
-    name="people"
-    options={[
-      { label: "a", value: "2" },
-      { label: "b", value: "3" },
-    ]}
-    label="People"
   />
 
+  <PeopleSelector name="people" />
   <PhotoUploader />
 
-  {JSON.stringify(test)}
+  <div class="text-small">
+    {JSON.stringify(test)}
+  </div>
 </Form>

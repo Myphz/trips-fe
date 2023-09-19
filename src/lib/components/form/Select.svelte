@@ -34,7 +34,7 @@
         <span class="absolute top-1 flex items-center truncate px-3">{$listbox.selected?.label ?? ""}</span>
         <span
           class={twMerge(
-            "bg epic-transition absolute top-1 mx-3 flex w-fit items-center truncate",
+            "bg epic-transition absolute top-1 z-30 mx-3 flex w-fit items-center truncate",
             ($listbox.selected?.value || $listbox.expanded) && "-top-2 text-xs",
           )}
         >

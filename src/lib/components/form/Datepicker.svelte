@@ -1,6 +1,6 @@
 <script lang="ts">
   import { DatePicker } from "@capacitor-community/date-picker";
-  import { format, parse } from "date-fns";
+  import { format } from "date-fns";
   import { getContext } from "svelte";
   import { Calendar } from "svelte-heros";
   import { twMerge } from "tailwind-merge";

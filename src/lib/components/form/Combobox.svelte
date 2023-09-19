@@ -13,11 +13,24 @@
 
   export let options: Option[];
   export let label: string;
-  export let name: string;
+  export let name = "";
+  export let onSelect: (value: string) => unknown = () => true;
+  export let multipleSelected: Array<string> = [];
+  export let multiple = false;
+
+  let inputRef: HTMLInputElement;
 
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
   const selected = ctx[name] ? options.find((opt) => opt.value === ctx[name]) : null;
   const combobox = createCombobox(selected ? { selected } : {});
+
+  const realOnSelect = (e: Event) => {
+    const selected = (e as CustomEvent).detail.selected;
+    const displaySelected = onSelect(selected.value);
+
+    if (displaySelected) inputRef.value = selected.label;
+    else inputRef.value = "";
+  };
 
   $: filtered = options.filter((option) =>
     option.label.toLowerCase().replace(/\s+/g, "").includes($combobox.filter.toLowerCase().replace(/\s+/g, "")),
@@ -37,11 +50,11 @@
       >
         <input
           use:combobox.input
-          class="px-3"
-          value={$combobox.selected?.label ?? ""}
-          on:focusout={(e) => {
-            // @ts-ignore
-            e.target.value = $combobox.selected?.label ?? "";
+          on:select={realOnSelect}
+          class="z-30 px-3"
+          bind:this={inputRef}
+          on:focusout={() => {
+            inputRef.value = $combobox.selected?.label ?? "";
           }}
         />
         <span
@@ -70,16 +83,16 @@
           use:combobox.items
           class="bg absolute z-20 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary"
         >
-          {#each filtered as value}
-            {@const active = $combobox.active === value}
-            {@const selected = $combobox.selected === value}
+          {#each filtered as option}
+            {@const active = $combobox.active === option}
+            {@const selected = multiple ? multipleSelected.includes(option.value) : $combobox.selected === option}
             <li
               class="relative cursor-pointer select-none py-1 pl-10 pr-4 {active || selected
                 ? 'bg-primary text-white'
                 : ''}"
-              use:combobox.item={{ value }}
+              use:combobox.item={{ value: option }}
             >
-              <span class="block truncate {selected ? 'font-medium' : 'font-normal'}">{value.label}</span>
+              <span class="block truncate {selected ? 'font-medium' : 'font-normal'}">{option.label}</span>
               {#if selected}
                 <span
                   class="absolute inset-y-0 left-0 flex items-center pl-3 {active ? 'text-white' : 'text-teal-600'}"

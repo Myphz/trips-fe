@@ -10,7 +10,20 @@
 
   const realSubmit = (e: SubmitEvent) => {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.target as HTMLFormElement)) as T;
+    const tempData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
+    console.log(tempData);
+    const data = Object.fromEntries(
+      Object.entries(tempData).map(([key, val]) => {
+        // Try to convert to JSON
+        try {
+          const newValue = JSON.parse(val as string);
+          return [key, newValue];
+        } catch {
+          return [key, val];
+        }
+      }),
+    ) as T;
+
     onSubmit(data);
   };
 </script>

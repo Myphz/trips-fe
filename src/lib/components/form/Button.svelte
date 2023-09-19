@@ -12,7 +12,7 @@
 </script>
 
 <button
-  on:submit
+  on:click
   type={submit ? "submit" : "button"}
   class={twMerge("w-full rounded-lg py-2 text-white", styleClasses[variant])}
 >

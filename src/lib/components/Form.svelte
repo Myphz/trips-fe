@@ -1,7 +1,11 @@
 <script lang="ts" generics="T extends object">
+  import { setContext } from "svelte";
   import Button from "./Button.svelte";
 
+  export let defaultValues: Record<string, string> = {};
   export let onSubmit: (data: T) => unknown;
+
+  setContext("defaultValues", defaultValues);
 
   const realSubmit = (e: SubmitEvent) => {
     e.preventDefault();

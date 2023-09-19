@@ -11,7 +11,7 @@
   const onSubmit = (data: { id: string }) => console.log(data);
 </script>
 
-<Form {onSubmit}>
+<Form {onSubmit} defaultValues={{ destination: "ciao", testoz: "2" }}>
   <Input placeholder="Destination" name="destination" required />
   <div class="flex gap-4">
     <Input placeholder="Departure" name="departure" />
@@ -21,8 +21,8 @@
     name="testoz"
     label="Currency"
     options={[
-      { label: "a", value: 2 },
-      { label: "b", value: 2 },
+      { label: "a", value: "2" },
+      { label: "b", value: "3" },
     ]}
   />
 </Form>

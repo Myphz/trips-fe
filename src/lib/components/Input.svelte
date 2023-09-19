@@ -1,11 +1,21 @@
 <script lang="ts">
+  import { getContext, onMount } from "svelte";
   import { twMerge } from "tailwind-merge";
 
   export let placeholder: string;
   export let required = false;
   export let name: string;
+  export let type = "text";
 
+  const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
+
+  let ref: HTMLInputElement;
+  let value = ctx[name] ?? null;
   let invalid = false;
+
+  onMount(() => {
+    ref.value = value;
+  });
 </script>
 
 <label class="gray group relative block h-10 w-full text-small">
@@ -20,6 +30,8 @@
     on:input={() => {
       if (invalid) invalid = false;
     }}
+    bind:this={ref}
+    {type}
     {required}
     {name}
     placeholder=""

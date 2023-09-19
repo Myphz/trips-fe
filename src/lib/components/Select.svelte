@@ -1,24 +1,27 @@
-<script lang="ts" generics="T">
+<script lang="ts">
+  import { getContext } from "svelte";
   import { twMerge } from "tailwind-merge";
 
   import { createListbox } from "svelte-headlessui";
   import { fade } from "svelte/transition";
   import { Check, ChevronDown } from "svelte-heros";
 
-  type Option<T> = {
+  type Option = {
     label: string;
-    value: T;
+    value: string;
   };
 
-  export let options: Option<T>[];
+  export let options: Option[];
   export let label: string;
   export let name: string;
 
-  const listbox = createListbox();
+  const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
+  const selected = ctx[name] ? options.find((opt) => opt.value === ctx[name]) : null;
+  const listbox = createListbox(selected ? { selected } : {});
 </script>
 
 <div class="group flex w-full flex-col items-center justify-center text-small text-gray">
-  <input class="visually-hidden" value={$listbox.selected?.value} {name} />
+  <input class="visually-hidden" value={$listbox.selected?.value ?? ""} {name} />
   <div class="w-full">
     <div class="relative h-[32px]">
       <button

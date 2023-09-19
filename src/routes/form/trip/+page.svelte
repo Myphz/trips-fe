@@ -1,7 +1,6 @@
 <script lang="ts">
   import { routeParams, setPageTitle } from "$lib/stores/route";
-  import { Input, Form, Select, Combobox, PhotoUploader, Datepicker } from "$lib/components/form";
-  import PeopleSelector from "$lib/components/form/PeopleSelector.svelte";
+  import { Input, Form, Select, PhotoUploader, Datepicker, PeopleSelector } from "$lib/components/form";
 
   const { entityId } = routeParams;
 
@@ -15,7 +14,7 @@
   };
 </script>
 
-<Form {onSubmit} defaultValues={{ destination: "ciao", testoz: "2", wewe: "3" }}>
+<Form {onSubmit}>
   <Input placeholder="Destination" name="destination" required />
   <div class="flex gap-4">
     <Datepicker name="departure" placeholder="Departure" />

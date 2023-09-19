@@ -10,7 +10,7 @@ npx cap copy android
 
 rm -rf ./build
 
-# cordova-res android --skip-config --copy
+npx capacitor-assets generate --android
 
 cd android
 

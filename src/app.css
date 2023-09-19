@@ -34,8 +34,10 @@ input {
   background: inherit;
 }
 
-*:focus-visible {
-  outline: none;
+*:focus-visible,
+*:focus-within,
+*:focus {
+  outline: none !important;
 }
 
 button {

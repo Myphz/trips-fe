@@ -16,7 +16,7 @@
 </script>
 
 <form on:submit={realSubmit} {autocomplete}>
-  <div class="flex flex-col gap-4 text-gray">
+  <div class="flex select-none flex-col gap-4 text-gray">
     <slot />
   </div>
   <div class="mt-8"><Button submit>ADD</Button></div>

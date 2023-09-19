@@ -18,6 +18,7 @@
   });
 
   const onInput = () => {
+    if (type !== "text") return;
     ref.value = ref.value.trimStart();
   };
 </script>

@@ -12,14 +12,15 @@
   let ref: HTMLInputElement;
   const startValue = ctx[name] ?? null;
   let invalid = false;
+  let isFilled = !!startValue;
 
   onMount(() => {
     ref.value = startValue;
   });
 
   const onInput = () => {
-    if (type !== "text") return;
-    ref.value = ref.value.trimStart();
+    if (type === "text") ref.value = ref.value.trimStart();
+    isFilled = !!ref.value;
   };
 </script>
 
@@ -40,12 +41,12 @@
     {required}
     {name}
     on:input={onInput}
-    placeholder=""
+    placeholder=" "
   />
   <div
     class={twMerge(
       "bg epic-transition absolute left-2 top-3 rounded-md px-1 text-small group-focus-within:top-0 group-focus-within:text-xs",
-      ref?.value && "!top-0 !text-xs",
+      isFilled && "!top-0 !text-xs",
     )}
   >
     {placeholder}{required ? "*" : ""}

@@ -14,7 +14,7 @@
   };
 </script>
 
-<Form {onSubmit}>
+<Form {onSubmit} buttonText="ADD">
   <Input placeholder="Destination" name="destination" required />
   <div class="flex gap-4">
     <Datepicker name="departure" placeholder="Departure" />

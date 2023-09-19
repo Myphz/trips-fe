@@ -5,6 +5,7 @@
   export let defaultValues: Record<string, string> = {};
   export let onSubmit: (data: T) => unknown;
   export let autocomplete = "off";
+  export let buttonText: string;
 
   setContext("defaultValues", defaultValues);
 
@@ -32,5 +33,5 @@
   <div class="flex select-none flex-col gap-4 text-gray">
     <slot />
   </div>
-  <div class="mt-8"><Button submit>ADD</Button></div>
+  <div class="mt-8"><Button submit>{buttonText}</Button></div>
 </form>

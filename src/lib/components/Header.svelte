@@ -12,7 +12,6 @@
       <button
         on:click={() => {
           history.back();
-          console.log("ahah");
         }}
       >
         <ArrowLeft size="2rem" />

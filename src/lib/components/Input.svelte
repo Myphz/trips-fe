@@ -43,7 +43,10 @@
     placeholder=""
   />
   <div
-    class="bg epic-transition absolute left-2 top-0 rounded-md px-1 text-xs group-focus-within:!top-0 group-focus-within:!text-xs peer-placeholder-shown:top-3 peer-placeholder-shown:text-small"
+    class={twMerge(
+      "bg epic-transition absolute left-2 top-3 rounded-md px-1 text-small group-focus-within:top-0 group-focus-within:text-xs",
+      ref?.value && "!top-0 !text-xs",
+    )}
   >
     {placeholder}{required ? "*" : ""}
   </div>

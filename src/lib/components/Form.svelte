@@ -4,6 +4,7 @@
 
   export let defaultValues: Record<string, string> = {};
   export let onSubmit: (data: T) => unknown;
+  export let autocomplete = "off";
 
   setContext("defaultValues", defaultValues);
 
@@ -14,7 +15,7 @@
   };
 </script>
 
-<form on:submit={realSubmit}>
+<form on:submit={realSubmit} {autocomplete}>
   <div class="flex flex-col gap-4">
     <slot />
   </div>

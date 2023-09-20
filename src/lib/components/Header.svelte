@@ -2,7 +2,6 @@
   import { MAIN_PAGE_TITLE, pageTitle } from "$lib/stores/route";
   import { Plus, ArrowLeft } from "svelte-heros";
   import { Redirect } from ".";
-  import { supabase } from "$lib/stores/api";
 
   $: advancedMode = $pageTitle !== MAIN_PAGE_TITLE;
 </script>
@@ -25,11 +24,4 @@
       <Plus size="2rem" />
     </Redirect>
   {/if}
-</div>
-
-<div>
-  {#await supabase.auth.getUser() then user}
-    {JSON.stringify(user)}
-    {JSON.stringify(user)}
-  {/await}
 </div>

@@ -14,7 +14,8 @@ export default {
       error: "#B60B0B",
       tab: "#37E0C8",
       accent: "#FFCB45",
-
+      "primary-light": "#E6F6F4",
+      "error-light": "#FFE6E6",
       "bg-dark": "#1A1A1A",
       "primary-dark": "#007F6D",
       "gray-dark": "#EAEAEA",
@@ -39,6 +40,9 @@ export default {
     extend: {
       minHeight: {
         textarea: "8rem",
+      },
+      height: {
+        fullscreen: "100dvh",
       },
     },
   },

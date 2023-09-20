@@ -1,0 +1,17 @@
+:root {
+  --toastBarWidth: 0%;
+  --toastContainerBottom: 0;
+  --toastContainerTop: 80%;
+  --toastBorderRadius: 0.5rem;
+  --toastContainerRight: 1rem;
+  --toastBtnWidth: 0;
+  --toastBtnHeight: 0;
+  --toastBtnContent: "";
+  --toastMsgPadding: 0;
+  --toastBoxShadow: none;
+}
+
+._toastMsg {
+  position: absolute;
+  inset: 0;
+}

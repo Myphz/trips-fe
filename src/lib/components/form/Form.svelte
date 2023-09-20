@@ -12,7 +12,6 @@
   const realSubmit = (e: SubmitEvent) => {
     e.preventDefault();
     const tempData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
-    console.log(tempData);
     const data = Object.fromEntries(
       Object.entries(tempData).map(([key, val]) => {
         // Try to convert to JSON

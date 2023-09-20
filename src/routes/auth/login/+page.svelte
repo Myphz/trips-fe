@@ -1,15 +1,35 @@
 <script lang="ts">
-  import { Button, Form, Input } from "$lib/components/form";
-  import { GoogleLogin } from "$lib/components";
+  import { Form, Input } from "$lib/components/form";
   import { supabase } from "$lib/stores/api";
   import { setPageTitle } from "$lib/stores/route";
+
+  import { fail } from "../../../utils/toasts";
+
   setPageTitle("Login");
+
+  type FormData = {
+    email: string;
+    password: string;
+  };
+
+  const onSubmit = async ({ email, password }: FormData) => {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error)
+      fail({
+        title: "Invalid credentials",
+        msg: "Invalid email or password. Please retry.",
+      });
+  };
 </script>
 
-<Form buttonText="Log In" onSubmit={() => {}}>
+<Form buttonText="Log In" {onSubmit}>
   <div class="flex flex-col gap-2">
-    <Input placeholder="Email" name="email" />
-    <Input placeholder="Password" type="password" name="password" />
+    <Input placeholder="Email" name="email" required />
+    <Input placeholder="Password" type="password" name="password" required />
     <a href="/" class="mt-2 block text-small text-primary underline">Forgot password?</a>
   </div>
 </Form>

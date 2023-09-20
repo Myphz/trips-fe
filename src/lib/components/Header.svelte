@@ -9,9 +9,6 @@
 
 <div class="mb-9 flex items-center justify-between">
   <div class={advancedMode ? "flex items-center gap-6" : null}>
-    {#await supabase.auth.getUser() then user}
-      {JSON.stringify(user)}
-    {/await}
     {#if advancedMode}
       <button
         on:click={() => {
@@ -28,4 +25,10 @@
       <Plus size="2rem" />
     </Redirect>
   {/if}
+</div>
+
+<div>
+  {#await supabase.auth.getUser() then user}
+    {JSON.stringify(user)}
+  {/await}
 </div>

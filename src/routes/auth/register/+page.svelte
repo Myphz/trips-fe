@@ -3,7 +3,7 @@
   import { supabase } from "$lib/stores/api";
   import { setPageTitle } from "$lib/stores/route";
 
-  import { fail } from "../../../utils/toasts";
+  import { fail, success } from "../../../utils/toasts";
 
   setPageTitle("Sign Up");
 
@@ -21,11 +21,7 @@
         msg: "The passwords are not the same. Please retry.",
       });
 
-    console.log({
-      email,
-      password,
-    });
-    const { data, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
     });
@@ -36,16 +32,7 @@
         msg: error.message,
       });
 
-    // const { data, error } = await supabase.auth.signInWithPassword({
-    //   email,
-    //   password,
-    // });
-
-    // if (error)
-    //   fail({
-    //     title: "Invalid credentials",
-    //     msg: "Invalid email or password. Please retry.",
-    //   });
+    success({ title: "Account registered", msg: "Verify your email to login!" });
   };
 </script>
 
@@ -62,13 +49,3 @@
   <span>Already registered?</span>
   <a href="/auth/login" class="text-primary underline">Login</a>
 </div>
-
-<!-- <div class="mt-4 flex flex-col gap-4 text-small">
-  <div class="flex items-center gap-4">
-    <div class="h-px flex-1 bg-primary"></div>
-    <div>OR</div>
-    <div class="h-px flex-1 bg-primary"></div>
-  </div>
-
-  <GoogleLogin />
-</div> -->

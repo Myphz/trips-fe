@@ -14,7 +14,7 @@
   const textColor = variant === "success" ? "text-primary" : "text-error";
 </script>
 
-<div class="flex min-h-full gap-2 rounded-lg border px-3 py-2 align-top text-black {variantStyles[variant]}">
+<div class="flex min-h-full gap-2 rounded-lg border p-1 align-top text-black {variantStyles[variant]}">
   <div class="mt-1 {textColor}">
     {#if variant === "success"}
       <CheckCircle size="1.5rem" />

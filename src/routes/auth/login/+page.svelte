@@ -1,9 +1,10 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { Form, Input } from "$lib/components/form";
   import { supabase } from "$lib/stores/api";
   import { setPageTitle } from "$lib/stores/route";
 
-  import { fail } from "$utils/toasts";
+  import { fail, success } from "$utils/toasts";
 
   setPageTitle("Login");
 
@@ -13,16 +14,19 @@
   };
 
   const onSubmit = async ({ email, password }: FormData) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
     if (error)
       fail({
-        title: "Invalid credentials",
+        title: "Invalid login",
         msg: "Invalid email or password. Please retry.",
       });
+
+    success({ title: "Logged in", msg: "Logged in successfully!" });
+    goto("/app");
   };
 </script>
 

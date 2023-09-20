@@ -1,0 +1,22 @@
+<script lang="ts">
+  import Home from "$lib/assets/icons/home.svg?raw";
+  import Bed from "$lib/assets/icons/bed.svg?raw";
+  import Train from "$lib/assets/icons/train.svg?raw";
+  import Trip from "$lib/assets/icons/trip.svg?raw";
+  import { page } from "$app/stores";
+
+  const TABS = [
+    { icon: Home, path: "/" },
+    { icon: Trip, path: "/trips" },
+    { icon: Bed, path: "/lodgings" },
+    { icon: Train, path: "/transport" },
+  ];
+</script>
+
+<nav class="fixed bottom-0 flex h-16 w-full items-center justify-between bg-primary px-9">
+  {#each TABS as { icon, path }}
+    <a class={$page.route.id === path ? "text-white" : "text-tab"} href={path}>
+      {@html icon}
+    </a>
+  {/each}
+</nav>

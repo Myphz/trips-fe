@@ -4,3 +4,4 @@ export { default as Header } from "./Header.svelte";
 export { default as Stars } from "./Stars.svelte";
 export { default as Redirect } from "./Redirect.svelte";
 export { default as GoogleLogin } from "./GoogleLogin.svelte";
+export { default as Footer } from "./Footer.svelte";

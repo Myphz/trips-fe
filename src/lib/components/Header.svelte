@@ -30,5 +30,6 @@
 <div>
   {#await supabase.auth.getUser() then user}
     {JSON.stringify(user)}
+    {JSON.stringify(user)}
   {/await}
 </div>

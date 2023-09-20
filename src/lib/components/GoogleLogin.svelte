@@ -1,3 +1,4 @@
+<!-- TODO: Install @codetrix-studio/capacitor-google-auth -->
 <!-- <script lang="ts">
   import { Button } from "./form";
 </script> -->

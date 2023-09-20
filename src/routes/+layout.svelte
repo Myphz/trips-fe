@@ -9,7 +9,7 @@
 </script>
 
 <Navbar />
-<main class="mx-4">
+<main class="mx-4 mb-12">
   <Header />
   <slot />
 </main>

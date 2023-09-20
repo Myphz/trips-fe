@@ -28,4 +28,4 @@
 </main>
 <Footer />
 
-<SvelteToast />
+<SvelteToast options={{ intro: { y: -100 } }} />

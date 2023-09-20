@@ -17,4 +17,5 @@ export function fail({ msg, title }: { msg: string; title: string }) {
       props: { msg, title, variant: "error" },
     },
   });
+  return false;
 }

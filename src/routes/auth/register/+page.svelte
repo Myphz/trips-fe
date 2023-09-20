@@ -1,7 +1,8 @@
 <script lang="ts">
+  import { goto } from "$app/navigation";
   import { Form, Input } from "$lib/components/form";
-  import { supabase } from "$lib/stores/api";
   import { setPageTitle } from "$lib/stores/route";
+  import { register } from "$utils/api";
 
   import { fail, success } from "../../../utils/toasts";
 
@@ -21,22 +22,14 @@
         msg: "The passwords are not the same. Please retry.",
       });
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    if (error)
-      return fail({
-        title: "Error",
-        msg: error.message,
-      });
-
-    success({ title: "Account registered", msg: "Verify your email to login!" });
+    if (await register({ email, password, displayed })) {
+      goto("/app");
+      success({ title: "Account registered", msg: "Remember to verify your email!" });
+    }
   };
 </script>
 
-<Form buttonText="Sign Up" {onSubmit}>
+<Form buttonText="Sign Up" {onSubmit} autocomplete="on">
   <div class="flex flex-col gap-2">
     <Input placeholder="Username" name="displayed" required />
     <Input placeholder="Email" name="email" required />

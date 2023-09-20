@@ -21,3 +21,9 @@
 ._toastItem {
   overflow: visible !important;
 }
+
+._toastContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}

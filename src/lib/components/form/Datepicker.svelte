@@ -44,7 +44,7 @@
         {placeholder}
       </div>
 
-      <div class="truncate">{value}</div>
+      <div class="truncate text-black">{value}</div>
     </div>
 
     <div class="flex h-full flex-1 items-center justify-center px-2">

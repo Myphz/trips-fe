@@ -1,7 +1,6 @@
 <script lang="ts">
   import { routeParams, setPageTitle } from "$lib/stores/route";
   import { Input, Form, Select, PhotoUploader, Datepicker, PeopleSelector } from "$lib/components/form";
-  import { authGuard } from "../../../utils/guard";
 
   const { entityId } = routeParams;
 
@@ -11,8 +10,6 @@
   const onSubmit = (data: { id: string }) => {
     console.log(data);
   };
-
-  authGuard();
 </script>
 
 <Form {onSubmit} buttonText="ADD">

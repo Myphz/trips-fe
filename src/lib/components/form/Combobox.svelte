@@ -51,7 +51,7 @@
         <input
           use:combobox.input
           on:select={realOnSelect}
-          class="z-30 px-3"
+          class="z-30 px-3 text-black"
           bind:this={inputRef}
           on:focusout={() => {
             inputRef.value = $combobox.selected?.label ?? "";
@@ -81,7 +81,7 @@
         <ul
           transition:fade={{ duration: 100 }}
           use:combobox.items
-          class="bg absolute z-40 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary"
+          class="bg absolute z-40 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary text-black"
         >
           {#each filtered as option}
             {@const active = $combobox.active === option}

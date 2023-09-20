@@ -27,7 +27,7 @@
 <label class="gray group relative block h-10 w-full text-small">
   <input
     class={twMerge(
-      "peer absolute inset-0 mt-auto h-8 w-full rounded-md border border-primary p-2",
+      "peer absolute inset-0 mt-auto h-8 w-full rounded-md border border-primary p-2 text-black",
       invalid && "border-error",
     )}
     on:invalid={() => {

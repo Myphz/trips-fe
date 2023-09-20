@@ -21,7 +21,7 @@
 </script>
 
 <div class="group flex w-full flex-col items-center justify-center text-small text-gray">
-  <input class="visually-hidden" value={$listbox.selected?.value ?? ""} {name} />
+  <input type="hidden" value={$listbox.selected?.value ?? ""} {name} />
   <div class="w-full">
     <div class="relative h-10">
       <button
@@ -31,7 +31,7 @@
           $listbox.expanded && "rounded-b-none border-b-primary",
         )}
       >
-        <span class="absolute top-1 flex items-center truncate px-3">{$listbox.selected?.label ?? ""}</span>
+        <span class="absolute top-1 flex items-center truncate px-3 text-black">{$listbox.selected?.label ?? ""}</span>
         <span
           class={twMerge(
             "bg epic-transition absolute top-1 z-30 mx-3 flex w-fit items-center truncate",
@@ -55,7 +55,7 @@
         <ul
           transition:fade={{ duration: 100 }}
           use:listbox.items
-          class="bg absolute z-40 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary"
+          class="bg absolute z-40 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary text-black"
         >
           {#each options as option}
             {@const active = $listbox.active === option}

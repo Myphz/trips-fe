@@ -1,7 +1,7 @@
 <script lang="ts">
   import { XMark } from "svelte-heros";
   import { Combobox } from ".";
-  import { throwError } from "../../../utils/error";
+  import { throwError } from "$utils/error";
 
   export let name: string;
 

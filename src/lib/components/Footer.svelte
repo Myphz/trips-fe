@@ -6,10 +6,10 @@
   import { page } from "$app/stores";
 
   const TABS = [
-    { icon: Home, path: "/" },
-    { icon: Trip, path: "/trips" },
-    { icon: Bed, path: "/lodgings" },
-    { icon: Train, path: "/transport" },
+    { icon: Home, path: "/app" },
+    { icon: Trip, path: "/app/trips" },
+    { icon: Bed, path: "/app/lodgings" },
+    { icon: Train, path: "/app/transport" },
   ];
 </script>
 

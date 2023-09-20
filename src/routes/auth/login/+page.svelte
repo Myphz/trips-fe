@@ -3,7 +3,7 @@
   import { supabase } from "$lib/stores/api";
   import { setPageTitle } from "$lib/stores/route";
 
-  import { fail } from "../../../utils/toasts";
+  import { fail } from "$utils/toasts";
 
   setPageTitle("Login");
 
@@ -43,3 +43,8 @@
 
   <GoogleLogin />
 </div> -->
+
+<div class="mt-3 flex justify-center gap-1 text-small">
+  <span>New user?</span>
+  <a href="/auth/register" class="text-primary underline">Register</a>
+</div>

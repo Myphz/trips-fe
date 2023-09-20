@@ -17,6 +17,7 @@
         // Try to convert to JSON
         try {
           const newValue = JSON.parse(val as string);
+          if (typeof newValue === "number") throw new Error();
           return [key, newValue];
         } catch {
           return [key, val];

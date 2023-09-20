@@ -1,7 +1,7 @@
 :root {
   --toastBarWidth: 0%;
   --toastContainerBottom: 0;
-  --toastContainerTop: 80%;
+  --toastContainerTop: 85%;
   --toastBorderRadius: 0.5rem;
   --toastContainerRight: 1rem;
   --toastBtnWidth: 0;
@@ -9,9 +9,15 @@
   --toastBtnContent: "";
   --toastMsgPadding: 0;
   --toastBoxShadow: none;
+  --toastMargin: 0;
 }
 
 ._toastMsg {
   position: absolute;
   inset: 0;
+  min-height: 100%;
+}
+
+._toastItem {
+  overflow: visible !important;
 }

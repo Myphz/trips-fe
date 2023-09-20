@@ -5,7 +5,6 @@
 
   import "../app.css";
   import "../toast.css";
-  import { success } from "../utils/toasts";
 
   onMount(() => {
     import("../config");

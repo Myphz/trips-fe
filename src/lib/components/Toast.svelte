@@ -24,5 +24,5 @@
     <div>{title}</div>
   </div>
 
-  <div class="text-xs">{msg}</div>
+  <div class="ml-1 text-xs">{msg}</div>
 </div>

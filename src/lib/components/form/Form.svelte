@@ -1,15 +1,21 @@
 <script lang="ts" generics="T extends object">
   import { setContext } from "svelte";
   import Button from "./Button.svelte";
+  import { BarLoader } from "svelte-loading-spinners";
 
   export let defaultValues: Record<string, string> = {};
   export let onSubmit: (data: T) => unknown;
   export let autocomplete = "off";
   export let buttonText: string;
 
+  let loading = false;
+
   setContext("defaultValues", defaultValues);
 
-  const realSubmit = (e: SubmitEvent) => {
+  const realSubmit = async (e: SubmitEvent) => {
+    if (loading) return;
+    loading = true;
+
     e.preventDefault();
     const tempData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
     const data = Object.fromEntries(
@@ -25,7 +31,9 @@
       }),
     ) as T;
 
-    onSubmit(data);
+    await onSubmit(data);
+
+    loading = false;
   };
 </script>
 
@@ -33,5 +41,14 @@
   <div class="flex select-none flex-col gap-4 text-gray">
     <slot />
   </div>
-  <div class="mt-8"><Button submit>{buttonText}</Button></div>
+  <div class="mt-8 flex gap-2">
+    <Button submit disabled={loading}>
+      <div class="relative flex w-full flex-col items-center justify-center">
+        <span>{loading ? "LOADING" : buttonText}</span>
+        {#if loading}
+          <BarLoader size="50" color="currentColor" />
+        {/if}
+      </div>
+    </Button>
+  </div>
 </form>

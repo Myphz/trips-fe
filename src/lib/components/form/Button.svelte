@@ -3,6 +3,7 @@
 
   export let submit = false;
   export let variant: "primary" | "error" | "outlined" = "primary";
+  export let disabled = false;
 
   const styleClasses: Record<typeof variant, string> = {
     primary: "primary",
@@ -14,7 +15,8 @@
 <button
   on:click
   type={submit ? "submit" : "button"}
-  class={twMerge("w-full rounded-lg py-2 text-white", styleClasses[variant])}
+  {disabled}
+  class={twMerge("w-full rounded-lg py-2 text-white disabled:opacity-70", styleClasses[variant])}
 >
   <slot />
 </button>

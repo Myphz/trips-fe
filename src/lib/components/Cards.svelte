@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { supabase } from "$lib/stores/api";
+  import { select } from "$lib/stores/api";
   import Card from "./Card.svelte";
 
-  const data = supabase.from("entities").select("*");
+  const data = select({ table: "trips" });
 </script>
 
-<main>
-  <Card />
+<main class="flex flex-col gap-8">
   {#await data then data}
-    {JSON.stringify(data)}
+    {#each data as trip}
+      <Card destination={trip.destination} startDate={trip.start_date} endDate={trip.end_date} />
+    {/each}
   {/await}
 </main>

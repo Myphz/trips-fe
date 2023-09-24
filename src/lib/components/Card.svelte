@@ -1,6 +1,11 @@
 <script lang="ts">
+  import { dateToCard } from "$utils/format";
   import { Stars } from ".";
   import { InformationCircle } from "svelte-heros";
+
+  export let destination: string;
+  export let startDate: string | null = null;
+  export let endDate: string | null = null;
 </script>
 
 <a href="/app/trip">
@@ -13,8 +18,14 @@
 
     <div class="flex flex-1 flex-col pb-4 pl-2 pr-4 pt-2">
       <div class="flex flex-1 flex-col">
-        <header class="text-h3">Japan</header>
-        <div class="text-xs">Jul 2023</div>
+        <header class="text-h3">{destination}</header>
+        {#if startDate && endDate}
+          <div class="flex gap-1 text-xs">
+            <div class="text-xs">{dateToCard(startDate)}</div>
+            <span>-</span>
+            <div class="text-xs">{dateToCard(endDate)}</div>
+          </div>
+        {/if}
       </div>
       <div class="flex items-center justify-between">
         <Stars number={5} />

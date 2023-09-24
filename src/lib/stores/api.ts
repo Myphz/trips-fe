@@ -8,18 +8,34 @@ import { capitalize } from "$utils/format";
 
 export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_KEY);
 
-type CreateParams<T extends keyof Database["public"]["Tables"]> = {
+type Tables = Database["public"]["Tables"];
+
+type CreateParams<T extends keyof Tables> = {
   table: T;
-  params: Database["public"]["Tables"][T]["Insert"];
+  params: Tables[T]["Insert"];
 };
 
-async function create<T extends keyof Database["public"]["Tables"]>({ table, params }: CreateParams<T>) {
+type SelectParams<T extends keyof Tables> = {
+  table: T;
+  cond?: Partial<Tables[T]["Row"]>;
+};
+
+async function create<T extends keyof Tables>({ table, params }: CreateParams<T>) {
   // @ts-ignore
   const { data, error } = await supabase.from(table).insert([params]).select();
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
   if (table !== "entities")
     success({ title: "Success", msg: `${capitalize(table.slice(0, -1))} created successfully!` });
   return data[0];
+}
+
+export async function select<T extends keyof Tables>({ table, cond }: SelectParams<T>) {
+  let query = supabase.from(table).select("*");
+  Object.entries(cond ?? {}).forEach(([key, val]) => (query = query.eq(key, val)));
+
+  const { error, data } = await query;
+  if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  return data;
 }
 
 export async function addTrip({ destination, end_date, start_date }: AddTrip) {

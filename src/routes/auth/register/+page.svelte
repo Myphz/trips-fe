@@ -4,7 +4,7 @@
   import { register } from "$lib/stores/api/user";
   import { setPageTitle } from "$lib/stores/route";
 
-  import { fail, success } from "../../../utils/toasts";
+  import { fail, success } from "$utils/toasts";
 
   setPageTitle("Sign Up");
 

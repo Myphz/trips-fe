@@ -1,6 +1,6 @@
 import type { Tables, Trip } from "$lib/types/api";
-import { convertRPCRow } from "$utils/api";
-import { addOptionals } from "$utils/optional";
+import { convertRPCRow } from "$lib/utils/api";
+import { addOptionals } from "$lib/utils/optional";
 import { supabase } from "./client";
 
 type SelectParams<T extends keyof Tables> = {

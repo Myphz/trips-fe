@@ -1,8 +1,8 @@
 import type { Tables } from "$lib/types/api";
 import type { AddTrip } from "$lib/types/forms";
-import { capitalize } from "$utils/format";
-import { addOptionals } from "$utils/optional";
-import { success } from "$utils/toasts";
+import { capitalize } from "$lib/utils/format";
+import { addOptionals } from "$lib/utils/optional";
+import { success } from "$lib/utils/toasts";
 
 type CreateParams<T extends keyof Tables> = {
   table: T;

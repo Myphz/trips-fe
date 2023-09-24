@@ -15,7 +15,6 @@ function redirect(isLogged: boolean, mustBeLogged: boolean) {
 export function authGuard(mustBeLogged = true) {
   onMount(async () => {
     const isLogged = !!(await supabase.auth.getSession()).data.session;
-    console.log(isLogged, await supabase.auth.getSession());
     redirect(isLogged, mustBeLogged);
 
     supabase.auth.onAuthStateChange((event, session) => {

@@ -3,7 +3,7 @@
   import { InformationCircle } from "svelte-heros";
 </script>
 
-<a href="/auth/login">
+<a href="/app/trip">
   <article class="relative flex h-52 w-full rounded-xl text-white">
     <img
       class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover"

@@ -1,44 +1,40 @@
-import { supabase } from "$lib/stores/api";
-import { fail } from "./toasts";
+import type { Entity, Lodging, Place, RPCRow, Trip } from "$lib/types/api";
 
 export function generateUsername(displayed: string) {
   const rand = Math.floor(Math.random() * 10001);
   return `${displayed.split(" ")[0]}#${rand}`;
 }
 
-type RegisterData = { email: string; password: string; displayed: string };
+function toTrip(row: RPCRow): Trip {
+  return {
+    type: "trip",
+    rating: row.rating,
+    id: row.id,
+    destination: row.trip_destination,
+  };
+}
 
-export async function register({ email, password, displayed }: RegisterData) {
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
-  });
+function toPlace(row: RPCRow): Place {
+  return {
+    type: "place",
+    rating: row.rating,
+    id: row.id,
+    name: row.place_name,
+  };
+}
 
-  if (error)
-    return fail({
-      title: "Error",
-      msg: error.message,
-    });
+function toLodging(row: RPCRow): Lodging {
+  return {
+    type: "lodging",
+    rating: row.rating,
+    id: row.id,
+    name: row.lodging_name,
+  };
+}
 
-  // Register profile
-  // eslint-disable-next-line no-constant-condition
-  while (true) {
-    let username = generateUsername(displayed);
-    const { error: errorProfile } = await supabase.from("profiles").insert([
-      {
-        id: data.user?.id,
-        displayed,
-        username,
-      },
-    ]);
-
-    if (errorProfile?.code === "23505") {
-      username = generateUsername(displayed);
-      continue;
-    } else if (errorProfile) return fail({ title: "Error", msg: "Unknown error. Please retry." });
-
-    break;
-  }
-
-  return true;
+export function convertRPCRow(row: RPCRow): Entity {
+  if (row.place_name) return toPlace(row);
+  if (row.trip_destination) return toTrip(row);
+  if (row.lodging_name) return toLodging(row);
+  throw new Error("Couldn't determine entity role?");
 }

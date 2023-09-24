@@ -1,5 +1,5 @@
 import { goto } from "$app/navigation";
-import { supabase } from "$lib/stores/api";
+import { supabase } from "$lib/stores/api/client";
 import { onMount } from "svelte";
 import { fail } from "./toasts";
 

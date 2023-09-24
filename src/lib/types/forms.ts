@@ -5,3 +5,5 @@ export type AddTrip = {
   currency: string;
   people: string[];
 };
+
+export type Register = { email: string; password: string; displayed: string };

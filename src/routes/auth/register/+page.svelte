@@ -1,8 +1,8 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { Form, Input } from "$lib/components/form";
+  import { register } from "$lib/stores/api/user";
   import { setPageTitle } from "$lib/stores/route";
-  import { register } from "$utils/api";
 
   import { fail, success } from "../../../utils/toasts";
 

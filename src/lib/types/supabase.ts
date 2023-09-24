@@ -298,6 +298,21 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      get_all: {
+        Args: {
+          tripid?: number
+          parentid?: number
+        }
+        Returns: {
+          id: number
+          description: string
+          rating: number
+          trip_id: number
+          trip_destination: string
+          place_name: string
+          lodging_name: string
+        }[]
+      }
       get_tripid: {
         Args: {
           _id: number

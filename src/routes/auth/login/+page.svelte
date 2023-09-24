@@ -1,7 +1,7 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
   import { Form, Input } from "$lib/components/form";
-  import { supabase } from "$lib/stores/api";
+  import { supabase } from "$lib/stores/api/client";
   import { setPageTitle } from "$lib/stores/route";
 
   import { fail, success } from "$utils/toasts";

@@ -2,7 +2,7 @@
   import { routeParams, setPageTitle } from "$lib/stores/route";
   import { Input, Form, Select, PhotoUploader, Datepicker, PeopleSelector } from "$lib/components/form";
   import type { AddTrip } from "$lib/types/forms";
-  import { addTrip } from "$lib/stores/api";
+  import { addTrip } from "$lib/stores/api/create";
 
   const { entityId } = routeParams;
 

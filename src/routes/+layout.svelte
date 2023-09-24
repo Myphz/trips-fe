@@ -2,7 +2,7 @@
   import "../app.css";
   import "../toast.css";
 
-  import { Navbar, Header, Footer } from "$lib/components";
+  import { Navbar, Header } from "$lib/components";
   import { onMount } from "svelte";
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { keyboardOpen } from "$lib/stores/ui";
@@ -22,10 +22,9 @@
 </script>
 
 <Navbar />
-<main class="mx-4 mb-12 pb-20">
+<section class="mx-4 mb-12 pb-20">
   <Header />
   <slot />
-</main>
-<Footer />
+</section>
 
 <SvelteToast options={{ intro: { y: -100 }, duration: 4000 }} />

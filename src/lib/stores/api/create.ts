@@ -3,6 +3,7 @@ import type { AddTrip } from "$lib/types/forms";
 import { capitalize } from "$lib/utils/format";
 import { addOptionals } from "$lib/utils/optional";
 import { success } from "$lib/utils/toasts";
+import { supabase } from "./client";
 
 type CreateParams<T extends keyof Tables> = {
   table: T;

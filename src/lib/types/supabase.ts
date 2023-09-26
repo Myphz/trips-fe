@@ -60,16 +60,19 @@ export interface Database {
       }
       groups: {
         Row: {
+          accepted: boolean
           id: number
           trip_id: number
           user_id: string
         }
         Insert: {
+          accepted?: boolean
           id?: number
           trip_id: number
           user_id?: string
         }
         Update: {
+          accepted?: boolean
           id?: number
           trip_id?: number
           user_id?: string
@@ -309,8 +312,24 @@ export interface Database {
           rating: number
           trip_id: number
           trip_destination: string
+          trip_start: string
+          trip_end: string
+          trip_photo: string
           place_name: string
+          place_date: string
+          place_address: string
+          place_price: number
           lodging_name: string
+          lodging_address: string
+          lodging_price: number
+          lodging_start: string
+          lodging_end: string
+          transport_price: number
+          transport_departure: string
+          transport_arrival: string
+          transport_mean: string
+          transport_departure_place: string
+          transport_arrival_place: string
         }[]
       }
       get_tripid: {

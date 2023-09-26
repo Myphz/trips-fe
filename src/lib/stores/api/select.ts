@@ -1,4 +1,4 @@
-import type { Tables, Trip } from "$lib/types/api";
+import type { GetRowType, Tables } from "$lib/types/api";
 import { convertRPCRow } from "$lib/utils/api";
 import { addOptionals } from "$lib/utils/optional";
 import { supabase } from "./client";
@@ -30,8 +30,9 @@ export async function getAll(opts: GetAllParams = {}) {
   return data.map((row) => convertRPCRow(row));
 }
 
-export async function getMainTrips(): Promise<Trip[]> {
+export async function getMainTrips() {
   const data = await getAll();
-  if (data.some((row) => row.type !== "trip")) throw new Error("Element with no parent or trip_id is not a trip?");
-  return data as Trip[];
+  const ret = data.filter((row): row is GetRowType<"trip"> => row.type === "trip");
+  if (data.length > ret.length) throw new Error("Element with no parent or trip_id is not a trip?");
+  return ret;
 }

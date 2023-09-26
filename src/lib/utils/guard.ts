@@ -2,6 +2,7 @@ import { goto } from "$app/navigation";
 import { supabase } from "$lib/stores/api/client";
 import { onMount } from "svelte";
 import { fail } from "./toasts";
+import { undo } from "$lib/stores/route";
 
 function redirect(isLogged: boolean, mustBeLogged: boolean) {
   const redirectTo = mustBeLogged ? "/auth/login" : "/app";
@@ -23,4 +24,10 @@ export function authGuard(mustBeLogged = true) {
       redirect(!!session, mustBeLogged);
     });
   });
+}
+
+export function goBack() {
+  if (window.location.href.endsWith("/trip") && !undo()) {
+    history.back();
+  }
 }

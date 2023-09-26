@@ -3,6 +3,7 @@
   import { Plus, ArrowLeft } from "svelte-heros";
   import { Redirect } from ".";
   import { page } from "$app/stores";
+  import { goBack } from "$utils/guard";
 
   $: advancedMode = $pageTitle !== MAIN_PAGE_TITLE;
 </script>
@@ -11,11 +12,7 @@
   <div class="mb-9 flex items-center justify-between">
     <div class={advancedMode ? "flex items-center gap-6" : null}>
       {#if advancedMode}
-        <button
-          on:click={() => {
-            history.back();
-          }}
-        >
+        <button on:click={goBack}>
           <ArrowLeft size="2rem" />
         </button>
       {/if}

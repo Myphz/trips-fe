@@ -8,9 +8,9 @@
 
   const TABS = [
     { icon: Home, path: "/app" },
-    { icon: Trip, path: "/app/trips" },
-    { icon: Bed, path: "/app/lodgings" },
-    { icon: Train, path: "/app/transport" },
+    { icon: Trip, path: "/app/trip/trips" },
+    { icon: Bed, path: "/app/trip/lodgings" },
+    { icon: Train, path: "/app/trip/transport" },
   ];
 </script>
 

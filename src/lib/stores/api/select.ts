@@ -33,6 +33,9 @@ export async function getAll(opts: GetAllParams = {}) {
 export async function getMainTrips() {
   const data = await getAll();
   const ret = data.filter((row): row is GetRowType<"trip"> => row.type === "trip");
-  if (data.length > ret.length) throw new Error("Element with no parent or trip_id is not a trip?");
+  if (data.length > ret.length) {
+    throw new Error("Element with no parent or trip_id is not a trip?");
+  }
+
   return ret;
 }

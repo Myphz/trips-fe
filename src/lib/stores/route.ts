@@ -14,8 +14,7 @@ export type RoutesUnwrapped = { [K in keyof RouteParams]: UnwrapWritable<RoutePa
 
 export const setRouteParams = (params: Partial<RoutesUnwrapped>) => {
   Object.entries(params).map(([key, val]) => {
-    // @ts-ignore
-    routeParams[key].set(val);
+    routeParams[key as keyof RouteParams].set(val);
   });
 };
 

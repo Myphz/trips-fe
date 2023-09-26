@@ -6,10 +6,15 @@ export function generateUsername(displayed: string) {
 }
 
 function filterObject<T extends EntityType>(startsWith: T, row: RPCRow): GetRowType<T> {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const rest = Object.fromEntries(Object.entries(row).filter(([key, _]) => key.startsWith(startsWith)));
+  const rest = Object.fromEntries(
+    Object.entries(row)
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      .filter(([key, _]) => key.startsWith(startsWith))
+      .map(([key, val]) => [key.split(`${startsWith}_`)[1], val]),
+  );
 
   return {
+    type: startsWith,
     id: row.id,
     tripId: row.main_id,
     rating: row.rating,

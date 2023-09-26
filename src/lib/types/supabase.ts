@@ -233,7 +233,7 @@ export interface Database {
           departure_datetime: string | null
           departure_place: string | null
           id: number
-          mean: string | null
+          mean: string
           price: number | null
         }
         Insert: {
@@ -243,7 +243,7 @@ export interface Database {
           departure_datetime?: string | null
           departure_place?: string | null
           id: number
-          mean?: string | null
+          mean: string
           price?: number | null
         }
         Update: {
@@ -253,7 +253,7 @@ export interface Database {
           departure_datetime?: string | null
           departure_place?: string | null
           id?: number
-          mean?: string | null
+          mean?: string
           price?: number | null
         }
         Relationships: [
@@ -310,7 +310,8 @@ export interface Database {
           id: number
           description: string
           rating: number
-          trip_id: number
+          main_id: number
+          parent: number
           trip_destination: string
           trip_start: string
           trip_end: string

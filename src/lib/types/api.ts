@@ -1,7 +1,6 @@
 import type { Database } from "./supabase";
 
 export type RPCRow = Database["public"]["Functions"]["get_all"]["Returns"][number];
-
 export type Tables = Database["public"]["Tables"];
 
 type SnakeToCamel<S extends string> = S extends `${infer Head}_${infer Tail}`
@@ -23,6 +22,8 @@ type FilterRow<T extends string> = {
 type EntityCommon = {
   id: number;
   rating: number;
+  tripId: number;
+  parent: number;
 };
 
 export type EntityType = "trip" | "place" | "transport" | "lodging";

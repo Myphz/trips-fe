@@ -11,7 +11,9 @@ function filterObject<T extends EntityType>(startsWith: T, row: RPCRow): GetRowT
 
   return {
     id: row.id,
+    tripId: row.main_id,
     rating: row.rating,
+    parent: row.parent,
     ...rest,
   } as GetRowType<T>;
 }

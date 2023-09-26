@@ -2,6 +2,8 @@ import { writable, type Writable } from "svelte/store";
 
 export const routeParams = {
   entityId: writable(0),
+  parent: writable(0),
+  tripId: writable(0),
 };
 
 export const MAIN_PAGE_TITLE = "My Trips";

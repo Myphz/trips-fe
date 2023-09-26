@@ -19,7 +19,7 @@ type FilterRow<T extends string> = {
   [x in SnakeToCamelArray<StartWith<T>>]: RPCRow[Extract<keyof RPCRow, `${T}_${x}`>];
 };
 
-type EntityCommon = {
+export type EntityCommon = {
   id: number;
   rating: number;
   tripId: number;
@@ -28,6 +28,7 @@ type EntityCommon = {
 
 export type EntityType = "trip" | "place" | "transport" | "lodging";
 export type GetRowType<T extends EntityType> = EntityCommon & { type: T } & FilterRow<T>;
+
 export type GetRowTypes = {
   [K in EntityType]: GetRowType<K>;
 }[EntityType];

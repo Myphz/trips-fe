@@ -21,7 +21,7 @@
       {/if}
       <h1 class="font-headers text-h1">{$pageTitle}</h1>
     </div>
-    {#if !advancedMode}
+    {#if !advancedMode || $page.route.id?.endsWith("/trip")}
       <Redirect href="/app/form/trip" params={{ entityId: undefined }} classes="text-primary">
         <Plus size="2rem" />
       </Redirect>

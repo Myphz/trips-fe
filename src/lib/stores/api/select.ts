@@ -1,17 +1,14 @@
-import type { GetRowType, Tables } from "$lib/types/api";
+import type { Tables } from "$lib/types/api";
 import { convertRPCRow } from "$lib/utils/api";
 import { addOptionals } from "$lib/utils/optional";
+import { get } from "svelte/store";
+import { routeParams } from "../route";
 import { supabase } from "./client";
 
 type SelectParams<T extends keyof Tables> = {
   table: T;
   cond?: Partial<Tables[T]["Row"]>;
 };
-
-type GetAllParams = Partial<{
-  tripid: string;
-  parentid: string;
-}>;
 
 export async function select<T extends keyof Tables>({ table, cond }: SelectParams<T>) {
   let query = supabase.from(table).select("*");
@@ -22,20 +19,10 @@ export async function select<T extends keyof Tables>({ table, cond }: SelectPara
   return data;
 }
 
-export async function getAll(opts: GetAllParams = {}) {
-  const { tripid, parentid } = opts;
-  const { data, error } = await supabase.rpc("get_all", addOptionals({ tripid, parentid }));
+export async function getAll() {
+  const { tripId, parent } = routeParams;
+  const { data, error } = await supabase.rpc("get_all", addOptionals({ tripid: get(tripId), parentid: get(parent) }));
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
 
   return data.map((row) => convertRPCRow(row));
-}
-
-export async function getMainTrips() {
-  const data = await getAll();
-  const ret = data.filter((row): row is GetRowType<"trip"> => row.type === "trip");
-  if (data.length > ret.length) {
-    throw new Error("Element with no parent or trip_id is not a trip?");
-  }
-
-  return ret;
 }

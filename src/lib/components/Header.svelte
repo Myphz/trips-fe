@@ -4,6 +4,7 @@
   import { Redirect } from ".";
   import { page } from "$app/stores";
   import { goBack } from "$utils/guard";
+  import { modal } from "$utils/modal";
 
   $: advancedMode = $pageTitle !== MAIN_PAGE_TITLE;
 </script>
@@ -19,9 +20,12 @@
       <h1 class="font-headers text-h1">{$pageTitle}</h1>
     </div>
     {#if !advancedMode || $page.route.id?.endsWith("/trip")}
-      <Redirect href="/app/form/trip" params={{ entityId: undefined }} classes="text-primary">
+      <!-- <Redirect href="/app/form/trip" params={{ entityId: undefined }} classes="text-primary">
         <Plus size="2rem" />
-      </Redirect>
+      </Redirect> -->
+      <button class="text-primary" use:modal>
+        <Plus size="2rem" />
+      </button>
     {/if}
   </div>
 {/if}

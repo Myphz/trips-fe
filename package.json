@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@capacitor/assets": "^2.0.4",
+    "@svelte-put/clickoutside": "^3.0.0",
     "@sveltejs/adapter-auto": "^2.0.0",
     "@sveltejs/adapter-static": "^2.0.3",
     "@sveltejs/kit": "^1.20.4",

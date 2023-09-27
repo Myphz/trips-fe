@@ -6,6 +6,7 @@ import { routeParams } from "../route";
 import { supabase } from "./client";
 
 export const cards = writable<Awaited<ReturnType<typeof getAll>>>(await getAll());
+export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);
 
 type SelectParams<T extends keyof Tables> = {
   table: T;
@@ -27,6 +28,19 @@ async function getAll() {
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
 
   return data.map((row) => convertRPCRow(row));
+}
+
+export async function getSingle() {
+  card.set(null);
+
+  const { entityId } = routeParams ?? {};
+  if (!get(entityId)) throw new Error("No entity id");
+
+  const { data, error } = await supabase.rpc("get_single", { entityid: get(entityId) });
+  if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  if (data.length !== 1) throw new Error("Entity not found");
+
+  card.set(convertRPCRow(data[0]));
 }
 
 export async function load() {

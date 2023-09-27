@@ -1,6 +1,6 @@
 <script lang="ts">
   import { MAIN_PAGE_TITLE, pageTitle } from "$lib/stores/route";
-  import { Plus, ArrowLeft } from "svelte-heros";
+  import { Plus, ArrowLeft, Pencil } from "svelte-heros";
   import { page } from "$app/stores";
   import { goBack } from "$utils/guard";
   import { modal } from "$utils/modal";
@@ -10,7 +10,7 @@
 
 {#if $page.route.id !== "/"}
   <div class="mb-9 flex items-center justify-between">
-    <div class={advancedMode ? "flex items-center gap-6" : null}>
+    <div class="flex items-center gap-6">
       {#if advancedMode}
         <button on:click={goBack}>
           <ArrowLeft size="2rem" />
@@ -28,6 +28,12 @@
           <Plus size="2rem" />
         </button>
       {/if}
+    {/if}
+
+    {#if $page.route.id?.includes("info")}
+      <button class="text-primary">
+        <Pencil size="1.5rem" />
+      </button>
     {/if}
   </div>
 {/if}

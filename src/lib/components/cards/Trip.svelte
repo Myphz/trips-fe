@@ -6,9 +6,10 @@
 
   export let data: EntityCommon & GetRowType<"trip">;
   const { destination, id, tripId, photo, rating, start, end } = data;
+  const redirectParams = { entityId: id, parent: id, tripId: tripId || id };
 </script>
 
-<Redirect href="/app/trip" params={{ entityId: id, parent: id, tripId: tripId || id }}>
+<Redirect href="/app/trip" params={redirectParams}>
   <article class="relative flex h-52 w-full text-white">
     <img
       class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover"
@@ -29,7 +30,9 @@
       </div>
       <div class="flex items-center justify-between">
         <Stars number={rating} />
-        <InformationCircle size="1.5rem" />
+        <Redirect href="/app/info" params={redirectParams}>
+          <InformationCircle size="2rem" />
+        </Redirect>
       </div>
     </div>
   </article>

@@ -333,6 +333,37 @@ export interface Database {
           transport_arrival_place: string
         }[]
       }
+      get_single: {
+        Args: {
+          entityid: number
+        }
+        Returns: {
+          id: number
+          description: string
+          rating: number
+          main_id: number
+          parent: number
+          trip_destination: string
+          trip_start: string
+          trip_end: string
+          trip_photo: string
+          place_name: string
+          place_date: string
+          place_address: string
+          place_price: number
+          lodging_name: string
+          lodging_address: string
+          lodging_price: number
+          lodging_start: string
+          lodging_end: string
+          transport_price: number
+          transport_departure: string
+          transport_arrival: string
+          transport_mean: string
+          transport_departure_place: string
+          transport_arrival_place: string
+        }[]
+      }
       get_tripid: {
         Args: {
           _id: number

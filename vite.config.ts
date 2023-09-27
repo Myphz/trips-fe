@@ -8,4 +8,7 @@ export default defineConfig({
       allow: [searchForWorkspaceRoot(process.cwd())],
     },
   },
+  build: {
+    target: "esnext",
+  },
 });

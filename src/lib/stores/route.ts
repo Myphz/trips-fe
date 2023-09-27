@@ -1,4 +1,4 @@
-import { get, writable, type Writable } from "svelte/store";
+import { writable, type Writable } from "svelte/store";
 
 export const routeParams = {
   entityId: writable(0),
@@ -16,28 +16,27 @@ export type RoutesUnwrapped = { [K in keyof RouteParams]: UnwrapWritable<RoutePa
 
 const paramsHistory: Partial<RoutesUnwrapped>[] = [];
 
-const unwrapParams = () => {
-  return Object.fromEntries(Object.entries(routeParams).map(([_, val]) => [_, get(val)])) as RoutesUnwrapped;
-};
-
 export const undo = () => {
+  paramsHistory.pop();
   const last = paramsHistory.pop();
+
   if (!last) {
     setRouteParams({ entityId: 0, parent: 0, tripId: 0 }, { saveParams: false });
     return false;
   }
-  setRouteParams(last, { saveParams: false });
+
+  setRouteParams(last);
   return true;
 };
 
 export const setRouteParams = (params: Partial<RoutesUnwrapped>, opts?: { saveParams: boolean }) => {
   const { saveParams = true } = opts ?? {};
-  const lastParams = unwrapParams();
-  if (saveParams && (lastParams.tripId || lastParams.parent || lastParams.entityId)) paramsHistory.push(lastParams);
 
   Object.entries(params).map(([key, val]) => {
     routeParams[key as keyof RouteParams].set(val);
   });
+
+  if (saveParams) paramsHistory.push(params);
 };
 
 export const setPageTitle = (title: string) => {

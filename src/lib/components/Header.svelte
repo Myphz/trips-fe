@@ -1,7 +1,6 @@
 <script lang="ts">
   import { MAIN_PAGE_TITLE, pageTitle } from "$lib/stores/route";
   import { Plus, ArrowLeft } from "svelte-heros";
-  import { Redirect } from ".";
   import { page } from "$app/stores";
   import { goBack } from "$utils/guard";
   import { modal } from "$utils/modal";
@@ -20,12 +19,15 @@
       <h1 class="font-headers text-h1">{$pageTitle}</h1>
     </div>
     {#if !advancedMode || $page.route.id?.endsWith("/trip")}
-      <!-- <Redirect href="/app/form/trip" params={{ entityId: undefined }} classes="text-primary">
-        <Plus size="2rem" />
-      </Redirect> -->
-      <button class="text-primary" use:modal>
-        <Plus size="2rem" />
-      </button>
+      {#if !advancedMode}
+        <a href="/app/form/trip" class="text-primary">
+          <Plus size="2rem" />
+        </a>
+      {:else}
+        <button class="text-primary" use:modal>
+          <Plus size="2rem" />
+        </button>
+      {/if}
     {/if}
   </div>
 {/if}

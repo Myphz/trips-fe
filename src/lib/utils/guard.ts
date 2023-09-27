@@ -27,7 +27,7 @@ export function authGuard(mustBeLogged = true) {
 }
 
 export function goBack() {
-  if (window.location.href.endsWith("/trip") && !undo()) {
-    history.back();
-  }
+  const inTrip = window.location.href.endsWith("/app/trip");
+  if (inTrip && undo()) return;
+  history.back();
 }

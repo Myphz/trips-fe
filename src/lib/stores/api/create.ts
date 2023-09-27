@@ -6,6 +6,7 @@ import { success } from "$lib/utils/toasts";
 import { get } from "svelte/store";
 import { routeParams } from "../route";
 import { supabase } from "./client";
+import { load } from "./select";
 
 type CreateParams<T extends keyof Tables> = {
   table: T;
@@ -19,6 +20,8 @@ export async function create<T extends keyof Tables>({ table, params, withToast 
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
   if (table !== "entities" && withToast)
     success({ title: "Success", msg: `${capitalize(table.slice(0, -1))} created successfully!` });
+
+  load();
   return data[0];
 }
 

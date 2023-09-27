@@ -3,6 +3,7 @@ import { supabase } from "$lib/stores/api/client";
 import { onMount } from "svelte";
 import { fail } from "./toasts";
 import { undo } from "$lib/stores/route";
+import { load } from "$lib/stores/api/select";
 
 function redirect(isLogged: boolean, mustBeLogged: boolean) {
   const redirectTo = mustBeLogged ? "/auth/login" : "/app";
@@ -22,6 +23,7 @@ export function authGuard(mustBeLogged = true) {
       // Prevent duplicates
       if (event === "INITIAL_SESSION") return;
       redirect(!!session, mustBeLogged);
+      if (session) load();
     });
   });
 }

@@ -3,6 +3,7 @@
   import { Input, Form, Select, PhotoUploader, Datepicker, PeopleSelector } from "$lib/components/form";
   import type { AddTrip } from "$lib/types/forms";
   import { addTrip } from "$lib/stores/api/create";
+  import { fail } from "$utils/toasts";
 
   const { entityId } = routeParams;
 
@@ -11,6 +12,11 @@
 
   const onSubmit = async (data: AddTrip) => {
     // if (isEdit) return await updateTrip($entityId, data);
+    if (data.start_date && data.end_date) {
+      if (+new Date(data.start_date) > +new Date(data.end_date)) {
+        return fail({ title: "Invalid data", msg: "Invalid data. Please retry" });
+      }
+    }
     await addTrip(data);
   };
 </script>

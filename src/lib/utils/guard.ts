@@ -10,7 +10,7 @@ function redirect(isLogged: boolean, mustBeLogged: boolean) {
 
   if (isLogged !== mustBeLogged) {
     goto(redirectTo);
-    fail({ msg: "Login to continue", title: "Auth required" });
+    if (mustBeLogged) fail({ msg: "Login to continue", title: "Auth required" });
   }
 }
 

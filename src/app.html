@@ -1,12 +1,15 @@
 <!doctype html>
-<html lang="en" class="h-fullscreen">
+<html lang="en" class="min-h-fullscreen h-full">
   <head>
     <meta charset="utf-8" />
     <link rel="icon" href="%sveltekit.assets%/favicon.png" />
     <meta name="viewport" content="width=device-width" />
     %sveltekit.head%
   </head>
-  <body data-sveltekit-preload-data="hover" class="bg text h-full w-full select-text font-regular text-regular">
+  <body
+    data-sveltekit-preload-data="hover"
+    class="bg text min-h-full w-full select-text overflow-x-hidden font-regular text-regular"
+  >
     <div style="display: contents">%sveltekit.body%</div>
   </body>
 </html>

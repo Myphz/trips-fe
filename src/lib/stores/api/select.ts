@@ -1,9 +1,11 @@
 import type { Tables } from "$lib/types/api";
 import { convertRPCRow } from "$lib/utils/api";
 import { addOptionals } from "$lib/utils/optional";
-import { get } from "svelte/store";
+import { get, writable } from "svelte/store";
 import { routeParams } from "../route";
 import { supabase } from "./client";
+
+export const cards = writable<Awaited<ReturnType<typeof getAll>>>(await getAll());
 
 type SelectParams<T extends keyof Tables> = {
   table: T;
@@ -19,10 +21,14 @@ export async function select<T extends keyof Tables>({ table, cond }: SelectPara
   return data;
 }
 
-export async function getAll() {
+async function getAll() {
   const { tripId, parent } = routeParams;
   const { data, error } = await supabase.rpc("get_all", addOptionals({ tripid: get(tripId), parentid: get(parent) }));
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
 
   return data.map((row) => convertRPCRow(row));
+}
+
+export async function load() {
+  cards.set(await getAll());
 }

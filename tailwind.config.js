@@ -40,6 +40,7 @@ export default {
     extend: {
       minHeight: {
         textarea: "8rem",
+        fullscreen: "100dvh",
       },
       height: {
         fullscreen: "100dvh",

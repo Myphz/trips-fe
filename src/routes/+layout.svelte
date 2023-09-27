@@ -22,7 +22,7 @@
 </script>
 
 <Navbar />
-<section class="mx-4 mb-12 pb-20">
+<section class="mx-4 h-full pb-20">
   <Header />
   <slot />
 </section>

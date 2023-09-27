@@ -1,4 +1,5 @@
 import { writable, type Writable } from "svelte/store";
+import { load } from "./api/select";
 
 export const routeParams = {
   entityId: writable(0),
@@ -37,6 +38,7 @@ export const setRouteParams = (params: Partial<RoutesUnwrapped>, opts?: { savePa
   });
 
   if (saveParams) paramsHistory.push(params);
+  if ("parent" in params || "tripId" in params) load();
 };
 
 export const setPageTitle = (title: string) => {

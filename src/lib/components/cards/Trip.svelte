@@ -9,7 +9,7 @@
 </script>
 
 <Redirect href="/app/trip" params={{ entityId: id, parent: id, tripId: tripId || id }}>
-  <article class="relative flex h-52 w-full rounded-xl text-white">
+  <article class="relative flex h-52 w-full text-white">
     <img
       class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover"
       src="https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg"

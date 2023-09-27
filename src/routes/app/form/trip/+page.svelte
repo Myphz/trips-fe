@@ -5,7 +5,7 @@
   import { addTrip } from "$lib/stores/api/create";
   import { fail } from "$utils/toasts";
 
-  const { entityId } = routeParams;
+  const { entityId } = routeParams ?? {};
 
   $: isEdit = !!$entityId;
   setPageTitle(isEdit ? "Edit a trip" : "Add a trip");

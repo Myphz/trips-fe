@@ -21,12 +21,12 @@ export async function create<T extends keyof Tables>({ table, params, withToast 
   if (table !== "entities" && withToast)
     success({ title: "Success", msg: `${capitalize(table.slice(0, -1))} created successfully!` });
 
-  load();
+  if (table !== "entities") load();
   return data[0];
 }
 
 export async function addTrip({ destination, end_date, start_date }: AddTrip) {
-  const { parent, tripId } = routeParams;
+  const { parent, tripId } = routeParams ?? {};
   // Create entity
   const entity = await create({
     table: "entities",

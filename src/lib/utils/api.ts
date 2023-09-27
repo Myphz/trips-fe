@@ -33,5 +33,6 @@ export function convertRPCRow(row: RPCRow): GetRowTypes {
   if (row.trip_destination) return toTrip(row);
   if (row.lodging_name) return toLodging(row);
   if (row.transport_mean) return toTransport(row);
+  console.warn(row);
   throw new Error("Couldn't determine entity role?");
 }

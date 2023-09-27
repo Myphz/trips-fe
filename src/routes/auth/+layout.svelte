@@ -1,0 +1,6 @@
+<script lang="ts">
+  import { authGuard } from "$utils/guard";
+  authGuard(false);
+</script>
+
+<slot />

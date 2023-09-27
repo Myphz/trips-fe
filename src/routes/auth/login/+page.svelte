@@ -20,7 +20,7 @@
     });
 
     if (error)
-      fail({
+      return fail({
         title: "Invalid login",
         msg: "Invalid email or password. Please retry.",
       });

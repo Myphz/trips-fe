@@ -14,7 +14,7 @@
     // if (isEdit) return await updateTrip($entityId, data);
     if (data.start_date && data.end_date) {
       if (+new Date(data.start_date) > +new Date(data.end_date)) {
-        return fail({ title: "Invalid data", msg: "Invalid data. Please retry" });
+        return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
       }
     }
     await addTrip(data);

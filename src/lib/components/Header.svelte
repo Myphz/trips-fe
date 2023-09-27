@@ -23,7 +23,7 @@
         <a href="/app/form/trip" class="text-primary">
           <Plus size="2rem" />
         </a>
-      {:else}
+      {:else if !$page.route.id?.includes("form")}
         <button class="text-primary" use:modal>
           <Plus size="2rem" />
         </button>

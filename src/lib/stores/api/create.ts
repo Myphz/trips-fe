@@ -1,8 +1,8 @@
 import type { Tables } from "$lib/types/api";
 import type { AddTrip } from "$lib/types/forms";
-import { capitalize } from "$lib/utils/format";
-import { addOptionals } from "$lib/utils/optional";
-import { success } from "$lib/utils/toasts";
+import { capitalize } from "$utils/format";
+import { addOptionals } from "$utils/objects";
+import { success } from "$utils/toasts";
 import { get } from "svelte/store";
 import { routeParams } from "../route";
 import { supabase } from "./client";

@@ -1,5 +1,6 @@
 import { writable, type Writable } from "svelte/store";
 import { load } from "./api/select";
+import { goto } from "$app/navigation";
 
 export const routeParams = {
   entityId: writable(0),
@@ -31,6 +32,7 @@ export const undo = () => {
 };
 
 export const setRouteParams = (params: Partial<RoutesUnwrapped>, opts?: { saveParams: boolean }) => {
+  console.log("setto", params);
   const { saveParams = true } = opts ?? {};
 
   Object.entries(params).map(([key, val]) => {
@@ -39,6 +41,10 @@ export const setRouteParams = (params: Partial<RoutesUnwrapped>, opts?: { savePa
 
   if (saveParams) paramsHistory.push(params);
   if ("parent" in params || "tripId" in params) load();
+  if (window.location.pathname !== "/app/trip") {
+    if (params.tripId) goto("/app/trip");
+    else goto("/app");
+  }
 };
 
 export const setPageTitle = (title: string) => {

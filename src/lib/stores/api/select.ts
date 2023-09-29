@@ -1,6 +1,6 @@
 import type { Tables } from "$lib/types/api";
-import { convertRPCRow } from "$lib/utils/api";
-import { addOptionals } from "$lib/utils/optional";
+import { convertRPCRow } from "$utils/api";
+import { addOptionals } from "$utils/objects";
 import { get, writable } from "svelte/store";
 import { routeParams } from "../route";
 import { supabase } from "./client";

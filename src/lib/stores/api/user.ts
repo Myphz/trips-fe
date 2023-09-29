@@ -1,5 +1,5 @@
 import type { Register } from "$lib/types/forms";
-import { generateUsername } from "$lib/utils/api";
+import { generateUsername } from "$utils/api";
 import { supabase } from "./client";
 
 export async function register({ email, password, displayed }: Register) {

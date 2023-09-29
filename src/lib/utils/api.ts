@@ -16,6 +16,7 @@ function filterObject<T extends EntityType>(startsWith: T, row: RPCRow): GetRowT
   return {
     type: startsWith,
     id: row.id,
+    description: row.description,
     tripId: row.main_id,
     rating: row.rating,
     parent: row.parent,

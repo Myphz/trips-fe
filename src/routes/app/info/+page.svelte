@@ -1,7 +1,9 @@
 <script lang="ts">
+  import { TripInfo } from "$lib/components/info";
   import { card, getSingle } from "$lib/stores/api/select";
   import { setPageTitle } from "$lib/stores/route";
   import type { GetRowTypes } from "$lib/types/api";
+
   getSingle();
 
   function getName(card: GetRowTypes | null) {
@@ -17,5 +19,7 @@
 </script>
 
 {#if $card}
-  <div>we</div>
+  {#if $card.type === "trip"}
+    <TripInfo />
+  {/if}
 {/if}

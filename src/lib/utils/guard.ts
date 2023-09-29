@@ -29,7 +29,7 @@ export function authGuard(mustBeLogged = true) {
 }
 
 export function goBack() {
-  const inTrip = window.location.href.endsWith("/app/trip");
+  const inTrip = window.location.pathname === "/app/trip" || window.location.pathname === "/app/info";
   if (inTrip && undo()) return;
   history.back();
 }

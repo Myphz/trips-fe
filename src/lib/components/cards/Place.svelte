@@ -23,7 +23,7 @@
         {/if}
       </div>
       <div class="flex items-center justify-between">
-        <Stars number={rating} />
+        <Stars {rating} mode="rating" />
       </div>
     </div>
   </article>

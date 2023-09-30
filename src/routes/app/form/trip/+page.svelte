@@ -5,11 +5,13 @@
   import { addTrip } from "$lib/stores/api/create";
   import { fail } from "$utils/toasts";
   import { routeParams } from "$lib/stores/routeParams";
+  import { Trash } from "svelte-heros";
+  import { toggleModal } from "$lib/stores/modals";
 
   const { entityId } = routeParams;
 
   $: isEdit = !!$entityId;
-  setPageTitle(isEdit ? "Edit a trip" : "Add a trip");
+  $: setPageTitle(isEdit ? "Edit a trip" : "Add a trip");
 
   const onSubmit = async (data: AddTrip) => {
     // if (isEdit) return await updateTrip($entityId, data);
@@ -21,6 +23,15 @@
     await addTrip(data);
   };
 </script>
+
+{#if isEdit}
+  <button
+    class="absolute right-0 top-0 flex h-12 items-center justify-center text-error"
+    on:click={() => toggleModal("deleteEntity")}
+  >
+    <Trash size="1.5rem" />
+  </button>
+{/if}
 
 <Form {onSubmit} buttonText="ADD">
   <Input placeholder="Destination" name="destination" required />

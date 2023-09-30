@@ -6,6 +6,7 @@
   import { onMount } from "svelte";
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { keyboardOpen } from "$lib/stores/ui";
+  import { Modals } from "$lib/components/modals";
 
   onMount(() => {
     import("../config");
@@ -22,9 +23,10 @@
 </script>
 
 <Navbar />
-<section class="mx-4 h-full pb-20">
+<section class="relative mx-4 h-full pb-20">
   <Header />
   <slot />
 </section>
 
 <SvelteToast options={{ intro: { y: -100 }, duration: 4000 }} />
+<Modals />

@@ -31,9 +31,9 @@
     {/if}
 
     {#if $page.route.id?.includes("info")}
-      <button class="text-primary">
+      <a href="/app/form/trip" class="text-primary">
         <Pencil size="1.5rem" />
-      </button>
+      </a>
     {/if}
   </div>
 {/if}

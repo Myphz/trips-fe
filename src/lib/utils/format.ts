@@ -1,4 +1,3 @@
-import { MAIN_PAGE_TITLE } from "$lib/stores/route";
 import type { GetRowTypes } from "$lib/types/api";
 import { format } from "date-fns";
 
@@ -11,7 +10,7 @@ export function dateToCard(date: string) {
 }
 
 export function getName(card: GetRowTypes | null) {
-  if (!card) return MAIN_PAGE_TITLE;
+  if (!card) return "";
   if (card.type === "trip") return card.destination;
   if (card.type === "lodging") return card.name;
   if (card.type === "place") return card.name;

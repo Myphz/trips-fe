@@ -5,7 +5,7 @@
   import { getName } from "$utils/format";
 
   getSingle();
-  $: setPageTitle(getName($card));
+  $: window.location.pathname === "/app/trip" && setPageTitle(getName($card));
 </script>
 
 <Cards />

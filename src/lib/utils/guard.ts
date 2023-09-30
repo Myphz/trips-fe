@@ -19,6 +19,8 @@ export function authGuard(mustBeLogged = true) {
     const isLogged = !!(await supabase.auth.getSession()).data.session;
     redirect(isLogged, mustBeLogged);
 
+    // TODO: Add redirect to create profile if not set
+
     supabase.auth.onAuthStateChange((event, session) => {
       // Prevent duplicates
       if (event === "INITIAL_SESSION") return;

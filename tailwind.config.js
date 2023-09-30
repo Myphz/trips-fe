@@ -15,6 +15,7 @@ export default {
       tab: "#37E0C8",
       accent: "#FFCB45",
       off: "#CECECE",
+      skeleton: "#B4B4B4",
 
       "primary-light": "#E6F6F4",
       "error-light": "#FFE6E6",

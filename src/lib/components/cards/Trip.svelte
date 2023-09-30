@@ -29,7 +29,7 @@
     </Redirect>
 
     <div class="absolute bottom-0 left-0 flex w-full items-center justify-between pb-4 pl-2 pr-4">
-      <Stars rating={3} mode="rating" />
+      <Stars rating={rating || 0} mode="rating" />
 
       <Redirect href="/app/info" classes="z-30" params={{ entityId: id }}>
         <InformationCircle size="2rem" />

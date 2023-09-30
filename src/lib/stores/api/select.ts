@@ -5,6 +5,7 @@ import { get, writable } from "svelte/store";
 import { routeParams } from "../route";
 import { supabase } from "./client";
 
+export const loading = writable(false);
 export const cards = writable<Awaited<ReturnType<typeof getAll>>>(await getAll());
 export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);
 
@@ -44,5 +45,7 @@ export async function getSingle() {
 }
 
 export async function load() {
+  loading.set(true);
   cards.set(await getAll());
+  loading.set(false);
 }

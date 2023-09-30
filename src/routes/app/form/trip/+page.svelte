@@ -1,6 +1,13 @@
 <script lang="ts">
   import { setPageTitle } from "$lib/stores/route";
-  import { Input, Form, Select, PhotoUploader, Datepicker, PeopleSelector } from "$lib/components/form";
+  import {
+    Input,
+    Form,
+    Select,
+    PhotoUploader,
+    Datepicker,
+    PeopleSelector,
+  } from "$lib/components/form";
   import type { AddTrip } from "$lib/types/forms";
   import { addTrip } from "$lib/stores/api/create";
   import { fail } from "$utils/toasts";
@@ -10,20 +17,33 @@
   import { goBack } from "$utils/guard";
   import { card } from "$lib/stores/api/select";
   import { getName } from "$utils/format";
+  import { pick, rename } from "$utils/objects";
+  import type { GetRowType } from "$lib/types/api";
+  import { update } from "$lib/stores/api/update";
 
   const { entityId } = routeParams;
 
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a trip");
 
+  const defaultValues = $card
+    ? pick(rename($card as GetRowType<"trip">, { start: "start_date", end: "end_date" }), [
+        "destination",
+        "start_date",
+        "end_date",
+      ])
+    : {};
+
   const onSubmit = async (data: AddTrip) => {
-    // if (isEdit) return await updateTrip($entityId, data);
     if (data.start_date && data.end_date) {
       if (+new Date(data.start_date) > +new Date(data.end_date)) {
         return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
       }
     }
-    await addTrip(data);
+
+    if (isEdit) await update({ table: "trips", params: data, id: $entityId });
+    else await addTrip(data);
+
     goBack();
   };
 </script>
@@ -37,13 +57,13 @@
   </button>
 {/if}
 
-<Form {onSubmit} buttonText="ADD">
+<Form {onSubmit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Destination" name="destination" required />
   <div class="flex gap-4">
     <Datepicker name="start_date" placeholder="Departure" />
     <Datepicker name="end_date" placeholder="Return" />
   </div>
-  <Select
+  <!-- <Select
     name="currency"
     label="Currency"
     options={[
@@ -52,6 +72,6 @@
     ]}
   />
 
-  <PeopleSelector name="people" />
+  <PeopleSelector name="people" /> -->
   <PhotoUploader />
 </Form>

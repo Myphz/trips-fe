@@ -21,7 +21,6 @@
     {#each $cards as row (row.id)}
       {@const type = row.type}
       {@const component = components[type]}
-
       <svelte:component this={component} data={row} />
     {/each}
   {:else}

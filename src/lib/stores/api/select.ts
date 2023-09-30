@@ -31,7 +31,7 @@ async function getAll() {
   return data.map((row) => convertRPCRow(row));
 }
 
-export async function getSingle() {
+export async function loadSingle() {
   card.set(null);
 
   const { entityId } = routeParams;

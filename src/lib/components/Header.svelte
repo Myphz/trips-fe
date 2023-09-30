@@ -9,31 +9,32 @@
 </script>
 
 {#if $page.route.id !== "/"}
-  <div class="mb-9 flex items-center justify-between">
-    <div class="flex items-center gap-6">
+  <div class="mb-9 flex w-full items-center justify-between">
+    <div class="flex w-full items-center gap-6">
       {#if advancedMode}
         <button on:click={goBack}>
           <ArrowLeft size="2rem" />
         </button>
       {/if}
-      <h1 class="font-headers text-h1">{$pageTitle}</h1>
-    </div>
-    {#if !advancedMode || $page.route.id?.endsWith("/trip")}
-      {#if !advancedMode}
-        <a href="/app/form/trip" class="text-primary">
-          <Plus size="2rem" />
-        </a>
-      {:else if !$page.route.id?.includes("form")}
-        <button class="text-primary" use:modal>
-          <Plus size="2rem" />
-        </button>
-      {/if}
-    {/if}
+      <h1 class="max-w-[60%] truncate font-headers text-h1">{$pageTitle}</h1>
 
-    {#if $page.route.id?.includes("info")}
-      <a href="/app/form/trip" class="text-primary">
-        <Pencil size="1.5rem" />
-      </a>
-    {/if}
+      {#if !advancedMode || $page.route.id?.endsWith("/trip")}
+        {#if !advancedMode}
+          <a href="/app/form/trip" class="ml-auto text-primary">
+            <Plus size="2rem" />
+          </a>
+        {:else if !$page.route.id?.includes("form")}
+          <button class="ml-auto text-primary" use:modal>
+            <Plus size="2rem" />
+          </button>
+        {/if}
+      {/if}
+
+      {#if $page.route.id?.includes("info")}
+        <a href="/app/form/trip" class="ml-auto text-primary">
+          <Pencil size="1.5rem" />
+        </a>
+      {/if}
+    </div>
   </div>
 {/if}

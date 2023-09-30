@@ -35,7 +35,7 @@ export async function getSingle() {
   card.set(null);
 
   const { entityId } = routeParams ?? {};
-  if (!get(entityId)) throw new Error("No entity id");
+  if (!get(entityId)) return;
 
   const { data, error } = await supabase.rpc("get_single", { entityid: get(entityId) });
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);

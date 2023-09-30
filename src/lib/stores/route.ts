@@ -1,12 +1,7 @@
 import { writable, type Writable } from "svelte/store";
 import { load } from "./api/select";
 import { goto } from "$app/navigation";
-
-export const routeParams = {
-  entityId: writable(0),
-  parent: writable(0),
-  tripId: writable(0),
-};
+import { routeParams } from "./routeParams";
 
 export const MAIN_PAGE_TITLE = "My Trips";
 export const pageTitle = writable(MAIN_PAGE_TITLE);

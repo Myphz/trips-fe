@@ -2,8 +2,8 @@ import type { Tables } from "$lib/types/api";
 import { convertRPCRow } from "$utils/api";
 import { addOptionals } from "$utils/objects";
 import { get, writable } from "svelte/store";
-import { routeParams } from "../route";
 import { supabase } from "./client";
+import { routeParams } from "../routeParams";
 
 export const loading = writable(false);
 export const cards = writable<Awaited<ReturnType<typeof getAll>>>(await getAll());

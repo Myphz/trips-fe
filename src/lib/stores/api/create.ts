@@ -14,12 +14,19 @@ type CreateParams<T extends keyof Tables> = {
   withToast?: boolean;
 };
 
-export async function create<T extends keyof Tables>({ table, params, withToast = true }: CreateParams<T>) {
+export async function create<T extends keyof Tables>({
+  table,
+  params,
+  withToast = true,
+}: CreateParams<T>) {
   // @ts-ignore
   const { data, error } = await supabase.from(table).insert([params]).select();
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
   if (table !== "entities" && withToast)
-    success({ title: "Success", msg: `${capitalize(table.slice(0, -1))} created successfully!` });
+    success({
+      title: "Success",
+      msg: `${capitalize(table.slice(0, -1))} created successfully!`,
+    });
 
   if (table !== "entities") load();
   return data[0];
@@ -38,6 +45,10 @@ export async function addTrip({ destination, end_date, start_date }: AddTrip) {
   const trip = await create({ table: "trips", params: tripParams });
   // Create group if it's a main trip
   if (!entity.trip_id)
-    await create({ table: "groups", params: { trip_id: trip.id, accepted: true }, withToast: false });
+    await create({
+      table: "groups",
+      params: { trip_id: trip.id, accepted: true },
+      withToast: false,
+    });
   return trip;
 }

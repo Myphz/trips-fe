@@ -30,7 +30,8 @@ export async function register({ email, password, displayed }: Register) {
     if (errorProfile?.code === "23505") {
       username = generateUsername(displayed);
       continue;
-    } else if (errorProfile) return fail({ title: "Error", msg: "Unknown error. Please retry." });
+    } else if (errorProfile)
+      return fail({ title: "Error", msg: "Unknown error. Please retry." });
 
     break;
   }

@@ -26,7 +26,10 @@ export const undo = () => {
   return true;
 };
 
-export const setRouteParams = (params: Partial<RoutesUnwrapped>, opts?: { saveParams: boolean }) => {
+export const setRouteParams = (
+  params: Partial<RoutesUnwrapped>,
+  opts?: { saveParams: boolean },
+) => {
   const { saveParams = true } = opts ?? {};
 
   Object.entries(params).map(([key, val]) => {

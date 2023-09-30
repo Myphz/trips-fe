@@ -3,7 +3,8 @@ import { App } from "@capacitor/app";
 // import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 App.addListener("backButton", async () => {
-  if (window.location.pathname === "/app" || window.location.pathname === "/") return await App.exitApp();
+  if (window.location.pathname === "/app" || window.location.pathname === "/")
+    return await App.exitApp();
   goBack();
 });
 

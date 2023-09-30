@@ -25,7 +25,10 @@ export async function select<T extends keyof Tables>({ table, cond }: SelectPara
 
 async function getAll() {
   const { tripId, parent } = routeParams;
-  const { data, error } = await supabase.rpc("get_all", addOptionals({ tripid: get(tripId), parentid: get(parent) }));
+  const { data, error } = await supabase.rpc(
+    "get_all",
+    addOptionals({ tripid: get(tripId), parentid: get(parent) }),
+  );
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
 
   return data.map((row) => convertRPCRow(row));

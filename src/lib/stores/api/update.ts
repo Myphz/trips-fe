@@ -11,7 +11,12 @@ type UpdateParams<T extends keyof Tables> = {
   withToast?: boolean;
 };
 
-export async function update<T extends keyof Tables>({ table, params, id, withToast = true }: UpdateParams<T>) {
+export async function update<T extends keyof Tables>({
+  table,
+  params,
+  id,
+  withToast = true,
+}: UpdateParams<T>) {
   // @ts-ignore
   const { data, error } = await supabase.from(table).update(params).eq("id", id).select();
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
@@ -23,7 +28,10 @@ export async function update<T extends keyof Tables>({ table, params, id, withTo
   return data[0];
 }
 
-export async function updateCard(params: Partial<EntityCommon>, { withToast }: { withToast: boolean }) {
+export async function updateCard(
+  params: Partial<EntityCommon>,
+  { withToast }: { withToast: boolean },
+) {
   const cardData = get(card);
   if (!cardData) return;
 

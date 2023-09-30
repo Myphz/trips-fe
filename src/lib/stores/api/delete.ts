@@ -10,7 +10,11 @@ type DeleteParams<T extends keyof Tables> = {
   withToast?: boolean;
 };
 
-export async function del<T extends keyof Tables>({ table, id, withToast = true }: DeleteParams<T>) {
+export async function del<T extends keyof Tables>({
+  table,
+  id,
+  withToast = true,
+}: DeleteParams<T>) {
   const idToDelete = id ?? get(routeParams.entityId);
   await supabase.from(table).delete().eq("id", idToDelete);
   if (!withToast) return;

@@ -31,7 +31,14 @@ export function authGuard(mustBeLogged = true) {
 }
 
 export function goBack() {
-  const inTrip = window.location.pathname === "/app/trip" || window.location.pathname === "/app/info";
+  const inTrip =
+    window.location.pathname === "/app/trip" ||
+    window.location.pathname === "/app/info" ||
+    window.location.pathname === "/app/form/trip";
   if (inTrip && undo()) return;
-  history.back();
+  if (inTrip) {
+    goto("/app");
+  } else {
+    history.back();
+  }
 }

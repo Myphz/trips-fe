@@ -7,11 +7,14 @@
   import { routeParams } from "$lib/stores/routeParams";
   import { Trash } from "svelte-heros";
   import { toggleModal } from "$lib/stores/modals";
+  import { goBack } from "$utils/guard";
+  import { card } from "$lib/stores/api/select";
+  import { getName } from "$utils/format";
 
   const { entityId } = routeParams;
 
   $: isEdit = !!$entityId;
-  $: setPageTitle(isEdit ? "Edit a trip" : "Add a trip");
+  $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a trip");
 
   const onSubmit = async (data: AddTrip) => {
     // if (isEdit) return await updateTrip($entityId, data);
@@ -21,6 +24,7 @@
       }
     }
     await addTrip(data);
+    goBack();
   };
 </script>
 

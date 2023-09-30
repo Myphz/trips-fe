@@ -1,5 +1,5 @@
 import { writable, type Writable } from "svelte/store";
-import { load } from "./api/select";
+import { getSingle, load } from "./api/select";
 import { goto } from "$app/navigation";
 import { routeParams } from "./routeParams";
 
@@ -35,6 +35,7 @@ export const setRouteParams = (params: Partial<RoutesUnwrapped>, opts?: { savePa
 
   if (saveParams) paramsHistory.push(params);
   if ("parent" in params || "tripId" in params) load();
+  if ("entityId" in params) getSingle();
   if (window.location.pathname !== "/app/trip") {
     if (params.tripId) goto("/app/trip");
     else goto("/app");

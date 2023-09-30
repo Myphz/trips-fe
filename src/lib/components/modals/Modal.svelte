@@ -1,13 +1,13 @@
 <script lang="ts">
   import { clickoutside } from "@svelte-put/clickoutside";
-  import { toggleModal } from "$lib/stores/modals";
+  import { closeModal } from "$lib/stores/modals";
   import { fade } from "svelte/transition";
 
   let clicked = false;
 
   const onClickOutside = () => {
     if (!clicked) return (clicked = true);
-    toggleModal("deleteEntity");
+    closeModal();
   };
 </script>
 

@@ -17,10 +17,10 @@ function redirect(isLogged: boolean, mustBeLogged: boolean) {
 export function authGuard(mustBeLogged = true) {
   onMount(async () => {
     const isLogged = !!(await supabase.auth.getSession()).data.session;
+    if (isLogged) load();
     redirect(isLogged, mustBeLogged);
 
     // TODO: Add redirect to create profile if not set
-
     supabase.auth.onAuthStateChange((event, session) => {
       // Prevent duplicates
       if (event === "INITIAL_SESSION") return;

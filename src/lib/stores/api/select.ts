@@ -5,8 +5,8 @@ import { get, writable } from "svelte/store";
 import { supabase } from "./client";
 import { routeParams } from "../routeParams";
 
-export const loading = writable(false);
-export const cards = writable<Awaited<ReturnType<typeof getAll>>>(await getAll());
+export const loading = writable(true);
+export const cards = writable<Awaited<ReturnType<typeof getAll>>>([]);
 export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);
 
 type SelectParams<T extends keyof Tables> = {

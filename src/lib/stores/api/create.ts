@@ -4,9 +4,9 @@ import { capitalize } from "$utils/format";
 import { addOptionals } from "$utils/objects";
 import { success } from "$utils/toasts";
 import { get } from "svelte/store";
-import { routeParams } from "../route";
 import { supabase } from "./client";
 import { load } from "./select";
+import { routeParams } from "../routeParams";
 
 type CreateParams<T extends keyof Tables> = {
   table: T;
@@ -26,7 +26,7 @@ export async function create<T extends keyof Tables>({ table, params, withToast 
 }
 
 export async function addTrip({ destination, end_date, start_date }: AddTrip) {
-  const { parent, tripId } = routeParams ?? {};
+  const { parent, tripId } = routeParams;
   // Create entity
   const entity = await create({
     table: "entities",

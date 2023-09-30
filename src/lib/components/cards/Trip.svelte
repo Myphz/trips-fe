@@ -3,15 +3,16 @@
   import { dateToCard } from "$utils/format";
   import { Stars, Redirect } from "../";
   import { InformationCircle } from "svelte-heros";
+  import CardBase from "./CardBase.svelte";
 
   export let data: EntityCommon & GetRowType<"trip">;
   const { destination, id, tripId, photo, rating, start, end } = data;
   const redirectParams = { entityId: id, parent: id, tripId: tripId || id };
 </script>
 
-<article class="relative flex h-52 w-full text-white">
+<CardBase>
   <img
-    class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover"
+    class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover shadow-md"
     src="https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg"
     alt="test"
   />
@@ -36,7 +37,7 @@
       </Redirect>
     </div>
   </div>
-</article>
+</CardBase>
 
 <style>
   .darker-image {

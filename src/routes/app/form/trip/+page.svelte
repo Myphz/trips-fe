@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { routeParams, setPageTitle } from "$lib/stores/route";
+  import { setPageTitle } from "$lib/stores/route";
   import { Input, Form, Select, PhotoUploader, Datepicker, PeopleSelector } from "$lib/components/form";
   import type { AddTrip } from "$lib/types/forms";
   import { addTrip } from "$lib/stores/api/create";
   import { fail } from "$utils/toasts";
+  import { routeParams } from "$lib/stores/routeParams";
 
-  const { entityId } = routeParams ?? {};
+  const { entityId } = routeParams;
 
   $: isEdit = !!$entityId;
   setPageTitle(isEdit ? "Edit a trip" : "Add a trip");

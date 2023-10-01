@@ -35,7 +35,7 @@ async function getAll() {
 }
 
 export async function loadSingle() {
-  card.set(null);
+  // card.set(null);
 
   const { entityId } = routeParams;
   if (!get(entityId)) return;

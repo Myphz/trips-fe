@@ -4,6 +4,7 @@ export type AddTrip = {
   end_date: string;
   currency: string;
   people: string[];
+  photo: string;
 };
 
 export type Register = { email: string; password: string; displayed: string };

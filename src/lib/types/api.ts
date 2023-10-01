@@ -22,6 +22,7 @@ type FilterRow<T extends string> = {
 export type EntityCommon = {
   id: number;
   description: string;
+  photo: string;
   rating: number;
   tripId: number;
   parent: number;

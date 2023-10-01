@@ -32,12 +32,12 @@ export async function create<T extends keyof Tables>({
   return data[0];
 }
 
-export async function addTrip({ destination, end_date, start_date }: AddTrip) {
+export async function addTrip({ destination, end_date, start_date, photo }: AddTrip) {
   const { parent, tripId } = routeParams;
   // Create entity
   const entity = await create({
     table: "entities",
-    params: addOptionals({ parent: get(parent), trip_id: get(tripId) }),
+    params: addOptionals({ parent: get(parent), trip_id: get(tripId), photo }),
   });
 
   const tripParams = { id: entity.id, destination, ...addOptionals({ end_date, start_date }) };

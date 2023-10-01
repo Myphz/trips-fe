@@ -26,26 +26,30 @@
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a trip");
 
-  const defaultValues = isEdit
-    ? pick(rename($card as GetRowType<"trip">, { start: "start_date", end: "end_date" }), [
-        "destination",
-        "start_date",
-        "end_date",
-      ])
-    : {};
+  $: defaultValues =
+    isEdit && $card
+      ? pick(rename($card as GetRowType<"trip">, { start: "start_date", end: "end_date" }), [
+          "destination",
+          "start_date",
+          "end_date",
+          "photo",
+        ])
+      : {};
 
   const onSubmit = async (data: AddTrip) => {
-    console.log(data);
-    // if (data.start_date && data.end_date) {
-    //   if (+new Date(data.start_date) > +new Date(data.end_date)) {
-    //     return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
-    //   }
-    // }
+    if (data.start_date && data.end_date) {
+      if (+new Date(data.start_date) > +new Date(data.end_date)) {
+        return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
+      }
+    }
 
-    // if (isEdit) await update({ table: "trips", params: data, id: $entityId });
-    // else await addTrip(data);
+    if (isEdit) {
+      const { photo, ...rest } = data;
+      await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
+      await update({ table: "trips", params: rest, id: $entityId });
+    } else await addTrip(data);
 
-    // goBack();
+    goBack();
   };
 </script>
 

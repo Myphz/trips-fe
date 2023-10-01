@@ -35,16 +35,17 @@
     : {};
 
   const onSubmit = async (data: AddTrip) => {
-    if (data.start_date && data.end_date) {
-      if (+new Date(data.start_date) > +new Date(data.end_date)) {
-        return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
-      }
-    }
+    console.log(data);
+    // if (data.start_date && data.end_date) {
+    //   if (+new Date(data.start_date) > +new Date(data.end_date)) {
+    //     return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
+    //   }
+    // }
 
-    if (isEdit) await update({ table: "trips", params: data, id: $entityId });
-    else await addTrip(data);
+    // if (isEdit) await update({ table: "trips", params: data, id: $entityId });
+    // else await addTrip(data);
 
-    goBack();
+    // goBack();
   };
 </script>
 
@@ -73,5 +74,5 @@
   />
 
   <PeopleSelector name="people" /> -->
-  <PhotoUploader />
+  <PhotoUploader name="photo" />
 </Form>

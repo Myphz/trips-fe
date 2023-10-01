@@ -19,16 +19,18 @@
     e.preventDefault();
     const tempData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
     const data = Object.fromEntries(
-      Object.entries(tempData).map(([key, val]) => {
-        // Try to convert to JSON
-        try {
-          const newValue = JSON.parse(val as string);
-          if (typeof newValue === "number") throw new Error();
-          return [key, newValue];
-        } catch {
-          return [key, val];
-        }
-      }),
+      Object.entries(tempData)
+        .filter(([_, val]) => !!val)
+        .map(([key, val]) => {
+          // Try to convert to JSON
+          try {
+            const newValue = JSON.parse(val as string);
+            if (typeof newValue === "number") throw new Error();
+            return [key, newValue];
+          } catch {
+            return [key, val];
+          }
+        }),
     ) as T;
 
     await onSubmit(data);

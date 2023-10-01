@@ -34,8 +34,9 @@ async function getAll() {
   return data.map((row) => convertRPCRow(row));
 }
 
-export async function loadSingle() {
-  // card.set(null);
+export async function loadSingle(opts: { setNull?: boolean } = {}) {
+  const { setNull = true } = opts;
+  setNull && card.set(null);
 
   const { entityId } = routeParams;
   if (!get(entityId)) return;

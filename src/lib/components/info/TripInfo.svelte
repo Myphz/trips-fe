@@ -13,14 +13,17 @@
   <article class="flex flex-col gap-2 text-small">
     <div class="flex justify-center">
       <Stars
-        rating={$card.rating}
+        rating={$card.rating || 0}
         mode="all"
         size="big"
         onSelect={(rating) => updateCard({ rating }, { withToast: false })}
       />
     </div>
 
-    <Textarea bind:value={description} on:blur={() => updateCard({ description }, { withToast: false })} />
+    <Textarea
+      bind:value={description}
+      on:blur={() => updateCard({ description }, { withToast: false })}
+    />
 
     <div class="mt-6 flex flex-col gap-4">
       <Details header="details" data={pick($card, ["start", "end"])} />

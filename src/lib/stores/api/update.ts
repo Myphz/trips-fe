@@ -9,6 +9,7 @@ type UpdateParams<T extends keyof Tables> = {
   id: string | number;
   params: Tables[T]["Update"];
   withToast?: boolean;
+  setNull?: boolean;
 };
 
 export async function update<T extends keyof Tables>({
@@ -16,6 +17,7 @@ export async function update<T extends keyof Tables>({
   params,
   id,
   withToast = true,
+  setNull = true,
 }: UpdateParams<T>) {
   // @ts-ignore
   const { data, error } = await supabase.from(table).update(params).eq("id", id).select();
@@ -23,7 +25,7 @@ export async function update<T extends keyof Tables>({
   if (withToast) success({ title: "Success", msg: "Entity updated successfully!" });
 
   load();
-  loadSingle();
+  loadSingle({ setNull });
 
   return data[0];
 }
@@ -35,5 +37,11 @@ export async function updateCard(
   const cardData = get(card);
   if (!cardData) return;
 
-  return await update({ id: cardData.id, table: "entities", params, withToast });
+  return await update({
+    id: cardData.id,
+    table: "entities",
+    params,
+    withToast,
+    setNull: false,
+  });
 }

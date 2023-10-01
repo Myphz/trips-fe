@@ -26,7 +26,7 @@
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a trip");
 
-  const defaultValues = $card
+  const defaultValues = isEdit
     ? pick(rename($card as GetRowType<"trip">, { start: "start_date", end: "end_date" }), [
         "destination",
         "start_date",

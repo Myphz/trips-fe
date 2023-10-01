@@ -2,11 +2,15 @@
   import { card } from "$lib/stores/api/select";
   import { updateCard } from "$lib/stores/api/update";
   import { pick } from "$utils/objects";
+  import { onDestroy } from "svelte";
   import { Stars } from "..";
   import { Textarea } from "../form";
   import Details from "./Details.svelte";
 
   let description = $card?.description ?? "";
+
+  const updateDescription = () => updateCard({ description }, { withToast: false });
+  onDestroy(updateDescription);
 </script>
 
 {#if $card && $card.type === "trip"}
@@ -20,10 +24,7 @@
       />
     </div>
 
-    <Textarea
-      bind:value={description}
-      on:blur={() => updateCard({ description }, { withToast: false })}
-    />
+    <Textarea bind:value={description} on:blur={updateDescription} />
 
     <div class="mt-6 flex flex-col gap-4">
       <Details header="details" data={pick($card, ["start", "end"])} />

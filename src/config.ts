@@ -1,5 +1,7 @@
 import { goBack } from "$utils/guard";
+import { getTwConfig } from "$utils/tw";
 import { App } from "@capacitor/app";
+import { StatusBar } from "@capacitor/status-bar";
 // import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 App.addListener("backButton", async () => {
@@ -8,6 +10,9 @@ App.addListener("backButton", async () => {
   goBack();
 });
 
+// Display content under transparent status bar (Android only)
+StatusBar.setOverlaysWebView({ overlay: true });
+StatusBar.setBackgroundColor({ color: getTwConfig().theme.colors.primary });
 // GoogleAuth.initialize({
 //   clientId: 'CLIENT_ID.apps.googleusercontent.com',
 //   scopes: ['profile', 'email'],

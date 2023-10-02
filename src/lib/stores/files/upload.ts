@@ -1,13 +1,11 @@
-import type { PickedFile } from "@capawesome/capacitor-file-picker";
 import { SERVER_URL } from "../../../constants";
-import { b64toBlob, blobToWebp } from "$utils/files";
+import { blobToWebp } from "$utils/files";
 
-export const uploadFiles = async (files: PickedFile[]) => {
+export const uploadFiles = async (files: FileList) => {
   const formData = new FormData();
 
   for (const file of files) {
-    const fileBlob = b64toBlob(file.data as string, file.mimeType);
-    const webpBlob = await blobToWebp(fileBlob);
+    const webpBlob = await blobToWebp(file);
     formData.append("file", webpBlob);
   }
 

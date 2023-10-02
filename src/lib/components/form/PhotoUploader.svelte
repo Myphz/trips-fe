@@ -1,6 +1,5 @@
 <script lang="ts">
   import { Photo } from "svelte-heros";
-  import { FilePicker } from "@capawesome/capacitor-file-picker";
   import { uploadFiles } from "$lib/stores/files/upload";
   import { PhotoViewer } from "..";
   import { getContext } from "svelte";
@@ -11,14 +10,31 @@
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
 
   let photo = ctx[name] ?? "";
+  let inputRef: HTMLInputElement;
 
-  const pickFile = async () => {
-    const { files } = await FilePicker.pickMedia({ multiple, readData: true });
+  const pickFile = () => {
+    inputRef.showPicker();
+  };
+
+  const onChange = async (e: Event) => {
+    const files = (e.currentTarget as HTMLInputElement).files;
+    if (!files?.length) return;
+
     photo = await uploadFiles(files);
   };
 </script>
 
 <input type="hidden" {name} value={photo} />
+
+<input
+  class="visually-hidden"
+  type="file"
+  accept="image/*"
+  {...multiple && { multiple }}
+  bind:this={inputRef}
+  on:change={onChange}
+/>
+
 {#if !photo}
   <button
     on:click={pickFile}

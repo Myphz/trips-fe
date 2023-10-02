@@ -48,7 +48,6 @@
     "@capacitor/app": "^5.0.6",
     "@capacitor/cli": "^5.4.1",
     "@capacitor/core": "^5.4.1",
-    "@capawesome/capacitor-file-picker": "^5.1.1",
     "@supabase/supabase-js": "^2.37.0",
     "date-fns": "^2.30.0",
     "svelte-headlessui": "^0.0.26",

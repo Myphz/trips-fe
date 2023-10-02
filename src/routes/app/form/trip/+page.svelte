@@ -4,7 +4,7 @@
     Input,
     Form,
     Select,
-    PhotoUploader,
+    MediaUploader,
     Datepicker,
     PeopleSelector,
   } from "$lib/components/form";
@@ -78,5 +78,5 @@
   />
 
   <PeopleSelector name="people" /> -->
-  <PhotoUploader name="photo" />
+  <MediaUploader name="photo" mediaType="image" />
 </Form>

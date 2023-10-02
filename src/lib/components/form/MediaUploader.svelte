@@ -4,8 +4,15 @@
   import { PhotoViewer } from "..";
   import { getContext } from "svelte";
 
+  export let mediaType: "image" | "video" | "both";
   export let name: string;
   export let multiple = false;
+
+  const typeToAccept: Record<typeof mediaType, string> = {
+    both: "image/*,video/*",
+    image: "image/*",
+    video: "video/*",
+  };
 
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
 
@@ -29,7 +36,7 @@
 <input
   class="visually-hidden"
   type="file"
-  accept="image/*"
+  accept={typeToAccept[mediaType]}
   {...multiple && { multiple }}
   bind:this={inputRef}
   on:change={onChange}

@@ -1,4 +1,4 @@
-export { default as PhotoUploader } from "./PhotoUploader.svelte";
+export { default as MediaUploader } from "./MediaUploader.svelte";
 export { default as Datepicker } from "./Datepicker.svelte";
 export { default as Form } from "./Form.svelte";
 export { default as Textarea } from "./Textarea.svelte";

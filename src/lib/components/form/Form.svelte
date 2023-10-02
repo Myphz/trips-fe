@@ -20,7 +20,7 @@
     const tempData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
     const data = Object.fromEntries(
       Object.entries(tempData)
-        .filter(([_, val]) => !!val)
+        .filter(([_, val]) => val !== undefined)
         .map(([key, val]) => {
           // Try to convert to JSON
           try {

@@ -2,15 +2,15 @@
   import { card } from "$lib/stores/api/select";
   import { updateCard } from "$lib/stores/api/update";
   import { pick } from "$utils/objects";
-  import { onDestroy } from "svelte";
   import { Stars } from "..";
   import { Textarea } from "../form";
   import Details from "./Details.svelte";
+  import { beforeNavigate } from "$app/navigation";
 
   let description = $card?.description ?? "";
 
   const updateDescription = () => updateCard({ description }, { withToast: false });
-  onDestroy(updateDescription);
+  beforeNavigate(updateDescription);
 </script>
 
 {#if $card && $card.type === "trip"}

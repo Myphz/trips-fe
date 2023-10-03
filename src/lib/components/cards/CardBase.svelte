@@ -20,13 +20,13 @@
       src={data.photo
         ? getPhotoURL(data.photo)
         : "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg"}
-      alt="test"
+      alt="entity"
     />
 
     <div class="relative flex flex-1 flex-col">
       <Redirect
-        href="/app/trip"
-        params={redirectParams}
+        href={data.type === "trip" ? "/app/trip" : "/app/info"}
+        params={data.type === "trip" ? redirectParams : { entityId: data.id }}
         classes="z-20 pb-4 pl-2 pr-4 pt-2 flex flex-1 flex-col"
       >
         <header class="line-clamp-2 text-h3">{getName(data)}</header>
@@ -38,9 +38,11 @@
       >
         <Stars rating={data.rating || 0} mode="rating" />
 
-        <Redirect href="/app/info" classes="z-30" params={{ entityId: data.id }}>
-          <InformationCircle size="2rem" />
-        </Redirect>
+        {#if data.type === "trip"}
+          <Redirect href="/app/info" classes="z-30" params={{ entityId: data.id }}>
+            <InformationCircle size="2rem" />
+          </Redirect>
+        {/if}
       </div>
     </div>
   </article>

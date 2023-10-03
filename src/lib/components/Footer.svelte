@@ -15,7 +15,9 @@
 </script>
 
 {#if !$keyboardOpen}
-  <nav class="fixed bottom-0 left-0 flex h-16 w-full items-center justify-between bg-primary px-9">
+  <nav
+    class="fixed bottom-0 left-0 z-50 flex h-16 w-full items-center justify-between bg-primary px-9"
+  >
     {#each TABS as { icon, path }}
       <a class={$page.route.id === path ? "text-white" : "text-tab"} href={path}>
         {@html icon}

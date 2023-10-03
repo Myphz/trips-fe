@@ -6,11 +6,13 @@
   export let required = false;
   export let name: string;
   export let type = "text";
+  export let numeric = false;
 
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
 
   let ref: HTMLInputElement;
   const startValue = ctx[name] ?? null;
+
   let invalid = false;
   let isFilled = !!startValue;
 
@@ -42,6 +44,7 @@
     {name}
     on:input={onInput}
     placeholder=" "
+    {...numeric && { inputmode: "numeric" }}
   />
   <div
     class={twMerge(

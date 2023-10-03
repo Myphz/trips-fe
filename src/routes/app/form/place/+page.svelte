@@ -11,6 +11,7 @@
   import { update } from "$lib/stores/api/update";
   import { addEntity } from "$lib/stores/api/create";
   import type { FormParams } from "$lib/types/forms";
+  import { fail } from "$utils/toasts";
 
   const { entityId } = routeParams;
 
@@ -20,6 +21,13 @@
   $: defaultValues = isEdit && $card ? pickCard("place", ["address", "date", "price"]) : {};
 
   const onSubmit = async (data: FormParams<"places">) => {
+    if (data.price) {
+      data.price = parseFloat(data.price as unknown as string);
+      if (isNaN(data.price))
+        return fail({ title: "Invalid price", msg: "Invalid value for price. Please retry." });
+    } else {
+      delete data.price;
+    }
     if (isEdit) {
       const { photo, ...rest } = data;
       await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
@@ -44,7 +52,7 @@
   <Input placeholder="Address" name="address" />
   <div class="flex gap-4">
     <Datepicker name="date" placeholder="Date" />
-    <Input placeholder="Price" name="price" />
+    <Input placeholder="Price" name="price" numeric />
   </div>
   <MediaUploader name="photo" mediaType="image" />
 </Form>

@@ -13,6 +13,7 @@
   import type { FormParams } from "$lib/types/forms";
   import { MEANS_OF_TRANSPORT } from "../../../../constants";
   import type { GetRowType } from "$lib/types/api";
+  import { fail } from "$utils/toasts";
 
   const { entityId } = routeParams;
 
@@ -40,6 +41,14 @@
       : {};
 
   const onSubmit = async (data: FormParams<"transports">) => {
+    if (data.price) {
+      data.price = parseFloat(data.price as unknown as string);
+      if (isNaN(data.price))
+        return fail({ title: "Invalid price", msg: "Invalid value for price. Please retry." });
+    } else {
+      delete data.price;
+    }
+
     if (isEdit) {
       const { photo, ...rest } = data;
       await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
@@ -68,7 +77,7 @@
     <Datepicker name="arrival_datetime" mode="dateAndTime" placeholder="Arrive at" />
   </div>
 
-  <Input placeholder="Price" name="price" />
+  <Input placeholder="Price" name="price" numeric />
   <Select name="mean" label="Mean of transport" options={MEANS_OF_TRANSPORT} />
 
   <MediaUploader name="photo" mediaType="image" />

@@ -1,7 +1,7 @@
 :root {
   --toastBarWidth: 0%;
   --toastContainerBottom: 0;
-  --toastContainerTop: 2%;
+  --toastContainerTop: 8%;
   --toastBorderRadius: 0.5rem;
   --toastContainerRight: auto;
   --toastContainerLeft: 0;

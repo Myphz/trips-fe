@@ -1,6 +1,6 @@
 import { goBack } from "$utils/guard";
 import { App } from "@capacitor/app";
-import { StatusBar } from "@capacitor/status-bar";
+import { StatusBar, Style } from "@capacitor/status-bar";
 // import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 App.addListener("backButton", async () => {
@@ -11,6 +11,7 @@ App.addListener("backButton", async () => {
 
 // Display content under transparent status bar (Android only)
 StatusBar.setOverlaysWebView({ overlay: true });
+StatusBar.setStyle({ style: Style.Dark });
 
 // GoogleAuth.initialize({
 //   clientId: 'CLIENT_ID.apps.googleusercontent.com',

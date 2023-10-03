@@ -32,7 +32,7 @@
 <Form buttonText="Sign Up" {onSubmit} autocomplete="on">
   <div class="flex flex-col gap-2">
     <Input placeholder="Username" name="displayed" required />
-    <Input placeholder="Email" name="email" required />
+    <Input placeholder="Email" name="email" type="email" required />
     <Input placeholder="Password" type="password" name="password" required />
     <Input placeholder="Confirm Password" type="password" name="confirm" required />
   </div>

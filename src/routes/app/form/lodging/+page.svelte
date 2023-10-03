@@ -23,7 +23,7 @@
     isEdit && $card
       ? pick(
           rename($card as GetRowType<"lodging">, { start: "start_date", end: "end_date" }),
-          ["name", "start_date", "end_date", "photo"],
+          ["name", "start_date", "end_date", "photo", "price"],
         )
       : {};
 
@@ -32,6 +32,14 @@
       if (+new Date(data.start_date) > +new Date(data.end_date)) {
         return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
       }
+    }
+
+    if (data.price) {
+      data.price = parseFloat(data.price as unknown as string);
+      if (isNaN(data.price))
+        return fail({ title: "Invalid price", msg: "Invalid value for price. Please retry." });
+    } else {
+      delete data.price;
     }
 
     if (isEdit) {
@@ -60,7 +68,7 @@
     <Datepicker name="end_date" placeholder="End date" />
   </div>
   <Input placeholder="Address" name="address" />
-  <Input placeholder="Total price" name="price" />
+  <Input placeholder="Total price" name="price" numeric />
 
   <MediaUploader name="photo" mediaType="image" />
 </Form>

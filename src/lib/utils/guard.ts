@@ -34,7 +34,7 @@ export function goBack() {
   const inTrip =
     window.location.pathname === "/app/trip" ||
     window.location.pathname === "/app/info" ||
-    window.location.pathname === "/app/form/trip";
+    window.location.pathname.startsWith("/app/form");
   if (inTrip && undo()) return;
   if (inTrip) {
     goto("/app");

@@ -3,6 +3,7 @@
   import Button from "./Button.svelte";
   import { BarLoader } from "svelte-loading-spinners";
 
+  export let isEdit = false;
   export let defaultValues: Record<string, string> = {};
   export let onSubmit: (data: T) => unknown;
   export let autocomplete = "off";
@@ -20,7 +21,8 @@
     const tempData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
     const data = Object.fromEntries(
       Object.entries(tempData)
-        .filter(([_, val]) => val !== undefined)
+        // Filter out empty values if it's not edit
+        .filter(([_, val]) => isEdit || !!val)
         .map(([key, val]) => {
           // Try to convert to JSON
           try {

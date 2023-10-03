@@ -61,7 +61,7 @@
   </button>
 {/if}
 
-<Form {onSubmit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
+<Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Destination" name="destination" required />
   <div class="flex gap-4">
     <Datepicker name="start_date" placeholder="Departure" />

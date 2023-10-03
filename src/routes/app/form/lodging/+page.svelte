@@ -1,13 +1,6 @@
 <script lang="ts">
   import { setPageTitle } from "$lib/stores/route";
-  import {
-    Input,
-    Form,
-    Select,
-    MediaUploader,
-    Datepicker,
-    PeopleSelector,
-  } from "$lib/components/form";
+  import { Input, Form, MediaUploader, Datepicker } from "$lib/components/form";
   import { fail } from "$utils/toasts";
   import { routeParams } from "$lib/stores/routeParams";
   import { Trash } from "svelte-heros";
@@ -16,9 +9,10 @@
   import { card } from "$lib/stores/api/select";
   import { getName } from "$utils/format";
   import { pick, rename } from "$utils/objects";
-  import type { GetRowType, Tables } from "$lib/types/api";
+  import type { GetRowType } from "$lib/types/api";
   import { update } from "$lib/stores/api/update";
   import { addEntity } from "$lib/stores/api/create";
+  import type { FormParams } from "$lib/types/forms";
 
   const { entityId } = routeParams;
 
@@ -27,15 +21,13 @@
 
   $: defaultValues =
     isEdit && $card
-      ? pick(rename($card as GetRowType<"trip">, { start: "start_date", end: "end_date" }), [
-          "destination",
-          "start_date",
-          "end_date",
-          "photo",
-        ])
+      ? pick(
+          rename($card as GetRowType<"lodging">, { start: "start_date", end: "end_date" }),
+          ["name", "start_date", "end_date", "photo"],
+        )
       : {};
 
-  const onSubmit = async (data: Tables["entities"]["Insert"] & Tables["trips"]["Insert"]) => {
+  const onSubmit = async (data: FormParams<"lodgings">) => {
     if (data.start_date && data.end_date) {
       if (+new Date(data.start_date) > +new Date(data.end_date)) {
         return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
@@ -45,8 +37,8 @@
     if (isEdit) {
       const { photo, ...rest } = data;
       await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
-      await update({ table: "trips", params: rest, id: $entityId });
-    } else await addEntity("trips", data);
+      await update({ table: "lodgings", params: rest, id: $entityId });
+    } else await addEntity("lodgings", data);
 
     goBack();
   };
@@ -61,7 +53,7 @@
   </button>
 {/if}
 
-<Form {onSubmit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
+<Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Name" name="name" required />
   <div class="flex gap-4">
     <Datepicker name="start_date" placeholder="Start date" />
@@ -70,15 +62,5 @@
   <Input placeholder="Address" name="address" />
   <Input placeholder="Total price" name="price" />
 
-  <!-- <Select
-    name="currency"
-    label="Currency"
-    options={[
-      { label: "Daniel", value: "2" },
-      { label: "b", value: "3" },
-    ]}
-  />
-
-  <PeopleSelector name="people" /> -->
   <MediaUploader name="photo" mediaType="image" />
 </Form>

@@ -37,7 +37,7 @@ export async function addEntity<T extends keyof Tables>(
 ) {
   const { parent, tripId } = routeParams;
 
-  if (!tripId && type !== "trips")
+  if (!get(tripId) && type !== "trips")
     throw new Error("Can't create something that's not a trip without a tripid");
   // Create entity
   const entity = await create({
@@ -49,11 +49,12 @@ export async function addEntity<T extends keyof Tables>(
   // Create trip|lodging|transport|place
   const row = await create({ table: type, params: rowParams });
   // Create group if it's a main trip
-  if (!tripId && type === "trips")
+  if (!get(tripId) && type === "trips") {
     await create({
       table: "groups",
       params: { trip_id: row.id as number, accepted: true },
       withToast: false,
     });
+  }
   return row;
 }

@@ -1,4 +1,4 @@
-import type { Tables } from "$lib/types/api";
+import type { GetRowTypes, Tables } from "$lib/types/api";
 import { convertRPCRow } from "$utils/api";
 import { addOptionals } from "$utils/objects";
 import { get, writable } from "svelte/store";
@@ -31,7 +31,7 @@ async function getAll() {
   );
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
 
-  return data.map((row) => convertRPCRow(row)).filter((val) => !!val);
+  return data.map((row) => convertRPCRow(row)).filter((val) => !!val) as GetRowTypes[];
 }
 
 export async function loadSingle(opts: { setNull?: boolean } = {}) {

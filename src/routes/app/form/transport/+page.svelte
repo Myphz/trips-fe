@@ -7,11 +7,12 @@
   import { goBack } from "$utils/guard";
   import { card } from "$lib/stores/api/select";
   import { getName } from "$utils/format";
-  import { pickCard } from "$utils/objects";
+  import { pick, rename } from "$utils/objects";
   import { update } from "$lib/stores/api/update";
   import { addEntity } from "$lib/stores/api/create";
   import type { FormParams } from "$lib/types/forms";
   import { MEANS_OF_TRANSPORT } from "../../../../constants";
+  import type { GetRowType } from "$lib/types/api";
 
   const { entityId } = routeParams;
 
@@ -19,7 +20,24 @@
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a transport");
 
   $: defaultValues =
-    isEdit && $card ? pickCard("transport", ["departure", "arrival", "price"]) : {};
+    isEdit && $card
+      ? pick(
+          rename($card as GetRowType<"transport">, {
+            departurePlace: "departure_place",
+            arrivalPlace: "arrival_place",
+            departure: "departure_datetime",
+            arrival: "arrival_datetime",
+          }),
+          [
+            "departure_place",
+            "arrival_place",
+            "departure_datetime",
+            "arrival_datetime",
+            "mean",
+            "photo",
+          ],
+        )
+      : {};
 
   const onSubmit = async (data: FormParams<"transports">) => {
     if (isEdit) {

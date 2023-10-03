@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { TripInfo } from "$lib/components/info";
-  import LodgingInfo from "$lib/components/info/LodgingInfo.svelte";
+  import { TripInfo, LodgingInfo, PlaceInfo } from "$lib/components/info";
+
   import { card } from "$lib/stores/api/select";
   import { setPageTitle } from "$lib/stores/route";
   import { getName } from "$utils/format";
@@ -14,5 +14,8 @@
   {/if}
   {#if $card.type === "lodging"}
     <LodgingInfo />
+  {/if}
+  {#if $card.type === "place"}
+    <PlaceInfo />
   {/if}
 {/if}

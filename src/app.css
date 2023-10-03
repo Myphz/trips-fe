@@ -38,6 +38,7 @@ input {
 *:focus-within,
 *:focus {
   outline: none !important;
+  box-shadow: none !important;
 }
 
 button {

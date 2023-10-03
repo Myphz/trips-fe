@@ -42,7 +42,9 @@
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Name" name="name" required />
   <Input placeholder="Address" name="address" />
-  <Datepicker name="date" placeholder="Date" />
-  <Input placeholder="Price" name="price" />
+  <div class="flex gap-4">
+    <Datepicker name="date" placeholder="Date" />
+    <Input placeholder="Price" name="price" />
+  </div>
   <MediaUploader name="photo" mediaType="image" />
 </Form>

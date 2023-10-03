@@ -31,8 +31,8 @@
         {/if}
       {/if}
 
-      {#if $page.route.id?.includes("info")}
-        <a href="/app/form/{$card?.type}" class="ml-auto text-primary">
+      {#if $page.route.id?.includes("info") && $card}
+        <a href="/app/form/{$card.type}" class="ml-auto text-primary">
           <Pencil size="1.5rem" />
         </a>
       {/if}

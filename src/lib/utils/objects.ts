@@ -1,3 +1,7 @@
+import { card } from "$lib/stores/api/select";
+import type { EntityType, GetRowType } from "$lib/types/api";
+import { get } from "svelte/store";
+
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export function addOptionals<T extends object>(optionals: T) {
   return Object.fromEntries(
@@ -26,4 +30,13 @@ export function pick<T extends object, K extends keyof T>(obj: T, keys: K[]): Pi
   return Object.fromEntries(
     Object.entries(obj).filter(([key, _]) => keys.includes(key as K)),
   ) as Pick<T, K>;
+}
+
+export function pickCard<T extends EntityType, K extends keyof GetRowType<T>>(
+  type: T,
+  keys: K[],
+) {
+  const cardData = get(card);
+  if (cardData?.type !== type) throw new Error("pickCard error type");
+  return pick(cardData as unknown as GetRowType<T>, keys);
 }

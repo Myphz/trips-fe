@@ -13,7 +13,7 @@
 </script>
 
 <InfoLayout>
-  <Details header="details" data={pickCard("trip", ["start", "end"])} />
+  <Details header="details" data={pickCard("lodging", ["start", "end"])} />
   <Details
     header="information"
     data={{

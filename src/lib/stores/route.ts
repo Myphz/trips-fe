@@ -1,7 +1,8 @@
-import { writable, type Writable } from "svelte/store";
-import { loadSingle, load } from "./api/select";
+import { get, writable, type Writable } from "svelte/store";
+import { loadSingle, load, card } from "./api/select";
 import { goto } from "$app/navigation";
 import { routeParams } from "./routeParams";
+import { getName } from "$utils/format";
 
 export const MAIN_PAGE_TITLE = "My Trips";
 export const pageTitle = writable(MAIN_PAGE_TITLE);
@@ -11,7 +12,7 @@ type RouteParams = typeof routeParams;
 type UnwrapWritable<T> = T extends Writable<infer R> ? R : never;
 export type RoutesUnwrapped = { [K in keyof RouteParams]: UnwrapWritable<RouteParams[K]> };
 
-const paramsHistory: Partial<RoutesUnwrapped>[] = [];
+export let paramsHistory: Partial<RoutesUnwrapped>[] = [];
 
 export const undo = () => {
   paramsHistory.pop();
@@ -24,6 +25,23 @@ export const undo = () => {
 
   setRouteParams(last);
   return true;
+};
+
+export const restore = async (
+  _routeParams: RoutesUnwrapped,
+  _paramsHistory: typeof paramsHistory,
+) => {
+  const { entityId, parent, tripId } = _routeParams;
+  routeParams.entityId.set(entityId);
+  routeParams.parent.set(parent);
+  routeParams.tripId.set(tripId);
+
+  paramsHistory = _paramsHistory;
+
+  load();
+  await loadSingle();
+
+  getName(get(card)) && setPageTitle(getName(get(card)));
 };
 
 export const setRouteParams = (

@@ -9,7 +9,8 @@ function redirect(isLogged: boolean, mustBeLogged: boolean) {
   const redirectTo = mustBeLogged ? "/auth/login" : "/app";
 
   if (isLogged !== mustBeLogged) {
-    goto(redirectTo);
+    // Don't redirect after restore
+    if (!sessionStorage.getItem("currentURL")) goto(redirectTo);
     if (mustBeLogged) fail({ msg: "Login to continue", title: "Auth required" });
   }
 }

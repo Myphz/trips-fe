@@ -8,8 +8,6 @@
     Datepicker,
     PeopleSelector,
   } from "$lib/components/form";
-  import type { AddTrip } from "$lib/types/forms";
-  import { addTrip } from "$lib/stores/api/create";
   import { fail } from "$utils/toasts";
   import { routeParams } from "$lib/stores/routeParams";
   import { Trash } from "svelte-heros";
@@ -18,8 +16,9 @@
   import { card } from "$lib/stores/api/select";
   import { getName } from "$utils/format";
   import { pick, rename } from "$utils/objects";
-  import type { GetRowType } from "$lib/types/api";
+  import type { GetRowType, Tables } from "$lib/types/api";
   import { update } from "$lib/stores/api/update";
+  import { addEntity } from "$lib/stores/api/create";
 
   const { entityId } = routeParams;
 
@@ -36,7 +35,7 @@
         ])
       : {};
 
-  const onSubmit = async (data: AddTrip) => {
+  const onSubmit = async (data: Tables["entities"]["Insert"] & Tables["trips"]["Insert"]) => {
     if (data.start_date && data.end_date) {
       if (+new Date(data.start_date) > +new Date(data.end_date)) {
         return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
@@ -47,7 +46,7 @@
       const { photo, ...rest } = data;
       await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
       await update({ table: "trips", params: rest, id: $entityId });
-    } else await addTrip(data);
+    } else await addEntity("trips", data);
 
     goBack();
   };

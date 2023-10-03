@@ -1,5 +1,4 @@
 import type { Tables } from "$lib/types/api";
-import type { AddTrip } from "$lib/types/forms";
 import { capitalize } from "$utils/format";
 import { addOptionals } from "$utils/objects";
 import { success } from "$utils/toasts";
@@ -18,7 +17,7 @@ export async function create<T extends keyof Tables>({
   table,
   params,
   withToast = true,
-}: CreateParams<T>) {
+}: CreateParams<T>): Promise<Tables[T]["Row"]> {
   // @ts-ignore
   const { data, error } = await supabase.from(table).insert([params]).select();
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
@@ -29,26 +28,32 @@ export async function create<T extends keyof Tables>({
     });
 
   if (table !== "entities") load();
-  return data[0];
+  return data[0] as unknown as Tables[T]["Row"];
 }
 
-export async function addTrip({ destination, end_date, start_date, photo }: AddTrip) {
+export async function addEntity<T extends keyof Tables>(
+  type: T,
+  params: Tables["entities"]["Insert"] & Tables[T]["Insert"],
+) {
   const { parent, tripId } = routeParams;
+
+  if (!tripId && type !== "trips")
+    throw new Error("Can't create something that's not a trip without a tripid");
   // Create entity
   const entity = await create({
     table: "entities",
-    params: addOptionals({ parent: get(parent), trip_id: get(tripId), photo }),
+    params: addOptionals({ parent: get(parent), trip_id: get(tripId), photo: params.photo }),
   });
 
-  const tripParams = { id: entity.id, destination, ...addOptionals({ end_date, start_date }) };
-  // Create trip
-  const trip = await create({ table: "trips", params: tripParams });
+  const rowParams = { id: entity.id, ...addOptionals(params) };
+  // Create trip|lodging|transport|place
+  const row = await create({ table: type, params: rowParams });
   // Create group if it's a main trip
-  if (!entity.trip_id)
+  if (!tripId && type === "trips")
     await create({
       table: "groups",
-      params: { trip_id: trip.id, accepted: true },
+      params: { trip_id: row.id as number, accepted: true },
       withToast: false,
     });
-  return trip;
+  return row;
 }

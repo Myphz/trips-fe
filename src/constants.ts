@@ -4,3 +4,34 @@ export const SUPABASE_KEY =
 export const SUPABASE_URL = "https://osbnntqdwcamhqbpdzwz.supabase.co";
 
 export const SERVER_URL = "https://tripss.fly.dev";
+
+export const MEANS_OF_TRANSPORT = [
+  {
+    label: "Autobus",
+    value: "Autobus",
+  },
+  {
+    label: "Ferry",
+    value: "Ferry",
+  },
+  {
+    label: "Plane",
+    value: "Plane",
+  },
+  {
+    label: "Taxi",
+    value: "Taxi",
+  },
+  {
+    label: "Train",
+    value: "Train",
+  },
+  {
+    label: "Streetcar",
+    value: "Streetcar",
+  },
+  {
+    label: "Metro",
+    value: "Metro",
+  },
+];

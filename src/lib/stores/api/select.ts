@@ -31,7 +31,7 @@ async function getAll() {
   );
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
 
-  return data.map((row) => convertRPCRow(row));
+  return data.map((row) => convertRPCRow(row)).filter((val) => !!val);
 }
 
 export async function loadSingle(opts: { setNull?: boolean } = {}) {

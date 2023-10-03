@@ -234,32 +234,32 @@ export interface Database {
       transports: {
         Row: {
           arrival_datetime: string | null
-          arrival_place: string | null
+          arrival_place: string
           created_at: string
           departure_datetime: string | null
-          departure_place: string | null
+          departure_place: string
           id: number
-          mean: string
+          mean: string | null
           price: number | null
         }
         Insert: {
           arrival_datetime?: string | null
-          arrival_place?: string | null
+          arrival_place: string
           created_at?: string
           departure_datetime?: string | null
-          departure_place?: string | null
+          departure_place: string
           id: number
-          mean: string
+          mean?: string | null
           price?: number | null
         }
         Update: {
           arrival_datetime?: string | null
-          arrival_place?: string | null
+          arrival_place?: string
           created_at?: string
           departure_datetime?: string | null
-          departure_place?: string | null
+          departure_place?: string
           id?: number
-          mean?: string
+          mean?: string | null
           price?: number | null
         }
         Relationships: [

@@ -9,11 +9,15 @@ export function dateToCard(date: string) {
   return format(new Date(date), "d MMM u");
 }
 
+export function datetimeToCard(date: string) {
+  return format(new Date(date), "d MMM HH:mm");
+}
+
 export function getName(card: GetRowTypes | null) {
   if (!card) return "";
   if (card.type === "trip") return card.destination;
   if (card.type === "lodging") return card.name;
   if (card.type === "place") return card.name;
-  if (card.type === "transport") return "";
+  if (card.type === "transport") return `${card.arrivalPlace} - ${card.departurePlace}`;
   return "";
 }

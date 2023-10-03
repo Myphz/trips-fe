@@ -7,16 +7,10 @@ type SnakeToCamel<S extends string> = S extends `${infer Head}_${infer Tail}`
   ? `${Lowercase<Head>}${Capitalize<SnakeToCamel<Tail>>}`
   : S;
 
-type SnakeToCamelArray<S extends string> = S extends `${infer Head}_${infer Tail}`
-  ? `${Lowercase<Head>}${Capitalize<SnakeToCamel<Tail>>}`
-  : S;
-
-type StartWith<Filter extends string> = {
-  [K in keyof RPCRow]: K extends `${Filter}_${infer Rest}` ? Rest : never;
-}[keyof RPCRow];
-
 type FilterRow<T extends string> = {
-  [x in SnakeToCamelArray<StartWith<T>>]: RPCRow[Extract<keyof RPCRow, `${T}_${x}`>];
+  [K in keyof RPCRow as K extends `${T}_${infer Rest}`
+    ? SnakeToCamel<Rest>
+    : never]: RPCRow[K];
 };
 
 export type EntityCommon = {

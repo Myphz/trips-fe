@@ -7,10 +7,10 @@
 
   export let placeholder: string;
   export let name: string;
+  export let mode: "date" | "dateAndTime" = "date";
 
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
-
-  const DATE_FORMAT = "yyyy-MM-dd";
+  const DATE_FORMAT = mode === "date" ? "yyyy-MM-dd" : "yyy-MM-dd HH:mm";
 
   // Defaults to current date
   let value = ctx[name] ?? format(new Date(), DATE_FORMAT);
@@ -18,7 +18,7 @@
   const onClick = async () => {
     const parsed = new Date(value);
     const { value: dateValue } = await DatePicker.present({
-      mode: "date",
+      mode,
       format: DATE_FORMAT,
       date: parsed.toISOString(),
     });

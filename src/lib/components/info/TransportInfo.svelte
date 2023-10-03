@@ -5,7 +5,10 @@
 </script>
 
 <InfoLayout>
-  <Details header="details" data={pickCard("lodging", ["start", "end"])} />
+  <Details
+    header="details"
+    data={pickCard("transport", ["departurePlace", "arrivalPlace", "price"])}
+  />
   <Details
     header="information"
     data={{

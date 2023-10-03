@@ -4,6 +4,7 @@
   import { page } from "$app/stores";
   import { goBack } from "$utils/guard";
   import { modal } from "$utils/modal";
+  import { card } from "$lib/stores/api/select";
 
   $: advancedMode = $pageTitle !== MAIN_PAGE_TITLE;
 </script>
@@ -31,7 +32,7 @@
       {/if}
 
       {#if $page.route.id?.includes("info")}
-        <a href="/app/form/trip" class="ml-auto text-primary">
+        <a href="/app/form/{$card?.type}" class="ml-auto text-primary">
           <Pencil size="1.5rem" />
         </a>
       {/if}

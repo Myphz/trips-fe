@@ -4,7 +4,6 @@
   import CardBase from "./CardBase.svelte";
 
   export let data: GetRowType<"transport">;
-  console.log(data);
 </script>
 
 <CardBase {data}>

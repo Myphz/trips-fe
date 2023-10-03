@@ -54,5 +54,5 @@
     <span>Add photo</span>
   </button>
 {:else}
-  <PhotoViewer bind:photo />
+  <PhotoViewer withCross bind:photo />
 {/if}

@@ -6,6 +6,7 @@
   import { Textarea } from "../form";
   import Details from "./Details.svelte";
   import { beforeNavigate } from "$app/navigation";
+  import PhotoViewer from "../PhotoViewer.svelte";
 
   let description = $card?.description ?? "";
 
@@ -26,7 +27,7 @@
 
     <Textarea bind:value={description} on:blur={updateDescription} />
 
-    <div class="mt-6 flex flex-col gap-4">
+    <div class="mb-8 mt-6 flex flex-col gap-4">
       <Details header="details" data={pick($card, ["start", "end"])} />
       <Details
         header="information"
@@ -37,5 +38,9 @@
         }}
       />
     </div>
+
+    {#if $card.photo}
+      <PhotoViewer photo={$card.photo} maxHeight={false} />
+    {/if}
   </article>
 {/if}

@@ -3,25 +3,31 @@
   import Bed from "$lib/assets/icons/bed.svg?raw";
   import Train from "$lib/assets/icons/train.svg?raw";
   import Trip from "$lib/assets/icons/trip.svg?raw";
-  import { page } from "$app/stores";
   import { keyboardOpen } from "$lib/stores/ui";
+  import { filter, filterOnly } from "$lib/stores/api/select";
+  import Redirect from "./Redirect.svelte";
 
   const TABS = [
-    { icon: Home, path: "/app" },
-    { icon: Trip, path: "/app/trip/trips" },
-    { icon: Bed, path: "/app/trip/lodgings" },
-    { icon: Train, path: "/app/trip/transport" },
-  ];
+    { icon: Trip, name: "trip" },
+    { icon: Bed, name: "lodging" },
+    { icon: Train, name: "transport" },
+  ] as const;
 </script>
 
 {#if !$keyboardOpen}
   <nav
     class="fixed bottom-0 left-0 z-50 flex h-16 w-full items-center justify-between bg-primary px-9"
   >
-    {#each TABS as { icon, path }}
-      <a class={$page.route.id === path ? "text-white" : "text-tab"} href={path}>
+    <Redirect params={{ entityId: 0, parent: 0, tripId: 0 }} href="/app" classes="text-tab">
+      {@html Home}
+    </Redirect>
+    {#each TABS as { icon, name }}
+      <button
+        on:click={() => filterOnly(name)}
+        class={$filter === name || (name === "trip" && !$filter) ? "text-white" : "text-tab"}
+      >
         {@html icon}
-      </a>
+      </button>
     {/each}
   </nav>
 {/if}

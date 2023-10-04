@@ -1,5 +1,5 @@
 import { get, writable, type Writable } from "svelte/store";
-import { loadSingle, load, card } from "./api/select";
+import { loadSingle, load, card, filter } from "./api/select";
 import { goto } from "$app/navigation";
 import { routeParams } from "./routeParams";
 import { getName } from "$utils/format";
@@ -30,6 +30,7 @@ export const undo = () => {
 export const restore = async (
   _routeParams: RoutesUnwrapped,
   _paramsHistory: typeof paramsHistory,
+  _filter: UnwrapWritable<typeof filter>,
 ) => {
   const { entityId, parent, tripId } = _routeParams;
   routeParams.entityId.set(entityId);
@@ -37,6 +38,7 @@ export const restore = async (
   routeParams.tripId.set(tripId);
 
   paramsHistory = _paramsHistory;
+  filter.set(_filter);
 
   load();
   await loadSingle();

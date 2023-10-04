@@ -5,6 +5,7 @@
 
   export let maxHeight = true;
   export let withCross = false;
+  export let onCrossClick: () => unknown = () => {};
 
   let fullScreen = false;
   const url = getPhotoURL(photo);
@@ -21,7 +22,7 @@
         <button
           type="button"
           class="absolute right-1 top-1 text-primary"
-          on:click={() => (photo = "")}
+          on:click={onCrossClick}
         >
           <XMark size="2rem" />
         </button>

@@ -1,46 +1,29 @@
 <script lang="ts">
   import { Photo } from "svelte-heros";
-  import { uploadFiles } from "$lib/stores/files/upload";
   import { PhotoViewer } from "..";
   import { getContext } from "svelte";
+  import FilePicker from "./FilePicker.svelte";
 
   export let mediaType: "image" | "video" | "both";
   export let name: string;
   export let multiple = false;
 
-  const typeToAccept: Record<typeof mediaType, string> = {
-    both: "image/*,video/*",
-    image: "image/*",
-    video: "video/*",
-  };
-
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
 
   let photo = ctx[name] ?? "";
-  let inputRef: HTMLInputElement;
+  let photos = [photo];
+
+  $: photo = photos[0] ?? "";
+
+  let ref: HTMLInputElement;
 
   const pickFile = () => {
-    inputRef.showPicker();
-  };
-
-  const onChange = async (e: Event) => {
-    const files = (e.currentTarget as HTMLInputElement).files;
-    if (!files?.length) return;
-
-    photo = await uploadFiles(files);
+    ref.showPicker();
   };
 </script>
 
 <input type="hidden" {name} value={photo} />
-
-<input
-  class="visually-hidden"
-  type="file"
-  accept={typeToAccept[mediaType]}
-  {...multiple && { multiple }}
-  bind:this={inputRef}
-  on:change={onChange}
-/>
+<FilePicker bind:ref {mediaType} {multiple} bind:photos />
 
 {#if !photo}
   <button
@@ -54,5 +37,5 @@
     <span>Add photo</span>
   </button>
 {:else}
-  <PhotoViewer withCross bind:photo />
+  <PhotoViewer withCross {photo} onCrossClick={() => (photos = [])} />
 {/if}

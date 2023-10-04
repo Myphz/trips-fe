@@ -6,7 +6,7 @@ export const uploadFiles = async (files: FileList) => {
 
   for (const file of files) {
     const webpBlob = await blobToWebp(file);
-    formData.append("file", webpBlob);
+    formData.append(file.name, webpBlob);
   }
 
   const res = await fetch(`${SERVER_URL}/upload`, {
@@ -15,6 +15,5 @@ export const uploadFiles = async (files: FileList) => {
   });
 
   const ret = await res.json();
-  if (files.length === 1) return ret["file"];
-  return ret;
+  return [...Object.values(ret)] as string[];
 };

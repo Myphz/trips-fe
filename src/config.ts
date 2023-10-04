@@ -4,6 +4,7 @@ import { paramsHistory, restore } from "$lib/stores/route";
 import { routeParams } from "$lib/stores/routeParams";
 import { goBack } from "$utils/guard";
 import { App } from "@capacitor/app";
+import { Capacitor } from "@capacitor/core";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
@@ -20,6 +21,8 @@ StatusBar.setOverlaysWebView({ overlay: true });
 StatusBar.setStyle({ style: Style.Dark });
 
 App.addListener("appStateChange", async ({ isActive }) => {
+  if (Capacitor.getPlatform() === "web") return;
+
   if (isActive) {
     // Restore status
     const routeParams = JSON.parse(sessionStorage.getItem("currentRouteParams")!);

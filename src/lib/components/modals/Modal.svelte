@@ -12,7 +12,7 @@
 </script>
 
 <dialog
-  class="fixed inset-0 z-[60] flex h-full w-full items-center justify-center bg-black bg-opacity-70"
+  class="fixed inset-0 z-[60] flex h-full w-full items-center justify-center bg-black bg-opacity-80"
   open={true}
   transition:fade={{ duration: 100 }}
 >

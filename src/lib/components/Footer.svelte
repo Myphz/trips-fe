@@ -6,12 +6,17 @@
   import { keyboardOpen } from "$lib/stores/ui";
   import { filter, filterOnly } from "$lib/stores/api/select";
   import Redirect from "./Redirect.svelte";
+  import { onMount } from "svelte";
 
   const TABS = [
     { icon: Trip, name: "trip" },
     { icon: Bed, name: "lodging" },
     { icon: Train, name: "transport" },
   ] as const;
+
+  onMount(() => {
+    filter.set("trip");
+  });
 </script>
 
 {#if !$keyboardOpen}
@@ -24,7 +29,7 @@
     {#each TABS as { icon, name }}
       <button
         on:click={() => filterOnly(name)}
-        class={$filter === name || (name === "trip" && !$filter) ? "text-white" : "text-tab"}
+        class={$filter === name ? "text-white" : "text-tab"}
       >
         {@html icon}
       </button>

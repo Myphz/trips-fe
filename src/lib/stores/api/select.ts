@@ -31,11 +31,17 @@ async function getAll() {
     addOptionals({ tripid: get(tripId), parentid: get(parent) }),
   );
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  const toFilter: EntityType[] = (() => {
+    const filt = get(filter);
+    if (filt === "trip") return ["trip", "place"];
+    if (!filt) return ["lodging", "place", "transport", "trip"];
+    return [filt];
+  })();
 
   return data
     .map((row) => convertRPCRow(row))
     .filter((val) => !!val)
-    .filter((row) => !get(filter) || row?.type === get(filter))
+    .filter((row) => toFilter.includes(row!.type))
     .sort((card1, card2) => {
       if (card1?.type !== card2?.type) {
         if (card1?.type === "trip") return -1;
@@ -46,12 +52,8 @@ async function getAll() {
 }
 
 export async function filterOnly(type: EntityType) {
-  if (type === "trip") {
-    filter.set(null);
-    return load();
-  }
-  cards.set(get(cards).filter((card) => card.type === type));
   filter.set(type);
+  load();
 }
 
 export async function loadSingle(opts: { setNull?: boolean } = {}) {

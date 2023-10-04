@@ -6,11 +6,17 @@
 
   export let maxHeight = true;
   export let small = false;
+  export let isPortrait = false;
   export let withCross = false;
   export let onCrossClick: () => unknown = () => {};
 
   let fullScreen = false;
   const url = getPhotoURL(photo);
+
+  const onLoad = (e: Event) => {
+    const image = e.target as HTMLImageElement;
+    isPortrait = image.naturalHeight > image.naturalWidth;
+  };
 </script>
 
 {#if photo}
@@ -22,10 +28,11 @@
       <img
         src={url}
         alt="Trip"
+        on:load={onLoad}
         class={twMerge(
           "rounded-xl object-contain",
           maxHeight && "max-h-64",
-          small && "h-[25vh]",
+          small && isPortrait && "w-[calc(50vw-1.5rem)]",
         )}
       />
       {#if withCross}

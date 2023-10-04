@@ -18,7 +18,8 @@
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a place");
 
-  $: defaultValues = isEdit && $card ? pickCard("place", ["address", "date", "price"]) : {};
+  $: defaultValues =
+    isEdit && $card ? pickCard("place", ["name", "address", "date", "price"]) : {};
 
   const onSubmit = async (data: FormParams<"places">) => {
     if (data.price) {

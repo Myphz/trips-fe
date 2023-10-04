@@ -9,6 +9,7 @@ export const loading = writable(true);
 export const cards = writable<Awaited<ReturnType<typeof getAll>>>([]);
 export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);
 export const filter = writable<EntityType | null>(null);
+export const photos = writable<Tables["photos"]["Row"][]>([]);
 
 type SelectParams<T extends keyof Tables> = {
   table: T;
@@ -74,4 +75,13 @@ export async function load() {
   loading.set(true);
   cards.set(await getAll());
   loading.set(false);
+}
+
+export async function loadPhotos() {
+  photos.set([]);
+
+  const cardData = get(card);
+  if (!cardData) return;
+
+  photos.set(await select({ table: "photos", cond: { entity_id: cardData.id } }));
 }

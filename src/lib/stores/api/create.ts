@@ -4,7 +4,7 @@ import { addOptionals } from "$utils/objects";
 import { success } from "$utils/toasts";
 import { get } from "svelte/store";
 import { supabase } from "./client";
-import { load } from "./select";
+import { card, load, loadPhotos } from "./select";
 import { routeParams } from "../routeParams";
 
 type CreateParams<T extends keyof Tables> = {
@@ -58,4 +58,15 @@ export async function addEntity<T extends keyof Tables>(
     });
   }
   return row;
+}
+
+export async function createPhotos(ids: string[]) {
+  const entityId = get(card)!.id;
+  await Promise.all(
+    ids.map((id) =>
+      create({ table: "photos", params: { id, entity_id: entityId }, withToast: false }),
+    ),
+  );
+  loadPhotos();
+  success({ title: "Media uploaded", msg: "Media uploaded successfully!" });
 }

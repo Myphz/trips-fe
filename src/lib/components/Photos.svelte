@@ -1,22 +1,16 @@
 <script lang="ts">
-  import { card, select } from "$lib/stores/api/select";
+  import { loadPhotos, photos } from "$lib/stores/api/select";
   import { Plus } from "svelte-heros";
   import FilePicker from "./form/FilePicker.svelte";
+  import { createPhotos } from "$lib/stores/api/create";
+  import { PhotoViewer } from ".";
 
   let ref: HTMLInputElement;
-
-  $: photos = $card?.id
-    ? select({ table: "photos", cond: { entity_id: $card?.id } })
-    : Promise.resolve([]);
-
-  let newPhotos: string[] = [];
-  $: {
-    console.log({ newPhotos });
-  }
+  loadPhotos();
 </script>
 
 <section class="mt-4">
-  <FilePicker mediaType="both" multiple bind:ref bind:photos={newPhotos} />
+  <FilePicker mediaType="both" multiple bind:ref onNewPhotos={createPhotos} />
   <div class="flex items-center justify-between">
     <header class="text-h3 capitalize">Photos</header>
     <button class="text-primary" on:click={() => ref.showPicker()}>
@@ -24,9 +18,9 @@
     </button>
   </div>
 
-  {#await photos then photos}
-    {#each photos as photo}
-      <div>{photo}</div>
+  <div class="mt-2 flex flex-wrap gap-4">
+    {#each $photos as photo}
+      <PhotoViewer photo={photo.id} maxHeight={false} small />
     {/each}
-  {/await}
+  </div>
 </section>

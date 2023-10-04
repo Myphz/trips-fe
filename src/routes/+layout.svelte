@@ -16,7 +16,8 @@
 
     window.visualViewport.addEventListener("resize", function (event: any) {
       const isOpen =
-        (event.target.height * event.target.scale) / window.screen.height < VIEWPORT_VS_CLIENT_HEIGHT_RATIO;
+        (event.target.height * event.target.scale) / window.screen.height <
+        VIEWPORT_VS_CLIENT_HEIGHT_RATIO;
       keyboardOpen.set(isOpen);
     });
   });

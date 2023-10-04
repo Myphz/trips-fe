@@ -4,7 +4,8 @@
   export let mediaType: "image" | "video" | "both";
   export let multiple = false;
   export let ref: HTMLInputElement;
-  export let photos: string[];
+  export let photos: string[] = [];
+  export let onNewPhotos: (ids: string[]) => unknown = () => {};
 
   const typeToAccept: Record<typeof mediaType, string> = {
     both: "image/*,video/*",
@@ -14,10 +15,10 @@
 
   const onChange = async (e: Event) => {
     const files = (e.currentTarget as HTMLInputElement).files;
-    console.log(files);
     if (!files?.length) return;
 
     photos = await uploadFiles(files);
+    onNewPhotos(photos);
   };
 </script>
 

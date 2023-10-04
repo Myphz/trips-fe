@@ -13,7 +13,7 @@
 </script>
 
 {#if $card}
-  <article class="flex flex-col gap-2 text-small">
+  <section class="flex flex-col gap-2 text-small">
     <div class="flex justify-center">
       <Stars
         rating={$card.rating || 0}
@@ -32,5 +32,5 @@
     {#if $card.photo && $card.type !== "place"}
       <PhotoViewer photo={$card.photo} maxHeight={false} />
     {/if}
-  </article>
+  </section>
 {/if}

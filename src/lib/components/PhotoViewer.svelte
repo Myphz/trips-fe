@@ -1,9 +1,11 @@
 <script lang="ts">
   import { ArrowDownTray, ArrowLeft, XMark } from "svelte-heros";
   import { downloadImage, getPhotoURL } from "$utils/files";
+  import { twMerge } from "tailwind-merge";
   export let photo: string;
 
   export let maxHeight = true;
+  export let small = false;
   export let withCross = false;
   export let onCrossClick: () => unknown = () => {};
 
@@ -17,7 +19,15 @@
       class="relative flex justify-center rounded-xl"
       on:click={() => (fullScreen = true)}
     >
-      <img src={url} alt="Trip" class="rounded-xl object-contain {maxHeight && 'max-h-64'}" />
+      <img
+        src={url}
+        alt="Trip"
+        class={twMerge(
+          "rounded-xl object-contain",
+          maxHeight && "max-h-64",
+          small && "h-[25vh]",
+        )}
+      />
       {#if withCross}
         <button
           type="button"

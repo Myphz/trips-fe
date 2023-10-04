@@ -17,14 +17,16 @@
 
   const onClick = async () => {
     const parsed = new Date(value);
+
     const { value: dateValue } = await DatePicker.present({
       mode,
-      format: DATE_FORMAT,
       date: parsed.toISOString(),
+      is24h: true,
+      theme: "dark",
     });
 
     if (!dateValue) return;
-    value = dateValue;
+    value = format(new Date(dateValue), DATE_FORMAT);
   };
 </script>
 

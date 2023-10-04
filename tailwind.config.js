@@ -11,14 +11,16 @@ export default {
 
       success: "#E6F6F4",
       gray: "#606060",
-      error: "#B60B0B",
+      error: "#F51900",
       tab: "#37E0C8",
       accent: "#FFCB45",
       off: "#CECECE",
       skeleton: "#B4B4B4",
 
-      "primary-light": "#E6F6F4",
-      "error-light": "#FFE6E6",
+      "primary-light": "#EAFBF3",
+      "primary-dark-toast": "#027834",
+
+      "error-light": "#FEF1EF",
       "bg-dark": "#1A1A1A",
       "primary-dark": "#007F6D",
       "gray-dark": "#EAEAEA",

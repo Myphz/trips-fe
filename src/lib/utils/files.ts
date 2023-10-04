@@ -1,4 +1,5 @@
-import { SERVER_URL } from "../../constants";
+import type { GetRowType, GetRowTypes } from "$lib/types/api";
+import { MEANS_OF_TRANSPORT, SERVER_URL } from "../../constants";
 
 const QUALITY = 0.75;
 
@@ -33,4 +34,24 @@ export function blobToWebp(blob: Blob): Promise<Blob> {
 
 export function getPhotoURL(photo: string) {
   return `${SERVER_URL}/file?id=${photo}`;
+}
+
+const IMAGES_NUMBER = {
+  transport: 2,
+  lodging: 3,
+  trip: 11,
+} as const;
+
+export function getPlaceholderImage(card: GetRowTypes) {
+  if (card.type === "transport") return getPlaceholderTransportImage(card);
+  const folderName = card.type === "place" ? "trip" : card.type;
+  return `/placeholder/${folderName}/${(card.id % IMAGES_NUMBER[folderName]) + 1}.webp`;
+}
+
+export function getPlaceholderTransportImage(card: GetRowType<"transport">) {
+  const means = MEANS_OF_TRANSPORT.map((opt) => opt.label.toLowerCase());
+  const mean = card.mean ?? means[Math.floor(Math.random() * means.length)];
+  return `/placeholder/transport/${mean.toLowerCase()}/${
+    (card.id % IMAGES_NUMBER["transport"]) + 1
+  }.webp`;
 }

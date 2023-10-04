@@ -3,7 +3,7 @@
   import { InformationCircle } from "svelte-heros";
   import { Redirect, Stars } from "../";
   import type { GetRowTypes } from "$lib/types/api";
-  import { getPhotoURL } from "$utils/files";
+  import { getPhotoURL, getPlaceholderImage } from "$utils/files";
 
   export let data: GetRowTypes;
 </script>
@@ -17,9 +17,7 @@
   <article class="relative flex h-52 w-full text-white">
     <img
       class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover shadow-md"
-      src={data.photo
-        ? getPhotoURL(data.photo)
-        : "https://www.state.gov/wp-content/uploads/2019/04/Japan-2107x1406.jpg"}
+      src={data.photo ? getPhotoURL(data.photo) : getPlaceholderImage(data)}
       alt="entity"
     />
 

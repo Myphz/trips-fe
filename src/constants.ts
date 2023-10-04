@@ -30,8 +30,4 @@ export const MEANS_OF_TRANSPORT = [
     label: "Streetcar",
     value: "Streetcar",
   },
-  {
-    label: "Metro",
-    value: "Metro",
-  },
 ];

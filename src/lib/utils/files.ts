@@ -1,5 +1,7 @@
 import type { GetRowType, GetRowTypes } from "$lib/types/api";
+import { Directory, Filesystem } from "@capacitor/filesystem";
 import { MEANS_OF_TRANSPORT, SERVER_URL } from "../../constants";
+import { success } from "./toasts";
 
 const QUALITY = 0.75;
 
@@ -32,7 +34,7 @@ export function blobToWebp(blob: Blob): Promise<Blob> {
   });
 }
 
-function blobToPng(blob: Blob): Promise<Blob> {
+function blobToJpeg(blob: Blob): Promise<Blob> {
   return new Promise((resolve, reject) => {
     const src = URL.createObjectURL(blob);
 
@@ -58,6 +60,15 @@ function blobToPng(blob: Blob): Promise<Blob> {
       );
     };
     image.onerror = (e) => reject(e);
+  });
+}
+
+function blobToBase64(blob: Blob): Promise<string> {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  return new Promise((resolve, _) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve((reader.result as string).split(",")[1]);
+    reader.readAsDataURL(blob);
   });
 }
 
@@ -88,13 +99,14 @@ export function getPlaceholderTransportImage(card: GetRowType<"transport">) {
 export async function downloadImage(url: string) {
   const res = await fetch(url);
   const blob = await res.blob();
-  const pngBlob = await blobToPng(blob);
-  const blobUrl = URL.createObjectURL(pngBlob);
+  const jpegBlob = await blobToJpeg(blob);
 
-  const link = document.createElement("a");
-  link.href = blobUrl;
-  link.download = `photo${(+new Date()).toString().slice(-3)}.jpeg`;
-  link.click();
+  const jpegData = await blobToBase64(jpegBlob);
+  await Filesystem.writeFile({
+    path: `Download/photo${(+new Date()).toString().slice(-3)}.jpeg`,
+    data: jpegData, // your data to write (ex. base64)
+    directory: Directory.ExternalStorage,
+  });
 
-  URL.revokeObjectURL(blobUrl);
+  success({ title: "Image saved", msg: "Image saved successfully" });
 }

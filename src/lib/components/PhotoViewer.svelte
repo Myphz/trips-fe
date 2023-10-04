@@ -36,8 +36,8 @@
           <ArrowLeft size="2rem" />
         </button>
 
-        <button class="text-primary">
-          <ArrowDownTray size="2rem" on:click={() => downloadImage(url)} />
+        <button class="text-primary" on:click={() => downloadImage(url)}>
+          <ArrowDownTray size="2rem" />
         </button>
       </div>
       <img src={url} alt="Trip" class="h-full w-full object-contain" />

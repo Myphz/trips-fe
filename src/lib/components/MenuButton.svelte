@@ -29,7 +29,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
 <div use:clickoutside on:clickoutside={closeModal} on:click={closeModal}>
   <Redirect
-    href="/app/form/{icon}"
+    href="/app/form/{icon === 'trip' ? 'subtrip' : icon}"
     params={{ entityId: 0 }}
     classes="flex flex-col items-center gap-1 text-small"
   >

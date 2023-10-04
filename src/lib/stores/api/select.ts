@@ -35,7 +35,14 @@ async function getAll() {
   return data
     .map((row) => convertRPCRow(row))
     .filter((val) => !!val)
-    .filter((row) => !get(filter) || row?.type === get(filter)) as GetRowTypes[];
+    .filter((row) => !get(filter) || row?.type === get(filter))
+    .sort((card1, card2) => {
+      if (card1?.type !== card2?.type) {
+        if (card1?.type === "trip") return -1;
+        if (card2?.type === "trip") return 1;
+      }
+      return 0;
+    }) as GetRowTypes[];
 }
 
 export async function filterOnly(type: EntityType) {

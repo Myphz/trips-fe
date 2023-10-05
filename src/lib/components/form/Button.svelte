@@ -16,7 +16,10 @@
   on:click
   type={submit ? "submit" : "button"}
   {disabled}
-  class={twMerge("w-full rounded-lg py-2 text-white disabled:opacity-70", styleClasses[variant])}
+  class={twMerge(
+    "w-full rounded-lg py-2 text-white disabled:opacity-70",
+    styleClasses[variant],
+  )}
 >
   <slot />
 </button>

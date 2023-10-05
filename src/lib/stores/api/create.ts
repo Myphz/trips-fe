@@ -1,10 +1,10 @@
 import type { Tables } from "$lib/types/api";
 import { capitalize } from "$utils/format";
 import { addOptionals } from "$utils/objects";
-import { success } from "$utils/toasts";
+import { fail, success } from "$utils/toasts";
 import { get } from "svelte/store";
 import { supabase } from "./client";
-import { card, load, loadPhotos } from "./select";
+import { card, load, loadPhotos, select } from "./select";
 import { routeParams } from "../routeParams";
 
 type CreateParams<T extends keyof Tables> = {
@@ -69,4 +69,15 @@ export async function createPhotos(ids: string[]) {
   );
   loadPhotos();
   success({ title: "Media uploaded", msg: "Media uploaded successfully!" });
+}
+
+export async function inviteUser(username: string, tripId: number) {
+  const userId = await select({ table: "profiles", cond: { username } });
+  if (!userId.length) return fail({ title: "Can't find user", msg: `Can't find ${username}` });
+
+  await create({
+    table: "groups",
+    params: { trip_id: tripId, user_id: userId[0].id },
+    withToast: false,
+  });
 }

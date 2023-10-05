@@ -21,8 +21,8 @@
     const tempData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
     const data = Object.fromEntries(
       Object.entries(tempData)
-        // Filter out empty values if it's not edit
-        .filter(([_, val]) => isEdit || !!val)
+        // Filter out empty values if it's not edit and __keys
+        .filter(([key, val]) => !key.startsWith("__") && (isEdit || !!val))
         .map(([key, val]) => {
           // Try to convert to JSON
           try {

@@ -32,6 +32,8 @@
       "peer absolute inset-0 mt-auto h-8 w-full rounded-md border border-primary p-2 text-black",
       invalid && "border-error",
     )}
+    on:input
+    on:keydown
     on:invalid={() => {
       invalid = true;
     }}

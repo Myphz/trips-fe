@@ -3,7 +3,6 @@
   import {
     Input,
     Form,
-    Select,
     MediaUploader,
     Datepicker,
     PeopleSelector,
@@ -18,7 +17,7 @@
   import { pick, rename } from "$utils/objects";
   import type { GetRowType, Tables } from "$lib/types/api";
   import { update } from "$lib/stores/api/update";
-  import { addEntity } from "$lib/stores/api/create";
+  import { addEntity, inviteUser } from "$lib/stores/api/create";
 
   const { entityId } = routeParams;
 
@@ -35,18 +34,25 @@
         ])
       : {};
 
-  const onSubmit = async (data: Tables["entities"]["Insert"] & Tables["trips"]["Insert"]) => {
-    if (data.start_date && data.end_date) {
-      if (+new Date(data.start_date) > +new Date(data.end_date)) {
-        return fail({ title: "Invalid data", msg: "Invalid dates. Please retry" });
+  const onSubmit = async (
+    data: Tables["entities"]["Insert"] & Tables["trips"]["Insert"] & { people: string[] },
+  ) => {
+    const { people, ...restData } = data;
+
+    if (restData.start_date && restData.end_date) {
+      if (+new Date(restData.start_date) > +new Date(restData.end_date)) {
+        return fail({ title: "Invalid dates", msg: "Invalid dates. Please retry" });
       }
     }
 
+    let tripId = $entityId;
     if (isEdit) {
-      const { photo, ...rest } = data;
+      const { photo, ...rest } = restData;
       await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
       await update({ table: "trips", params: rest, id: $entityId });
-    } else await addEntity("trips", data);
+    } else tripId = (await addEntity("trips", restData)).id;
+
+    await Promise.all(people.map((user) => inviteUser(user, tripId)));
 
     goBack();
   };
@@ -74,8 +80,8 @@
       { label: "Daniel", value: "2" },
       { label: "b", value: "3" },
     ]}
-  />
+  /> -->
 
-  <PeopleSelector name="people" /> -->
+  <PeopleSelector name="people" />
   <MediaUploader name="photo" mediaType="image" />
 </Form>

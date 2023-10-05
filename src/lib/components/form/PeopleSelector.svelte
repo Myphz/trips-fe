@@ -1,70 +1,53 @@
 <script lang="ts">
   import { XMark } from "svelte-heros";
-  import { Combobox } from ".";
-  import { throwError } from "$utils/error";
+  import { Button, Input } from ".";
 
   export let name: string;
 
-  const people = [
-    {
-      name: "Salvo",
-      image: "https://xsgames.co/randomusers/assets/avatars/male",
-    },
-    {
-      name: "Mattia",
-      image: "https://xsgames.co/randomusers/assets/avatars/male",
-    },
-    {
-      name: "Luca",
-      image: "https://xsgames.co/randomusers/assets/avatars/male",
-    },
-    {
-      name: "Antonio",
-      image: "https://xsgames.co/randomusers/assets/avatars/male",
-    },
-    {
-      name: "Pietro",
-      image: "https://xsgames.co/randomusers/assets/avatars/male",
-    },
-    {
-      name: "Daniel",
-      image: "https://xsgames.co/randomusers/assets/avatars/male",
-    },
-  ];
+  let inputValue = "";
+  let selected: string[] = [];
 
-  const options = people.map((person) => ({ value: person.name, label: person.name }));
-  let selected: typeof people = [];
+  let inputRef: HTMLInputElement;
 
-  const onPersonSelect = (value: string) => {
-    const person = people.find((person) => person.name === value) ?? throwError("Can't find selected person");
-    // Delete person if already selected
-    if (selected.some((p) => p.name === person.name)) return deletePerson(person.name);
-    selected = [...selected, person];
+  const onInput = (e: Event) => {
+    if (!inputRef) inputRef = e.target as HTMLInputElement;
+    inputValue = (e.target as any).value;
+  };
+
+  const onPersonSelect = () => {
+    if (!inputValue) return;
+    if (!selected.some((p) => p === inputValue)) selected = [...selected, inputValue];
+    inputValue = "";
+    inputRef.value = "";
   };
 
   const deletePerson = (value: string) => {
-    selected = selected.filter((person) => person.name !== value);
+    selected = selected.filter((person) => person !== value);
   };
 </script>
 
 <div class="flex flex-col gap-2">
   <input type="hidden" value={JSON.stringify(selected)} {name} />
-  <Combobox
-    multiple
-    {options}
-    label="People"
-    onSelect={onPersonSelect}
-    multipleSelected={selected.map((selected) => selected.name)}
-  />
 
-  <div class="flex flex-col gap-2 text-small text-black">
+  <div class="flex flex-col gap-1">
+    <Input name="__person" placeholder="People" on:input={onInput} />
+    <div class="text-xs">
+      Your friend's username, as shown in their profile (e.g., test#4536).
+    </div>
+
+    <div class="text-small">
+      <Button variant="primary" on:click={onPersonSelect}>Add person</Button>
+    </div>
+  </div>
+
+  <div class="mb-8 mt-2 flex flex-col gap-2 text-small text-black">
     {#each selected as person, i}
       <div class="flex justify-between">
         <div class="flex items-center gap-2">
-          <img src="{person.image}/{(+new Date() + i) % 78}.jpg" alt="si" class="aspect-square h-6 rounded-full" />
-          <span>{person.name}</span>
+          <img src="/user.svg" alt="person" class="aspect-square h-6 rounded-full" />
+          <span class="max-w-[50vw] truncate">{person}</span>
         </div>
-        <button type="button" class="text-primary" on:click={() => deletePerson(person.name)}>
+        <button type="button" class="text-primary" on:click={() => deletePerson(person)}>
           <XMark />
         </button>
       </div>

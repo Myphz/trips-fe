@@ -9,7 +9,7 @@ export const pageTitle = writable(MAIN_PAGE_TITLE);
 
 type RouteParams = typeof routeParams;
 
-type UnwrapWritable<T> = T extends Writable<infer R> ? R : never;
+export type UnwrapWritable<T> = T extends Writable<infer R> ? R : never;
 export type RoutesUnwrapped = { [K in keyof RouteParams]: UnwrapWritable<RouteParams[K]> };
 
 export let paramsHistory: Partial<RoutesUnwrapped>[] = [];

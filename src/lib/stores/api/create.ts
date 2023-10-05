@@ -73,7 +73,11 @@ export async function createPhotos(ids: string[]) {
 
 export async function inviteUser(username: string, tripId: number) {
   const userId = await select({ table: "profiles", cond: { username } });
-  if (!userId.length) return fail({ title: "Can't find user", msg: `Can't find ${username}` });
+  if (!userId.length) return fail({ title: "Invite error", msg: `Can't find ${username}` });
+
+  const myId = (await supabase.auth.getSession()).data.session?.user.id;
+  if (userId[0].id === myId)
+    return fail({ title: "Invite error", msg: "Can't add yourself to a trip" });
 
   await create({
     table: "groups",

@@ -10,6 +10,7 @@ export const cards = writable<Awaited<ReturnType<typeof getAll>>>([]);
 export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);
 export const filter = writable<EntityType | null>(null);
 export const photos = writable<Tables["photos"]["Row"][]>([]);
+export const myId = writable("");
 
 type SelectParams<T extends keyof Tables> = {
   table: T;

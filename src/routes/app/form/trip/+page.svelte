@@ -17,7 +17,7 @@
   import { pick, rename } from "$utils/objects";
   import type { GetRowType, Tables } from "$lib/types/api";
   import { update } from "$lib/stores/api/update";
-  import { addEntity, inviteUser } from "$lib/stores/api/create";
+  import { addEntity, inviteUsers } from "$lib/stores/api/create";
 
   const { entityId } = routeParams;
 
@@ -52,8 +52,7 @@
       await update({ table: "trips", params: rest, id: $entityId });
     } else tripId = (await addEntity("trips", restData)).id;
 
-    await Promise.all(people.map((user) => inviteUser(user, tripId)));
-
+    await inviteUsers(people, tripId);
     goBack();
   };
 </script>

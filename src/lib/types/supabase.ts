@@ -304,6 +304,10 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
+      delete_user: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
+      }
       get_all:
         | {
             Args: {

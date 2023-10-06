@@ -31,3 +31,14 @@ export const MEANS_OF_TRANSPORT = [
     value: "Streetcar",
   },
 ];
+
+export const THEME_OPTIONS = [
+  {
+    label: "Light",
+    value: "light",
+  },
+  {
+    label: "Dark",
+    value: "dark",
+  },
+];

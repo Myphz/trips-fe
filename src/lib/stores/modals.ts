@@ -2,6 +2,7 @@ import { get, writable } from "svelte/store";
 
 export const modalState = {
   deleteEntity: writable(false),
+  deleteAccount: writable(false),
 };
 
 export const modalOpen = writable(false);

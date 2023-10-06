@@ -14,10 +14,13 @@
   export let options: Option[];
   export let label: string;
   export let name: string;
+  export let onSelect: (value: string) => unknown = () => {};
 
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
   const selected = ctx[name] ? options.find((opt) => opt.value === ctx[name]) : null;
   const listbox = createListbox(selected ? { selected } : {});
+
+  $: onSelect($listbox.selected?.value);
 </script>
 
 <div class="group flex w-full flex-col items-center justify-center text-small text-gray">
@@ -25,13 +28,16 @@
   <div class="w-full">
     <div class="relative h-10">
       <button
+        type="button"
         use:listbox.button
         class={twMerge(
           "relative mt-2 h-8 w-full cursor-default rounded-md border border-primary text-left",
           $listbox.expanded && "rounded-b-none border-b-primary",
         )}
       >
-        <span class="absolute top-1 flex items-center truncate px-3 text-black">{$listbox.selected?.label ?? ""}</span>
+        <span class="absolute top-1 flex items-center truncate px-3 text-black">
+          {$listbox.selected?.label ?? ""}
+        </span>
         <span
           class={twMerge(
             "bg epic-transition absolute top-1 z-30 mx-3 flex w-fit items-center truncate",
@@ -66,7 +72,9 @@
                 : ''}"
               use:listbox.item={{ value: option }}
             >
-              <span class="block truncate {selected ? 'font-medium' : 'font-normal'}">{option.label}</span>
+              <span class="block truncate {selected ? 'font-medium' : 'font-normal'}">
+                {option.label}
+              </span>
               {#if selected}
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
                   <Check />

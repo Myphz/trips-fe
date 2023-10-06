@@ -11,6 +11,7 @@ export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(
 export const filter = writable<EntityType | null>(null);
 export const photos = writable<Tables["photos"]["Row"][]>([]);
 export const myId = writable("");
+export const invitesN = writable(0);
 
 type SelectParams<T extends keyof Tables> = {
   table: T;

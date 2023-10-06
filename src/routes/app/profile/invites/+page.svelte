@@ -1,7 +1,7 @@
 <script lang="ts">
   import Empty from "$lib/components/cards/Empty.svelte";
   import { del } from "$lib/stores/api/delete";
-  import { getInvites } from "$lib/stores/api/select";
+  import { getInvites, invitesN } from "$lib/stores/api/select";
   import { update } from "$lib/stores/api/update";
   import { Check, XMark } from "svelte-heros";
 
@@ -15,6 +15,7 @@
 
   const filterInvite = (id: number) => {
     invites = invites.filter((invite) => invite.id !== id);
+    invitesN.set($invitesN - 1);
   };
 
   const kotowaruInvite = async (id: number) => {

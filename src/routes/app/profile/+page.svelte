@@ -1,14 +1,12 @@
 <script>
   import { ChevronRight, EnvelopeOpen } from "svelte-heros";
   import User from "$lib/assets/icons/user.svg?raw";
-  import { getInvites, myId, select } from "$lib/stores/api/select";
+  import { invitesN, myId, select } from "$lib/stores/api/select";
   import { throwError } from "$utils/error";
   import { onMount } from "svelte";
 
   let name = "Loading...";
   let photo = "";
-
-  let invitesN = 0;
 
   onMount(async () => {
     while (!$myId) {
@@ -20,8 +18,6 @@
       name = value.displayed;
       photo = value.photo;
     });
-
-    getInvites().then((invites) => (invitesN = invites.length));
   });
 </script>
 
@@ -43,11 +39,11 @@
       <div class="flex items-center gap-2">
         <div class="relative text-primary">
           <EnvelopeOpen variation="solid" size="1.5rem" />
-          {#if invitesN}
+          {#if $invitesN}
             <div
               class="absolute -right-[2px] -top-[2px] flex aspect-square w-3 justify-center rounded-full bg-error text-[7px] leading-none text-white"
             >
-              <span class="pt-[2px]">{invitesN}</span>
+              <span class="pt-[2px]">{$invitesN}</span>
             </div>
           {/if}
         </div>

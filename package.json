@@ -52,6 +52,7 @@
     "@capacitor/status-bar": "^5.0.6",
     "@capawesome/capacitor-background-task": "^5.0.0",
     "@supabase/supabase-js": "^2.37.0",
+    "axios": "^1.5.1",
     "date-fns": "^2.30.0",
     "svelte-headlessui": "^0.0.26",
     "svelte-heros": "^5.2.0"

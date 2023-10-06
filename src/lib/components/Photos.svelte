@@ -10,13 +10,14 @@
 </script>
 
 <section class="mt-4">
-  <FilePicker mediaType="both" multiple bind:ref onNewPhotos={createPhotos} />
   <div class="flex items-center justify-between">
     <header class="text-h3 capitalize">Photos</header>
     <button class="text-primary" on:click={() => ref.showPicker()}>
       <Plus />
     </button>
   </div>
+
+  <FilePicker mediaType="both" multiple bind:ref onNewPhotos={createPhotos} />
 
   <div class="mt-2 flex flex-wrap gap-4">
     {#each $photos as photo}

@@ -1,12 +1,17 @@
 <script lang="ts">
+  import Empty from "$lib/components/cards/Empty.svelte";
   import { del } from "$lib/stores/api/delete";
   import { getInvites } from "$lib/stores/api/select";
   import { update } from "$lib/stores/api/update";
   import { Check, XMark } from "svelte-heros";
 
   let invites: Awaited<ReturnType<typeof getInvites>> = [];
+  let isLoading = true;
 
-  getInvites().then((value) => (invites = value));
+  getInvites().then((value) => {
+    invites = value;
+    isLoading = false;
+  });
 
   const filterInvite = (id: number) => {
     invites = invites.filter((invite) => invite.id !== id);
@@ -26,6 +31,13 @@
 <h1 class="mb-10 font-headers text-h1">My Invites</h1>
 
 <section class="flex flex-col gap-8">
+  {#if !invites.length}
+    {#if isLoading}
+      <div>Loading...</div>
+    {:else}
+      <Empty customDescription="No invites so far..." />
+    {/if}
+  {/if}
   {#each invites as invite (invite.id)}
     <article class="flex items-center justify-between">
       <div class="flex flex-col">

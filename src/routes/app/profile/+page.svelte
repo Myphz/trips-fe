@@ -50,7 +50,6 @@
 
         <div>Invites</div>
       </div>
-
       <ChevronRight />
     </a>
   </section>

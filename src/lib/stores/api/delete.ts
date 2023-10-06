@@ -1,5 +1,5 @@
 import type { Tables } from "$lib/types/api";
-import { success } from "$utils/toasts";
+import { fail, success } from "$utils/toasts";
 import { get } from "svelte/store";
 import { routeParams } from "../routeParams";
 import { supabase } from "./client";
@@ -16,8 +16,10 @@ export async function del<T extends keyof Tables>({
   withToast = true,
 }: DeleteParams<T>) {
   const idToDelete = id ?? get(routeParams.entityId);
-  await supabase.from(table).delete().eq("id", idToDelete);
-  if (!withToast) return;
 
+  const { error } = await supabase.from(table).delete().eq("id", idToDelete).single();
+  if (error) return fail({ title: "Error", msg: "You can't do that!" });
+
+  if (!withToast) return;
   success({ title: "Deleted", msg: "Entity successfully deleted!" });
 }

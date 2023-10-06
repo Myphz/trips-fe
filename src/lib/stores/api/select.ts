@@ -22,7 +22,10 @@ export async function select<T extends keyof Tables>({ table, cond }: SelectPara
   Object.entries(cond ?? {}).forEach(([key, val]) => (query = query.eq(key, val)));
 
   const { error, data } = await query;
-  if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  if (error)
+    throw new Error(
+      `Supabase error: ${error.message}\nDetails: ${JSON.stringify(error.details)}`,
+    );
   return data;
 }
 
@@ -85,4 +88,22 @@ export async function loadPhotos() {
   if (!cardData) return;
 
   photos.set(await select({ table: "photos", cond: { entity_id: cardData.id } }));
+}
+
+export async function getInvites() {
+  // Wait for myId
+  while (!get(myId)) {
+    await new Promise((res) => setTimeout(res, 100));
+  }
+
+  const { data, error } = await supabase
+    .from("groups")
+    .select(
+      "id, trip_id, trips ( destination, entities!trips_id_fkey ( profiles ( displayed ) ) )",
+    )
+    .eq("user_id", get(myId))
+    .eq("accepted", false);
+
+  if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  return data;
 }

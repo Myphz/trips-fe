@@ -304,38 +304,72 @@ export interface Database {
       [_ in never]: never
     }
     Functions: {
-      get_all: {
-        Args: {
-          tripid?: number
-          parentid?: number
-        }
-        Returns: {
-          id: number
-          description: string
-          rating: number
-          main_id: number
-          parent: number
-          photo: string
-          trip_destination: string
-          trip_start: string
-          trip_end: string
-          place_name: string
-          place_date: string
-          place_address: string
-          place_price: number
-          lodging_name: string
-          lodging_address: string
-          lodging_price: number
-          lodging_start: string
-          lodging_end: string
-          transport_price: number
-          transport_departure: string
-          transport_arrival: string
-          transport_mean: string
-          transport_departure_place: string
-          transport_arrival_place: string
-        }[]
-      }
+      get_all:
+        | {
+            Args: {
+              tripid?: number
+              parentid?: number
+            }
+            Returns: {
+              id: number
+              description: string
+              rating: number
+              main_id: number
+              parent: number
+              photo: string
+              trip_destination: string
+              trip_start: string
+              trip_end: string
+              place_name: string
+              place_date: string
+              place_address: string
+              place_price: number
+              lodging_name: string
+              lodging_address: string
+              lodging_price: number
+              lodging_start: string
+              lodging_end: string
+              transport_price: number
+              transport_departure: string
+              transport_arrival: string
+              transport_mean: string
+              transport_departure_place: string
+              transport_arrival_place: string
+            }[]
+          }
+        | {
+            Args: {
+              userid: string
+              tripid?: number
+              parentid?: number
+            }
+            Returns: {
+              id: number
+              description: string
+              rating: number
+              main_id: number
+              parent: number
+              photo: string
+              trip_destination: string
+              trip_start: string
+              trip_end: string
+              place_name: string
+              place_date: string
+              place_address: string
+              place_price: number
+              lodging_name: string
+              lodging_address: string
+              lodging_price: number
+              lodging_start: string
+              lodging_end: string
+              transport_price: number
+              transport_departure: string
+              transport_arrival: string
+              transport_mean: string
+              transport_departure_place: string
+              transport_arrival_place: string
+            }[]
+          }
       get_single: {
         Args: {
           entityid: number
@@ -380,12 +414,26 @@ export interface Database {
         }
         Returns: boolean
       }
+      has_access_no_accepted: {
+        Args: {
+          userid: string
+          tripid: number
+        }
+        Returns: boolean
+      }
       is_owner: {
         Args: {
           userid: string
           tripid: number
         }
         Returns: boolean
+      }
+      tripid_or_id: {
+        Args: {
+          trip_id: number
+          id: number
+        }
+        Returns: number
       }
     }
     Enums: {

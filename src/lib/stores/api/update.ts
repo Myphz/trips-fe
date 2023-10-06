@@ -1,5 +1,5 @@
 import type { EntityCommon, Tables } from "$lib/types/api";
-import { success } from "$utils/toasts";
+import { fail, success } from "$utils/toasts";
 import { get } from "svelte/store";
 import { supabase } from "./client";
 import { card, load, loadSingle } from "./select";
@@ -21,7 +21,10 @@ export async function update<T extends keyof Tables>({
 }: UpdateParams<T>) {
   // @ts-ignore
   const { data, error } = await supabase.from(table).update(params).eq("id", id).select();
-  if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  if (error) {
+    fail({ title: "Error", msg: "You don't have permissions to do that!" });
+    throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  }
   if (withToast) success({ title: "Success", msg: "Entity updated successfully!" });
 
   load();

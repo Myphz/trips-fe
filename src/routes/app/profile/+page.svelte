@@ -16,7 +16,7 @@
 
   <section class="flex flex-col gap-4">
     <header class="font-headers text-h3">Notifications</header>
-    <div class="flex justify-between">
+    <a class="flex justify-between" href="/app/profile/invites">
       <div class="flex items-center gap-2">
         <div class="relative text-primary">
           <EnvelopeOpen variation="solid" size="1.5rem" />
@@ -31,7 +31,7 @@
       </div>
 
       <ChevronRight />
-    </div>
+    </a>
   </section>
 
   <section>settings</section>

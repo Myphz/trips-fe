@@ -20,7 +20,10 @@ export async function create<T extends keyof Tables>({
 }: CreateParams<T>): Promise<Tables[T]["Row"]> {
   // @ts-ignore
   const { data, error } = await supabase.from(table).insert([params]).select();
-  if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  if (error) {
+    fail({ title: "Error", msg: "You don't have permissions to do that!" });
+    throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
+  }
   if (table !== "entities" && withToast)
     success({
       title: "Success",

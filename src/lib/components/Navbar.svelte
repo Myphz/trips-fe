@@ -10,5 +10,5 @@
     {@html Logo}
   </div>
 
-  <a href="/"><UserCircle size="2rem" /></a>
+  <a href="/app/profile"><UserCircle size="2rem" /></a>
 </header>

@@ -9,7 +9,7 @@
   $: advancedMode = $pageTitle !== MAIN_PAGE_TITLE;
 </script>
 
-{#if $page.route.id !== "/"}
+{#if $page.route.id !== "/" && $page.route.id !== "/app/profile"}
   <div class="mb-9 flex w-full items-center justify-between">
     <div class="flex w-full items-center gap-6">
       {#if advancedMode}

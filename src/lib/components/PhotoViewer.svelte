@@ -2,6 +2,7 @@
   import { ArrowDownTray, ArrowLeft, XMark } from "svelte-heros";
   import { downloadImage, getPhotoURL } from "$utils/files";
   import { twMerge } from "tailwind-merge";
+  import Loading from "./cards/Loading.svelte";
   export let photo: string;
 
   export let maxHeight = true;
@@ -11,7 +12,14 @@
   export let onCrossClick: () => unknown = () => {};
 
   let fullScreen = false;
-  const url = getPhotoURL(photo);
+
+  let isLoading = true;
+  let url = "";
+
+  getPhotoURL(photo).then((l) => {
+    url = l;
+    isLoading = false;
+  });
 
   const onLoad = (e: Event) => {
     const image = e.target as HTMLImageElement;
@@ -21,30 +29,34 @@
 
 {#if photo}
   {#if !fullScreen}
-    <button
-      class="relative flex justify-center rounded-xl"
-      on:click={() => (fullScreen = true)}
-    >
-      <img
-        src={url}
-        alt="Trip"
-        on:load={onLoad}
-        class={twMerge(
-          "rounded-xl object-contain",
-          maxHeight && "max-h-64",
-          small && isPortrait && "w-[calc(50vw-1.5rem)]",
-        )}
-      />
-      {#if withCross}
-        <button
-          type="button"
-          class="absolute right-1 top-1 text-primary"
-          on:click={onCrossClick}
-        >
-          <XMark size="2rem" />
-        </button>
-      {/if}
-    </button>
+    {#if !isLoading}
+      <button
+        class="relative flex justify-center rounded-xl"
+        on:click={() => (fullScreen = true)}
+      >
+        <img
+          src={url}
+          alt="Trip"
+          on:load={onLoad}
+          class={twMerge(
+            "rounded-xl object-contain",
+            maxHeight && "max-h-64",
+            small && isPortrait && "w-[calc(50vw-1.5rem)]",
+          )}
+        />
+        {#if withCross}
+          <button
+            type="button"
+            class="absolute right-1 top-1 text-primary"
+            on:click={onCrossClick}
+          >
+            <XMark size="2rem" />
+          </button>
+        {/if}
+      </button>
+    {:else}
+      <Loading />
+    {/if}
   {:else}
     <div class="fixed inset-0 z-50 flex h-full w-full items-center justify-center bg-black">
       <div

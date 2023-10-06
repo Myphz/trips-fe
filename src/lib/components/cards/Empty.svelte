@@ -14,6 +14,6 @@
   {:else}
     <header class="text-h3">Adventure Awaits!</header>
     <div>No {$filter}s found</div>
-    <div>for the current trip.</div>
+    <div>in the current trip.</div>
   {/if}
 </article>

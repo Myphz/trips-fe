@@ -15,5 +15,5 @@ export const uploadFiles = async (files: FileList) => {
   });
 
   const ret = await res.json();
-  return [...Object.values(ret)] as string[];
+  return ret as string[];
 };

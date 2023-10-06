@@ -72,8 +72,9 @@ function blobToBase64(blob: Blob): Promise<string> {
   });
 }
 
-export function getPhotoURL(photo: string) {
-  return `${SERVER_URL}/file?id=${photo}`;
+export async function getPhotoURL(photo: string) {
+  const reqUrl = `${SERVER_URL}/file?id=${photo}`;
+  return await (await fetch(reqUrl)).text();
 }
 
 const IMAGES_NUMBER = {
@@ -104,7 +105,7 @@ export async function downloadImage(url: string) {
   const jpegData = await blobToBase64(jpegBlob);
   await Filesystem.writeFile({
     path: `Download/photo${(+new Date()).toString().slice(-3)}.jpeg`,
-    data: jpegData, // your data to write (ex. base64)
+    data: jpegData,
     directory: Directory.ExternalStorage,
   });
 

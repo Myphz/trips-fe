@@ -5,8 +5,8 @@ import { uploadProgress, uploading } from "../api/select";
 import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
 
-export const uploadFiles = async (files: FileList) => {
-  if ([...files].some((file) => !file.type.includes("image"))) {
+export const uploadFiles = async (files: FileList, allowAny = false) => {
+  if (!allowAny && [...files].some((file) => !file.type.includes("image"))) {
     fail({ title: "Invalid file", msg: "Invalid file type" });
     throwError("Invalid filetype");
   }
@@ -17,8 +17,8 @@ export const uploadFiles = async (files: FileList) => {
   const formData = new FormData();
 
   for (const file of files) {
-    const webpBlob = await blobToWebp(file);
-    formData.append(file.name, webpBlob);
+    const blob = allowAny ? file : await blobToWebp(file);
+    formData.append(file.name, blob);
   }
 
   const { data } = await axios.post(`${SERVER_URL}/upload`, formData, {

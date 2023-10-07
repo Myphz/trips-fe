@@ -5,6 +5,7 @@
   import type { GetRowTypes } from "$lib/types/api";
   import { getPhotoURL, getPlaceholderImage } from "$utils/files";
   import Loading from "./Loading.svelte";
+  import { fade } from "svelte/transition";
 
   export let data: GetRowTypes;
 
@@ -30,7 +31,7 @@
     tripId: data.tripId || data.id,
   }}
   {#if !isLoading}
-    <article class="relative flex h-52 w-full text-white">
+    <article class="relative flex h-52 w-full text-white" transition:fade={{ duration: 100 }}>
       <img
         class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover shadow-md"
         src={url}

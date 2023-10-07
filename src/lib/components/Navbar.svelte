@@ -3,6 +3,7 @@
   import { getInvites, invitesN, myId } from "$lib/stores/api/select";
   import { onMount } from "svelte";
   import { UserCircle } from "svelte-heros";
+  import { Redirect } from ".";
 
   onMount(async () => {
     while (!$myId) {
@@ -16,9 +17,13 @@
 <header
   class="sticky top-0 z-50 mb-12 flex items-center justify-between bg-gradient px-4 pt-6 text-white"
 >
-  <a class="relative flex aspect-square w-16 items-center justify-center" href="/app">
+  <Redirect
+    classes="relative flex aspect-square w-16 items-center justify-center"
+    href="/app"
+    params={{ entityId: 0, parent: 0, tripId: 0 }}
+  >
     {@html Logo}
-  </a>
+  </Redirect>
 
   <a href="/app/profile" class="relative">
     <UserCircle size="2rem" />

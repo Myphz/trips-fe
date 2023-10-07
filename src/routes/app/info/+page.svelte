@@ -4,21 +4,24 @@
   import { card } from "$lib/stores/api/select";
   import { setPageTitle } from "$lib/stores/route";
   import { getName } from "$utils/format";
+  import { blur } from "svelte/transition";
 
   $: setPageTitle(getName($card));
 </script>
 
 {#if $card}
-  {#if $card.type === "trip"}
-    <TripInfo />
-  {/if}
-  {#if $card.type === "lodging"}
-    <LodgingInfo />
-  {/if}
-  {#if $card.type === "place"}
-    <PlaceInfo />
-  {/if}
-  {#if $card.type === "transport"}
-    <TransportInfo />
-  {/if}
+  <div transition:blur={{ duration: 100 }}>
+    {#if $card.type === "trip"}
+      <TripInfo />
+    {/if}
+    {#if $card.type === "lodging"}
+      <LodgingInfo />
+    {/if}
+    {#if $card.type === "place"}
+      <PlaceInfo />
+    {/if}
+    {#if $card.type === "transport"}
+      <TransportInfo />
+    {/if}
+  </div>
 {/if}

@@ -4,6 +4,7 @@
   import FilePicker from "./form/FilePicker.svelte";
   import { createPhotos } from "$lib/stores/api/create";
   import { PhotoViewer } from ".";
+  import Empty from "./cards/Empty.svelte";
 
   let ref: HTMLInputElement;
   loadPhotos();
@@ -20,8 +21,12 @@
   <FilePicker mediaType="both" multiple bind:ref onNewPhotos={createPhotos} />
 
   <div class="mt-2 flex flex-wrap gap-4">
-    {#each $photos as photo}
-      <PhotoViewer photo={photo.id} maxHeight={false} small />
-    {/each}
+    {#if $photos.length}
+      {#each $photos as photo}
+        <PhotoViewer photo={photo.id} maxHeight={false} small />
+      {/each}
+    {:else}
+      <Empty customDescription="No photos uploaded yet..." />
+    {/if}
   </div>
 </section>

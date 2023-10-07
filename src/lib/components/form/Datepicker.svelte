@@ -12,15 +12,14 @@
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
   const DATE_FORMAT = mode === "date" ? "yyyy-MM-dd" : "yyy-MM-dd HH:mm";
 
-  // Defaults to current date
-  let value = ctx[name] ?? format(new Date(), DATE_FORMAT);
+  let value = ctx[name];
 
   const onClick = async () => {
-    const parsed = new Date(value);
+    const parsed = value ? new Date(value) : null;
 
     const { value: dateValue } = await DatePicker.present({
       mode,
-      date: parsed.toISOString(),
+      ...(parsed && { date: parsed.toISOString() }),
       is24h: true,
       theme: "dark",
     });
@@ -50,7 +49,7 @@
         {placeholder}
       </div>
 
-      <div class="truncate text-black">{value}</div>
+      <div class="truncate text-black">{value ?? ""}</div>
     </div>
 
     <div class="flex h-full flex-1 items-center justify-center px-2">

@@ -8,12 +8,11 @@
   export let name: string;
   export let multiple = false;
 
-  const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
+  const ctx = getContext<Record<string, Record<string, string>>>("defaultValues") ?? {};
+  let photos = ctx[name] ?? {};
+  if (typeof photos === "string") photos = { unknown: photos };
 
-  let photo = ctx[name] ?? "";
-  let photos = [photo];
-
-  $: photo = photos[0] ?? "";
+  $: photo = photos[Object.keys(photos)?.[0]] ?? "";
 
   let ref: HTMLInputElement;
 
@@ -37,5 +36,5 @@
     <span>Add photo</span>
   </button>
 {:else}
-  <PhotoViewer withCross {photo} onCrossClick={() => (photos = [])} />
+  <PhotoViewer withCross {photo} onCrossClick={() => (photos = {})} />
 {/if}

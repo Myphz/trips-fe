@@ -6,8 +6,8 @@
   export let mediaType: "image" | "video" | "both";
   export let multiple = false;
   export let ref: HTMLInputElement;
-  export let photos: string[] = [];
-  export let onNewPhotos: (ids: string[]) => unknown = () => {};
+  export let photos: Record<string, string> = {};
+  export let onNewPhotos: (photos: Record<string, string>) => unknown = () => {};
 
   const typeToAccept: Record<typeof mediaType, string> = {
     both: "image/*,video/*",

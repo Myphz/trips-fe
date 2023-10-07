@@ -5,7 +5,7 @@ import { uploadProgress, uploading } from "../api/select";
 import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
 
-export const uploadFiles = async (files: FileList) => {
+export const uploadFiles = async (files: FileList, isDocument = false) => {
   if ([...files].some((file) => !file.type.includes("image"))) {
     fail({ title: "Invalid file", msg: "Invalid file type" });
     throwError("Invalid filetype");
@@ -30,5 +30,6 @@ export const uploadFiles = async (files: FileList) => {
   });
 
   uploading.set(false);
-  return data as string[];
+
+  return data as Record<string, string>;
 };

@@ -63,11 +63,11 @@ export async function addEntity<T extends keyof Tables>(
   return row;
 }
 
-export async function createPhotos(ids: string[]) {
+export async function createPhotos(photos: Record<string, string>) {
   const entityId = get(card)!.id;
   await Promise.all(
-    ids.map((id) =>
-      create({ table: "photos", params: { id, entity_id: entityId }, withToast: false }),
+    Object.entries(photos).map(([name, id]) =>
+      create({ table: "photos", params: { id, entity_id: entityId, name }, withToast: false }),
     ),
   );
   loadPhotos();

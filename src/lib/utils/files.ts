@@ -127,11 +127,12 @@ async function fileExists(path: string) {
 
 export async function downloadOrViewFile(file: UnwrapWritable<typeof photos>[number]) {
   const path = `Download/trips/${file.name}`;
+  const { uri } = await Filesystem.getUri({ directory: Directory.ExternalStorage, path });
 
   const exists = await fileExists(path);
   if (exists)
     return await FileOpener.open({
-      filePath: path,
+      filePath: uri,
     });
 
   const res = await fetch(`${SERVER_URL}/download?id=${file.id}`);
@@ -146,6 +147,6 @@ export async function downloadOrViewFile(file: UnwrapWritable<typeof photos>[num
   });
 
   await FileOpener.open({
-    filePath: path,
+    filePath: uri,
   });
 }

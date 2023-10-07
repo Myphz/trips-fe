@@ -18,7 +18,7 @@
     </button>
   </div>
 
-  <FilePicker mediaType="both" multiple bind:ref onNewPhotos={createPhotos} />
+  <FilePicker mediaType="any" multiple bind:ref onNewPhotos={createPhotos} />
 
   <div class="mt-2 flex flex-col gap-2">
     {#if $photos.length}

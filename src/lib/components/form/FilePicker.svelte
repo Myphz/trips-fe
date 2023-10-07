@@ -3,7 +3,7 @@
   import { uploadFiles } from "$lib/stores/files/upload";
   import { BarLoader } from "svelte-loading-spinners";
 
-  export let mediaType: "image" | "video" | "both";
+  export let mediaType: "image" | "video" | "both" | "any";
   export let multiple = false;
   export let ref: HTMLInputElement;
   export let photos: Record<string, string> = {};
@@ -13,6 +13,7 @@
     both: "image/*,video/*",
     image: "image/*",
     video: "video/*",
+    any: "",
   };
 
   const onChange = async (e: Event) => {

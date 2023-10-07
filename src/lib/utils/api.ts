@@ -3,7 +3,7 @@ import type { EntityType, GetRowType, GetRowTypes, RPCRow } from "$lib/types/api
 
 export function generateUsername(displayed: string) {
   const rand = Math.floor(Math.random() * 10001);
-  return `${displayed.split(" ")[0]}#${rand}`;
+  return `${displayed.split(" ")[0]}#${rand.toString().padStart(4, "0")}`;
 }
 
 const snakeToCamel = (str: string) =>

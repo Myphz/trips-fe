@@ -3,7 +3,7 @@ import { supabase } from "$lib/stores/api/client";
 import { onMount } from "svelte";
 import { fail } from "./toasts";
 import { undo } from "$lib/stores/route";
-import { load, myId } from "$lib/stores/api/select";
+import { load, setMe } from "$lib/stores/api/select";
 
 function redirect(isLogged: boolean, mustBeLogged: boolean) {
   const redirectTo = mustBeLogged ? "/auth/login" : "/app";
@@ -20,7 +20,7 @@ export function authGuard(mustBeLogged = true) {
     const session = (await supabase.auth.getSession()).data.session;
     if (session) {
       load();
-      myId.set(session.user.id);
+      setMe(session.user.id);
     }
     redirect(!!session, mustBeLogged);
 
@@ -31,7 +31,7 @@ export function authGuard(mustBeLogged = true) {
       redirect(!!session, mustBeLogged);
       if (session) {
         load();
-        myId.set(session.user.id);
+        setMe(session.user.id);
       }
     });
   });

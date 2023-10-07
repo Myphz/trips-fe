@@ -1,28 +1,10 @@
 <script lang="ts">
   import { ChevronRight, Envelope, EnvelopeOpen, Key, Moon, Trash, User } from "svelte-heros";
   import Userr from "$lib/assets/icons/user.svg?raw";
-  import { invitesN, myId, select } from "$lib/stores/api/select";
-  import { throwError } from "$utils/error";
-  import { onMount, setContext } from "svelte";
+  import { invitesN, myProfile } from "$lib/stores/api/select";
+  import { setContext } from "svelte";
   import Select from "$lib/components/form/Select.svelte";
   import { THEME_OPTIONS } from "../../../constants";
-
-  let name = "Loading...";
-  let photo: string | null = null;
-  let username: string;
-
-  onMount(async () => {
-    while (!$myId) {
-      await new Promise((res) => setTimeout(res, 100));
-    }
-
-    select({ table: "profiles", cond: { id: $myId } }).then((profile) => {
-      const value = profile[0] ?? throwError("Can't find my profile");
-      name = value.displayed;
-      photo = value.photo;
-      username = value.username;
-    });
-  });
 
   setContext("defaultValues", { theme: "light" });
 </script>
@@ -30,15 +12,15 @@
 <section class="flex flex-col gap-8">
   <section class="flex flex-col items-center justify-center gap-4">
     <div class="relative flex aspect-square w-[100px] items-center justify-center text-white">
-      <div class="aspect-square w-24 [&>*]:aspect-square [&>*]:h-full">
+      <div class="aspect-square [&>*]:aspect-square [&>*]:h-full [&>*]:w-full">
         {@html Userr}
       </div>
       <div class="absolute -z-10 h-full w-full rounded-full bg-gradient"></div>
     </div>
 
     <div class="flex flex-col items-center justify-center gap-1">
-      <header class="font-headers text-h1">{name}</header>
-      <div>{username}</div>
+      <header class="font-headers text-h1">{$myProfile?.displayed}</header>
+      <div>{$myProfile?.username}</div>
     </div>
   </section>
 
@@ -65,7 +47,7 @@
 
   <section class="flex flex-col gap-4">
     <header class="mt-2 font-headers text-h3">Settings</header>
-    <a class="flex justify-between" href="/app/profile/invites">
+    <a class="flex justify-between" href="/app/profile/name">
       <div class="flex items-center gap-2">
         <div class="text-primary">
           <User size="1.5rem" />
@@ -76,7 +58,7 @@
       <ChevronRight />
     </a>
 
-    <a class="flex justify-between" href="/app/profile/invites">
+    <a class="flex justify-between" href="/app/profile/email">
       <div class="flex items-center gap-2">
         <div class="text-primary">
           <Envelope size="1.5rem" />

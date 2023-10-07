@@ -20,7 +20,7 @@
 
   <FilePicker mediaType="both" multiple bind:ref onNewPhotos={createPhotos} />
 
-  <div class="mt-2 flex flex-wrap gap-4">
+  <div class="mt-2 flex flex-col gap-2">
     {#if $photos.length}
       {#each $photos as photo}
         <FileViewer file={photo} />

@@ -2,6 +2,9 @@ import type { GetRowType, GetRowTypes } from "$lib/types/api";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 import { MEANS_OF_TRANSPORT, SERVER_URL } from "../../constants";
 import { success } from "./toasts";
+import type { UnwrapWritable } from "$lib/stores/route";
+import type { photos } from "$lib/stores/api/select";
+import { FileOpener } from "@capacitor-community/file-opener";
 
 const QUALITY = 0.75;
 
@@ -104,10 +107,45 @@ export async function downloadImage(photo: string) {
   const jpegData = await blobToBase64(jpegBlob);
 
   await Filesystem.writeFile({
-    path: `Download/photo${(+new Date()).toString().slice(-3)}.jpeg`,
+    path: `Download/trips/${photo}.jpeg`,
     data: jpegData,
+    recursive: true,
     directory: Directory.ExternalStorage,
   });
 
   success({ title: "Image saved", msg: "Image saved successfully" });
+}
+
+async function fileExists(path: string) {
+  try {
+    await Filesystem.stat({ path });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export async function downloadOrViewFile(file: UnwrapWritable<typeof photos>[number]) {
+  const path = `Download/trips/${file.name}`;
+
+  const exists = await fileExists(path);
+  if (exists)
+    return await FileOpener.open({
+      filePath: path,
+    });
+
+  const res = await fetch(`${SERVER_URL}/download?id=${file.id}`);
+  const blob = await res.blob();
+  const data = await blobToBase64(blob);
+
+  await Filesystem.writeFile({
+    path,
+    data,
+    recursive: true,
+    directory: Directory.ExternalStorage,
+  });
+
+  await FileOpener.open({
+    filePath: path,
+  });
 }

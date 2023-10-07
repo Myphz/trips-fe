@@ -5,7 +5,7 @@ import { uploadProgress, uploading } from "../api/select";
 import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
 
-export const uploadFiles = async (files: FileList, isDocument = false) => {
+export const uploadFiles = async (files: FileList) => {
   if ([...files].some((file) => !file.type.includes("image"))) {
     fail({ title: "Invalid file", msg: "Invalid file type" });
     throwError("Invalid filetype");

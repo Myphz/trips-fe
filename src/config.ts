@@ -8,6 +8,8 @@ import { Capacitor } from "@capacitor/core";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
+import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
+import { getTwConfig } from "$utils/tw";
 // import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 App.addListener("backButton", async () => {
@@ -19,6 +21,9 @@ App.addListener("backButton", async () => {
 // Display content under transparent status bar (Android only)
 StatusBar.setOverlaysWebView({ overlay: true });
 StatusBar.setStyle({ style: Style.Dark });
+
+// Navigation bar
+NavigationBar.setColor({ color: getTwConfig().theme.colors.primary });
 
 if (Capacitor.getPlatform() !== "web")
   App.addListener("appStateChange", async ({ isActive }) => {

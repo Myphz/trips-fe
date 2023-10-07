@@ -30,7 +30,7 @@
 </script>
 
 <div class="gray group flex h-10 w-full max-w-[calc(50vw-1.5rem)] text-small">
-  <input class="visually-hidden" {value} {name} />
+  <input class="visually-hidden" value={value ?? ""} {name} />
   <button
     type="button"
     class="mt-2 flex h-8 w-full rounded-md border border-primary"

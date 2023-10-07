@@ -6,10 +6,10 @@
   import { onMount, setContext } from "svelte";
   import Select from "$lib/components/form/Select.svelte";
   import { THEME_OPTIONS } from "../../../constants";
-  import { modal } from "$utils/modal";
 
   let name = "Loading...";
   let photo: string | null = null;
+  let username: string;
 
   onMount(async () => {
     while (!$myId) {
@@ -20,6 +20,7 @@
       const value = profile[0] ?? throwError("Can't find my profile");
       name = value.displayed;
       photo = value.photo;
+      username = value.username;
     });
   });
 
@@ -35,7 +36,10 @@
       <div class="absolute -z-10 h-full w-full rounded-full bg-gradient"></div>
     </div>
 
-    <header class="font-headers text-h1">{name}</header>
+    <div class="flex flex-col items-center justify-center gap-1">
+      <header class="font-headers text-h1">{name}</header>
+      <div>{username}</div>
+    </div>
   </section>
 
   <section class="flex flex-col gap-4">

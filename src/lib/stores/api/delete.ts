@@ -23,3 +23,8 @@ export async function del<T extends keyof Tables>({
   if (!withToast) return;
   success({ title: "Deleted", msg: "Entity successfully deleted!" });
 }
+
+export async function deletePhoto(photo: string) {
+  console.log(photo);
+  return await del({ table: "photos", id: photo });
+}

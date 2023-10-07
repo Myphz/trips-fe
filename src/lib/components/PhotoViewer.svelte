@@ -1,14 +1,17 @@
 <script lang="ts">
-  import { ArrowDownTray, ArrowLeft, XMark } from "svelte-heros";
+  import { ArrowDownTray, ArrowLeft, Trash, XMark } from "svelte-heros";
   import { downloadImage, getPhotoURL } from "$utils/files";
   import { twMerge } from "tailwind-merge";
   import Loading from "./cards/Loading.svelte";
+  import { deletePhoto } from "$lib/stores/api/delete";
+  import { loadPhotos } from "$lib/stores/api/select";
   export let photo: string;
 
   export let maxHeight = true;
   export let small = false;
   export let isPortrait = false;
   export let withCross = false;
+  export let withDelete = false;
   export let onCrossClick: () => unknown = () => {};
 
   let fullScreen = false;
@@ -66,9 +69,23 @@
           <ArrowLeft size="2rem" />
         </button>
 
-        <button class="text-primary" on:click={() => downloadImage(url)}>
-          <ArrowDownTray size="2rem" />
-        </button>
+        <div class="flex gap-4">
+          <button class="text-primary" on:click={() => downloadImage(photo)}>
+            <ArrowDownTray size="2rem" />
+          </button>
+          {#if withDelete}
+            <button
+              class="text-error"
+              on:click={async () => {
+                await deletePhoto(photo);
+                fullScreen = false;
+                loadPhotos();
+              }}
+            >
+              <Trash size="2rem" />
+            </button>
+          {/if}
+        </div>
       </div>
       <img src={url} alt="Trip" class="h-full w-full object-contain" />
     </div>

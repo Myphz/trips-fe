@@ -23,7 +23,7 @@
   <div class="mt-2 flex flex-wrap gap-4">
     {#if $photos.length}
       {#each $photos as photo}
-        <PhotoViewer photo={photo.id} maxHeight={false} small />
+        <PhotoViewer photo={photo.id} maxHeight={false} withDelete />
       {/each}
     {:else}
       <Empty customDescription="No photos uploaded yet..." />

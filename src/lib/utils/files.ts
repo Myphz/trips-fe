@@ -97,12 +97,12 @@ export function getPlaceholderTransportImage(card: GetRowType<"transport">) {
   }.webp`;
 }
 
-export async function downloadImage(url: string) {
-  const res = await fetch(url);
+export async function downloadImage(photo: string) {
+  const res = await fetch(`${SERVER_URL}/download?id=${photo}`);
   const blob = await res.blob();
   const jpegBlob = await blobToJpeg(blob);
-
   const jpegData = await blobToBase64(jpegBlob);
+
   await Filesystem.writeFile({
     path: `Download/photo${(+new Date()).toString().slice(-3)}.jpeg`,
     data: jpegData,

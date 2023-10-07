@@ -2,6 +2,7 @@
   import { pickCard } from "$utils/objects";
   import Details from "./Details.svelte";
   import InfoLayout from "./InfoLayout.svelte";
+  import Documents from "../Documents.svelte";
 </script>
 
 <InfoLayout>
@@ -17,4 +18,6 @@
       currency: "sadfasf",
     }}
   />
+
+  <Documents />
 </InfoLayout>

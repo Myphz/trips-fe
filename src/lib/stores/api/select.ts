@@ -6,14 +6,19 @@ import { supabase } from "./client";
 import { routeParams } from "../routeParams";
 
 export const loading = writable(true);
-export const cards = writable<Awaited<ReturnType<typeof getAll>>>([]);
-export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);
-export const filter = writable<EntityType | null>(null);
-export const photos = writable<Tables["photos"]["Row"][]>([]);
-export const myId = writable("");
-export const invitesN = writable(0);
 export const uploading = writable(false);
 export const uploadProgress = writable(0);
+
+export const cards = writable<Awaited<ReturnType<typeof getAll>>>([]);
+export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);
+
+export const filter = writable<EntityType | null>(null);
+
+export const photos = writable<Tables["photos"]["Row"][]>([]);
+
+export const myId = writable("");
+
+export const invitesN = writable(0);
 
 type SelectParams<T extends keyof Tables> = {
   table: T;

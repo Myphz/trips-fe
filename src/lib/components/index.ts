@@ -7,3 +7,4 @@ export { default as GoogleLogin } from "./GoogleLogin.svelte";
 export { default as Footer } from "./Footer.svelte";
 export { default as Menu } from "./Menu.svelte";
 export { default as PhotoViewer } from "./PhotoViewer.svelte";
+export { default as FileViewer } from "./FileViewer.svelte";

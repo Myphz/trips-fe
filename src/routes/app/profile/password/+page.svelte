@@ -5,6 +5,7 @@
   import { goBack } from "$utils/guard";
   import { fail, success } from "$utils/toasts";
   import { ArrowLeft } from "svelte-heros";
+  import { AUTH_SERVER_URL } from "../../../../constants";
 
   const sendEmail = async () => {
     const user = await supabase.auth.getUser();
@@ -13,7 +14,7 @@
     if (!email) return fail({ title: "Error", msg: "Something went wrong. Please retry" });
 
     await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "https://wopp.dev/trips/password",
+      redirectTo: `${AUTH_SERVER_URL}/password`,
     });
 
     success({ title: "Success", msg: "Check your email" });

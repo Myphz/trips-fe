@@ -5,11 +5,12 @@
   import { goBack } from "$utils/guard";
   import { fail, success } from "$utils/toasts";
   import { ArrowLeft } from "svelte-heros";
+  import { AUTH_SERVER_URL } from "../../../../constants";
 
   const onSubmit = async ({ email }: { email: string }) => {
     const { error } = await supabase.auth.updateUser(
       { email },
-      { emailRedirectTo: "https://wopp.dev/trips/confirm_email" },
+      { emailRedirectTo: `${AUTH_SERVER_URL}/confirm_email` },
     );
     if (error) return fail({ title: "Error", msg: "Something went wrong. Please retry" });
 

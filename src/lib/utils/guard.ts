@@ -20,19 +20,19 @@ export function authGuard(mustBeLogged = true) {
     const session = (await supabase.auth.getSession()).data.session;
     if (session) {
       load();
-      setMe(session.user.id);
+      if (!(await setMe(session.user.id))) {
+        fail({ title: "Profile not found", msg: "Create your profile to continue" });
+        supabase.auth.signOut();
+      }
     }
     redirect(!!session, mustBeLogged);
 
     // TODO: Add redirect to create profile if not set
-    supabase.auth.onAuthStateChange((event, session) => {
+    supabase.auth.onAuthStateChange(async (event, session) => {
       // Prevent duplicates
       if (event === "INITIAL_SESSION") return;
       redirect(!!session, mustBeLogged);
-      if (session) {
-        load();
-        setMe(session.user.id);
-      }
+      if (session) load();
     });
   });
 }

@@ -4,7 +4,7 @@ import { addOptionals } from "$utils/objects";
 import { get, writable } from "svelte/store";
 import { supabase } from "./client";
 import { routeParams } from "../routeParams";
-import { fail } from "$utils/toasts";
+import type { UnwrapWritable } from "../route";
 
 export const loading = writable(true);
 export const uploading = writable(false);
@@ -118,13 +118,20 @@ export async function getInvites() {
   return data;
 }
 
-export async function setMe(id: string) {
+export async function setMe(id: string, profileParam?: UnwrapWritable<typeof myProfile>) {
   myId.set(id);
-  const profile = await select({ table: "profiles", cond: { id } });
-  if (!profile.length) {
-    fail({ title: "Profile not found", msg: "Create your profile to continue" });
-    return supabase.auth.signOut();
-  }
 
-  myProfile.set(profile[0]);
+  const profile =
+    profileParam ??
+    (await (async () => {
+      const profile = await select({ table: "profiles", cond: { id } });
+      if (!profile.length) {
+        return false;
+      }
+      return profile[0];
+    })());
+
+  if (!profile) return;
+  myProfile.set(profile);
+  return true;
 }

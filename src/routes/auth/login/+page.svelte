@@ -2,6 +2,7 @@
   import { goto } from "$app/navigation";
   import { Form, Input } from "$lib/components/form";
   import { supabase } from "$lib/stores/api/client";
+  import { setMe } from "$lib/stores/api/select";
   import { setPageTitle } from "$lib/stores/route";
 
   import { fail, success } from "$utils/toasts";
@@ -14,7 +15,7 @@
   };
 
   const onSubmit = async ({ email, password }: FormData) => {
-    const { error } = await supabase.auth.signInWithPassword({
+    const { error, data } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
@@ -25,6 +26,7 @@
         msg: "Invalid email or password. Please retry.",
       });
 
+    await setMe(data.user.id);
     success({ title: "Logged in", msg: "Logged in successfully!" });
     goto("/app");
   };

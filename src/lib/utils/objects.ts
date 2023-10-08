@@ -40,3 +40,9 @@ export function pickCard<T extends EntityType, K extends keyof GetRowType<T>>(
   if (cardData?.type !== type) throw new Error("pickCard error type");
   return pick(cardData as unknown as GetRowType<T>, keys);
 }
+
+export function emptyToNull<T extends object>(optionals: T) {
+  return Object.fromEntries(
+    Object.entries(optionals).map(([key, val]) => [key, val ? val : null]),
+  ) as T;
+}

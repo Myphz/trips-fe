@@ -7,7 +7,7 @@
   import { goBack } from "$utils/guard";
   import { card } from "$lib/stores/api/select";
   import { getName } from "$utils/format";
-  import { pickCard } from "$utils/objects";
+  import { emptyToNull, pickCard } from "$utils/objects";
   import { update } from "$lib/stores/api/update";
   import { addEntity } from "$lib/stores/api/create";
   import type { FormParams } from "$lib/types/forms";
@@ -32,7 +32,7 @@
     if (isEdit) {
       const { photo, ...rest } = data;
       await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
-      await update({ table: "places", params: rest, id: $entityId });
+      await update({ table: "places", params: emptyToNull(rest), id: $entityId });
     } else await addEntity("places", data);
 
     goBack();

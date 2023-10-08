@@ -14,7 +14,7 @@
   import { goBack } from "$utils/guard";
   import { card } from "$lib/stores/api/select";
   import { getName } from "$utils/format";
-  import { pick, rename } from "$utils/objects";
+  import { emptyToNull, pick, rename } from "$utils/objects";
   import type { GetRowType, Tables } from "$lib/types/api";
   import { update } from "$lib/stores/api/update";
   import { addEntity, inviteUsers } from "$lib/stores/api/create";
@@ -49,7 +49,7 @@
     if (isEdit) {
       const { photo, ...rest } = restData;
       await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
-      await update({ table: "trips", params: rest, id: $entityId });
+      await update({ table: "trips", params: emptyToNull(rest), id: $entityId });
     } else tripId = (await addEntity("trips", restData)).id;
 
     await inviteUsers(people, tripId);

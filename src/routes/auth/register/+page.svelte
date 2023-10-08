@@ -16,6 +16,8 @@
   };
 
   const onSubmit = async ({ email, password, confirm, displayed }: FormData) => {
+    if (password.length < 6)
+      return fail({ title: "Error", msg: "Password should be at least 6 characters" });
     if (password !== confirm)
       return fail({
         title: "Invalid password",

@@ -20,10 +20,7 @@ export function authGuard(mustBeLogged = true) {
     const session = (await supabase.auth.getSession()).data.session;
     if (session) {
       load();
-      if (!(await setMe(session.user.id))) {
-        fail({ title: "Profile not found", msg: "Create your profile to continue" });
-        supabase.auth.signOut();
-      }
+      await setMe(session.user.id);
     }
     redirect(!!session, mustBeLogged);
 

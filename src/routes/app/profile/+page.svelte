@@ -6,6 +6,7 @@
     EnvelopeOpen,
     Key,
     Moon,
+    PlusCircle,
     Trash,
     User,
   } from "svelte-heros";
@@ -22,12 +23,19 @@
 
 <section class="flex flex-col gap-8">
   <section class="flex flex-col items-center justify-center gap-4">
-    <div class="relative flex aspect-square w-[100px] items-center justify-center text-white">
+    <button
+      class="relative flex aspect-square w-[100px] items-center justify-center text-white"
+    >
       <div class="aspect-square [&>*]:aspect-square [&>*]:h-full [&>*]:w-full">
         {@html Userr}
       </div>
       <div class="absolute -z-10 h-full w-full rounded-full bg-gradient"></div>
-    </div>
+      <div
+        class="absolute bottom-[15%] right-0 flex aspect-square w-5 items-center justify-center rounded-full bg-primary"
+      >
+        <PlusCircle variation="solid" size="1rem" />
+      </div>
+    </button>
 
     <div class="flex flex-col items-center justify-center gap-1">
       <header class="font-headers text-h1">{$myProfile?.displayed}</header>

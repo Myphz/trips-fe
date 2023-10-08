@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { toISOStringWithTimezone } from "$utils/format";
   import { DatePicker } from "@capacitor-community/date-picker";
   import { format } from "date-fns";
   import { getContext } from "svelte";
@@ -25,7 +26,7 @@
     });
 
     if (!dateValue) return;
-    value = format(new Date(dateValue), DATE_FORMAT);
+    value = toISOStringWithTimezone(new Date(dateValue));
   };
 </script>
 
@@ -49,7 +50,9 @@
         {placeholder}
       </div>
 
-      <div class="truncate text-black">{value ?? ""}</div>
+      <div class="truncate text-black">
+        {value ? format(new Date(value), DATE_FORMAT) : ""}
+      </div>
     </div>
 
     <div class="flex h-full flex-1 items-center justify-center px-2">

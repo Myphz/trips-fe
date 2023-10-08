@@ -94,7 +94,7 @@ export function getPlaceholderImage(card: GetRowTypes) {
 
 export function getPlaceholderTransportImage(card: GetRowType<"transport">) {
   const means = MEANS_OF_TRANSPORT.map((opt) => opt.label.toLowerCase());
-  const mean = card.mean ?? means[Math.floor(Math.random() * means.length)];
+  const mean = card.mean || means[Math.floor(Math.random() * means.length)];
   return `/placeholder/transport/${mean.toLowerCase()}/${
     (card.id % IMAGES_NUMBER["transport"]) + 1
   }.webp`;

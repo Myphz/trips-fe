@@ -7,7 +7,10 @@
   import { ArrowLeft } from "svelte-heros";
 
   const onSubmit = async ({ email }: { email: string }) => {
-    const { data, error } = await supabase.auth.updateUser({ email });
+    const { data, error } = await supabase.auth.updateUser(
+      { email },
+      { emailRedirectTo: "https://wopp.dev/trips/confirm_email" },
+    );
     if (error)
       return fail({ title: "Error", msg: "Something went wrong. Please retry later" });
     console.log({ data, error });

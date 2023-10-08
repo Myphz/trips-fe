@@ -2,8 +2,7 @@
   import Logo from "$lib/assets/brand/logo-outline.svg?raw";
   import { getInvites, invitesN, myId } from "$lib/stores/api/select";
   import { onMount } from "svelte";
-  import { UserCircle } from "svelte-heros";
-  import { Redirect } from ".";
+  import { Redirect, UserImage } from ".";
 
   onMount(async () => {
     while (!$myId) {
@@ -26,7 +25,11 @@
   </Redirect>
 
   <a href="/app/profile" class="relative">
-    <UserCircle size="2rem" />
+    <div
+      class="aspect-auto w-10 overflow-hidden rounded-full border-2 border-primary [&>*]:aspect-square [&>*]:w-full"
+    >
+      <UserImage />
+    </div>
     {#if $invitesN}
       <div
         class="absolute right-0 top-0 flex aspect-square w-3 justify-center rounded-full bg-error text-[7px] leading-none text-white"

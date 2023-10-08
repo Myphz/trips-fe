@@ -10,13 +10,24 @@
     Trash,
     User,
   } from "svelte-heros";
-  import Userr from "$lib/assets/icons/user.svg?raw";
-  import { invitesN, myProfile } from "$lib/stores/api/select";
+  import { invitesN, myId, myProfile, setMe } from "$lib/stores/api/select";
   import { setContext } from "svelte";
   import Select from "$lib/components/form/Select.svelte";
   import { THEME_OPTIONS } from "../../../constants";
   import { toggleModal } from "$lib/stores/modals";
   import { supabase } from "$lib/stores/api/client";
+  import FilePicker from "$lib/components/form/FilePicker.svelte";
+  import { update } from "$lib/stores/api/update";
+  import UserImage from "$lib/components/UserImage.svelte";
+
+  let ref: HTMLInputElement;
+
+  const updatePhoto = async (photos: Record<string, string>) => {
+    const photo = photos[Object.keys(photos)?.[0]];
+    if (!photo) await update({ table: "profiles", id: $myId, params: { photo: "" } });
+    else await update({ table: "profiles", id: $myId, params: { photo } });
+    await setMe($myId);
+  };
 
   setContext("defaultValues", { theme: "light" });
 </script>
@@ -25,25 +36,30 @@
   <section class="flex flex-col items-center justify-center gap-4">
     <button
       class="relative flex aspect-square w-[100px] items-center justify-center text-white"
+      on:click={() => ref.showPicker()}
     >
-      <div class="aspect-square [&>*]:aspect-square [&>*]:h-full [&>*]:w-full">
-        {@html Userr}
+      <div
+        class="aspect-square w-[92%] rounded-full [&>*]:aspect-square [&>*]:h-full [&>*]:w-full [&>*]:rounded-full"
+      >
+        <UserImage />
       </div>
       <div class="absolute -z-10 h-full w-full rounded-full bg-gradient"></div>
       <div
         class="absolute bottom-[15%] right-0 flex aspect-square w-5 items-center justify-center rounded-full bg-primary"
       >
-        <PlusCircle variation="solid" size="1rem" />
+        <PlusCircle size="1rem" />
       </div>
     </button>
 
-    <div class="flex flex-col items-center justify-center gap-1">
+    <div class="flex flex-col items-center justify-center">
       <header class="font-headers text-h1">{$myProfile?.displayed}</header>
       <div>{$myProfile?.username}</div>
     </div>
   </section>
 
   <section class="flex flex-col gap-4">
+    <FilePicker bind:ref mediaType="image" onNewPhotos={updatePhoto} />
+
     <header class="font-headers text-h3">Notifications</header>
     <a class="flex justify-between" href="/app/profile/invites">
       <div class="flex items-center gap-2">

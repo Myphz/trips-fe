@@ -1,13 +1,14 @@
 <script lang="ts">
-  import { supabase } from "$lib/stores/api/client";
   import { closeModal } from "$lib/stores/modals";
   import { goBack } from "$utils/guard";
+  import { success } from "$utils/toasts";
   import { Button } from "../form";
 
   const onDeleteClick = async () => {
     closeModal();
-    await supabase.rpc("delete_user");
-    await supabase.auth.signOut();
+    // await supabase.rpc("delete_user");
+    // await supabase.auth.signOut();
+    success({ title: "Request sent", msg: "Your request will be processed soon." });
     goBack();
   };
 </script>

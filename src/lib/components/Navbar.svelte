@@ -1,6 +1,6 @@
 <script lang="ts">
   import Logo from "$lib/assets/brand/logo-outline.svg?raw";
-  import { getInvites, invitesN, myId } from "$lib/stores/api/select";
+  import { getInvites, invitesN, myId, myProfile } from "$lib/stores/api/select";
   import { onMount } from "svelte";
   import { Redirect, UserImage } from ".";
 
@@ -28,7 +28,7 @@
     <div
       class="aspect-auto w-10 overflow-hidden rounded-full border-2 border-primary [&>*]:aspect-square [&>*]:w-full"
     >
-      <UserImage />
+      <UserImage photo={$myProfile?.photo ?? ""} />
     </div>
     {#if $invitesN}
       <div

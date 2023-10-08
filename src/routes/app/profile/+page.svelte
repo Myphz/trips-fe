@@ -41,7 +41,7 @@
       <div
         class="aspect-square w-[92%] rounded-full [&>*]:aspect-square [&>*]:h-full [&>*]:w-full [&>*]:rounded-full"
       >
-        <UserImage />
+        <UserImage photo={$myProfile?.photo ?? ""} />
       </div>
       <div class="absolute -z-10 h-full w-full rounded-full bg-gradient"></div>
       <div

@@ -1,14 +1,14 @@
 <script lang="ts">
-  import { myProfile } from "$lib/stores/api/select";
   import { getPhotoURL } from "$utils/files";
   import Userr from "$lib/assets/icons/user.svg?raw";
 
   let url = "";
+  export let photo: string;
 
-  $: $myProfile?.photo && getPhotoURL($myProfile.photo).then((u) => (url = u));
+  $: photo && getPhotoURL(photo).then((u) => (url = u));
 </script>
 
-{#if !$myProfile?.photo}
+{#if !photo}
   {@html Userr}
 {:else if url}
   <img src={url} alt="user" />

@@ -3,13 +3,15 @@
   import { Button, Input } from ".";
   import { myId, select } from "$lib/stores/api/select";
   import { routeParams } from "$lib/stores/routeParams";
+  import UserImage from "../UserImage.svelte";
+  import type { SelectedUser } from "$lib/types/forms";
 
   export let name: string;
 
   const { entityId } = routeParams;
 
   let inputValue = "";
-  let selected: string[] = [];
+  let selected: SelectedUser[] = [];
 
   if ($entityId) {
     // Set default value
@@ -21,7 +23,7 @@
             .map((group) => select({ table: "profiles", cond: { id: group.user_id } })),
         ),
       )
-      .then((users) => (selected = users.flat().map((user) => user.username)));
+      .then((users) => (selected = users.flat()));
   }
 
   let inputRef: HTMLInputElement;
@@ -33,18 +35,19 @@
 
   const onPersonSelect = () => {
     if (!inputValue) return;
-    if (!selected.some((p) => p === inputValue)) selected = [...selected, inputValue];
+    if (!selected.some((p) => p.username === inputValue))
+      selected = [...selected, { username: inputValue }];
     inputValue = "";
     inputRef.value = "";
   };
 
   const deletePerson = (value: string) => {
-    selected = selected.filter((person) => person !== value);
+    selected = selected.filter((person) => person.username !== value);
   };
 </script>
 
 <div class="flex flex-col gap-2">
-  <input type="hidden" value={JSON.stringify(selected)} {name} />
+  <input type="hidden" value={JSON.stringify(selected.map((user) => user.username))} {name} />
 
   <div class="flex flex-col gap-1">
     <Input name="__person" placeholder="People" on:input={onInput} />
@@ -61,10 +64,16 @@
     {#each selected as person}
       <div class="flex justify-between">
         <div class="flex items-center gap-2">
-          <img src="/user.svg" alt="person" class="aspect-square h-6 rounded-full" />
-          <span class="max-w-[50vw] truncate">{person}</span>
+          <div class="[&>*]:aspect-square [&>*]:h-6 [&>*]:rounded-full">
+            <UserImage photo={person.photo ?? ""} />
+          </div>
+          <span class="max-w-[50vw] truncate">{person.displayed || person.username}</span>
         </div>
-        <button type="button" class="text-primary" on:click={() => deletePerson(person)}>
+        <button
+          type="button"
+          class="text-primary"
+          on:click={() => deletePerson(person.username)}
+        >
           <XMark />
         </button>
       </div>

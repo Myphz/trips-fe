@@ -20,10 +20,6 @@
   {#if !customDescription}
     {#if !$filter}
       <div>Start planning now</div>
-      <div>
-        Tap <span class="text-primary">+</span>
-        to begin
-      </div>
     {:else}
       <div>No {$filter === "trip" ? "entitie" : $filter}s found</div>
       <div>in the current trip.</div>

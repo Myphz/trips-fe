@@ -39,6 +39,8 @@ export async function register({ email, password, displayed }: Register) {
     break;
   }
 
+  // Wait to refresh supabase cache
+  await new Promise((res) => setTimeout(res, 200));
   setMe(id);
   return true;
 }

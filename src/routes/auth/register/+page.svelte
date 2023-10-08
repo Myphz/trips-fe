@@ -26,7 +26,7 @@
 
     if (await register({ email, password, displayed })) {
       goto("/app");
-      success({ title: "Account registered", msg: "Remember to verify your email!" });
+      success({ title: "User Registered", msg: "Verify your email!" });
     }
   };
 </script>

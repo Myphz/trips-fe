@@ -69,7 +69,7 @@
       <ChevronRight />
     </a>
 
-    <a class="flex justify-between" href="/app/profile/invites">
+    <a class="flex justify-between" href="/app/profile/password">
       <div class="flex items-center gap-2">
         <div class="text-primary">
           <Key size="1.5rem" />

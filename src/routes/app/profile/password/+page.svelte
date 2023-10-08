@@ -30,7 +30,7 @@
     <h1 class="font-headers text-h1">Change password</h1>
   </header>
 
-  <div class="text-small">You will receive a link to your email to uppdate your password</div>
+  <div class="text-small">You will receive a link to your email to update your password</div>
 
   <Button on:click={sendEmail}>SEND EMAIL</Button>
 </section>

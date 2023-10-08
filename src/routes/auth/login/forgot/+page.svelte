@@ -1,0 +1,28 @@
+<script lang="ts">
+  import Form from "$lib/components/form/Form.svelte";
+  import Input from "$lib/components/form/Input.svelte";
+  import { supabase } from "$lib/stores/api/client";
+  import { setPageTitle } from "$lib/stores/route";
+  import { goBack } from "$utils/guard";
+  import { success } from "$utils/toasts";
+
+  setPageTitle("Recover password");
+
+  const onSubmit = async ({ email }: { email: string }) => {
+    if (!email) return;
+    await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: "https://wopp.dev/trips/password",
+    });
+
+    success({ title: "Success", msg: "Check your email" });
+    goBack();
+  };
+</script>
+
+<section class="flex flex-col gap-4">
+  <div class="text-small">You will receive a link to your email to update your password</div>
+
+  <Form buttonText="SEND EMAIL" {onSubmit}>
+    <Input type="email" placeholder="Email" name="email" />
+  </Form>
+</section>

@@ -34,7 +34,9 @@
   <div class="flex flex-col gap-2">
     <Input placeholder="Email" name="email" type="email" required />
     <Input placeholder="Password" type="password" name="password" required />
-    <a href="/" class="mt-2 block text-small text-primary underline">Forgot password?</a>
+    <a href="/auth/login/forgot" class="mt-2 block text-small text-primary underline">
+      Forgot password?
+    </a>
   </div>
 </Form>
 

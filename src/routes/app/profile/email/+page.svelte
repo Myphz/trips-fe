@@ -3,17 +3,18 @@
   import Input from "$lib/components/form/Input.svelte";
   import { supabase } from "$lib/stores/api/client";
   import { goBack } from "$utils/guard";
-  import { fail } from "$utils/toasts";
+  import { fail, success } from "$utils/toasts";
   import { ArrowLeft } from "svelte-heros";
 
   const onSubmit = async ({ email }: { email: string }) => {
-    const { data, error } = await supabase.auth.updateUser(
+    const { error } = await supabase.auth.updateUser(
       { email },
       { emailRedirectTo: "https://wopp.dev/trips/confirm_email" },
     );
-    if (error)
-      return fail({ title: "Error", msg: "Something went wrong. Please retry later" });
-    console.log({ data, error });
+    if (error) return fail({ title: "Error", msg: "Something went wrong. Please retry" });
+
+    success({ title: "Success", msg: "Confirm your emails to continue" });
+    goBack();
   };
 </script>
 
@@ -25,6 +26,10 @@
 
     <h1 class="font-headers text-h1">Change email</h1>
   </header>
+
+  <div class="text-small">
+    You will have to confirm both your previous and updated email addresses.
+  </div>
 
   <Form autocomplete="off" buttonText="UPDATE" {onSubmit}>
     <Input name="email" required placeholder="Email" type="email" />

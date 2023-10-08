@@ -25,7 +25,28 @@ StatusBar.setStyle({ style: Style.Dark });
 // Navigation bar
 NavigationBar.setColor({ color: getTwConfig().theme.colors.primary });
 
-if (Capacitor.getPlatform() !== "web")
+async function saveAppState() {
+  // The app state has been changed to inactive.
+  // Start the background task by calling `beforeExit`.
+  const taskId = await BackgroundTask.beforeExit(() => {
+    const currentRouteParams = {
+      entityId: get(routeParams.entityId),
+      parent: get(routeParams.parent),
+      tripId: get(routeParams.tripId),
+    };
+
+    // Save current status
+    sessionStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
+    sessionStorage.setItem("paramsHistory", JSON.stringify(paramsHistory));
+    get(filter) && sessionStorage.setItem("filter", get(filter)!);
+    sessionStorage.setItem("currentURL", window.location.pathname);
+
+    // Finish the background task as soon as everything is done.
+    BackgroundTask.finish({ taskId });
+  });
+}
+
+if (Capacitor.getPlatform() !== "web") {
   App.addListener("appStateChange", async ({ isActive }) => {
     if (isActive) {
       // Restore status
@@ -38,25 +59,12 @@ if (Capacitor.getPlatform() !== "web")
       goto(currentURL);
       return;
     }
-    // The app state has been changed to inactive.
-    // Start the background task by calling `beforeExit`.
-    const taskId = await BackgroundTask.beforeExit(() => {
-      const currentRouteParams = {
-        entityId: get(routeParams.entityId),
-        parent: get(routeParams.parent),
-        tripId: get(routeParams.tripId),
-      };
 
-      // Save current status
-      sessionStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
-      sessionStorage.setItem("paramsHistory", JSON.stringify(paramsHistory));
-      get(filter) && sessionStorage.setItem("filter", get(filter)!);
-      sessionStorage.setItem("currentURL", window.location.pathname);
-
-      // Finish the background task as soon as everything is done.
-      BackgroundTask.finish({ taskId });
-    });
+    await saveAppState();
   });
+
+  App.addListener("pause", saveAppState);
+}
 
 // GoogleAuth.initialize({
 //   clientId: 'CLIENT_ID.apps.googleusercontent.com',

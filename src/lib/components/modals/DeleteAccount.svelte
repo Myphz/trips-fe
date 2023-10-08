@@ -1,14 +1,13 @@
 <script lang="ts">
   import { supabase } from "$lib/stores/api/client";
-  import { card } from "$lib/stores/api/select";
   import { closeModal } from "$lib/stores/modals";
-  import { getName } from "$utils/format";
   import { goBack } from "$utils/guard";
   import { Button } from "../form";
 
   const onDeleteClick = async () => {
     closeModal();
     await supabase.rpc("delete_user");
+    await supabase.auth.signOut();
     goBack();
   };
 </script>

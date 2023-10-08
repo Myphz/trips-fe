@@ -121,8 +121,10 @@ export async function getInvites() {
 export async function setMe(id: string) {
   myId.set(id);
   const profile = await select({ table: "profiles", cond: { id } });
-  if (!profile.length)
-    return fail({ title: "Profile not found", msg: "Create your profile to continue" });
+  if (!profile.length) {
+    fail({ title: "Profile not found", msg: "Create your profile to continue" });
+    return supabase.auth.signOut();
+  }
 
   myProfile.set(profile[0]);
 }

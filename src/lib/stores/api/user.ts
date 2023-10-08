@@ -2,6 +2,7 @@ import type { Register } from "$lib/types/forms";
 import { generateUsername } from "$utils/api";
 import { fail } from "$utils/toasts";
 import { supabase } from "./client";
+import { setMe } from "./select";
 
 export async function register({ email, password, displayed }: Register) {
   const { data, error } = await supabase.auth.signUp({
@@ -9,13 +10,14 @@ export async function register({ email, password, displayed }: Register) {
     password,
   });
 
-  if (!data.user) throw new Error("Couldn't sign up");
-
   if (error)
     return fail({
       title: "Error",
       msg: error.message,
     });
+
+  const id = data.session?.user.id;
+  if (!id) return fail({ title: "ID not found", msg: "Please retry" });
 
   // Register profile
   // eslint-disable-next-line no-constant-condition
@@ -23,7 +25,7 @@ export async function register({ email, password, displayed }: Register) {
     let username = generateUsername(displayed);
     const { error: errorProfile } = await supabase.from("profiles").insert([
       {
-        id: data.user?.id,
+        id,
         displayed,
         username,
       },
@@ -37,5 +39,6 @@ export async function register({ email, password, displayed }: Register) {
     break;
   }
 
+  setMe(id);
   return true;
 }

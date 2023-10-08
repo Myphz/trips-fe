@@ -1,10 +1,21 @@
 <script lang="ts">
-  import { ChevronRight, Envelope, EnvelopeOpen, Key, Moon, Trash, User } from "svelte-heros";
+  import {
+    ArrowLeftOnRectangle,
+    ChevronRight,
+    Envelope,
+    EnvelopeOpen,
+    Key,
+    Moon,
+    Trash,
+    User,
+  } from "svelte-heros";
   import Userr from "$lib/assets/icons/user.svg?raw";
   import { invitesN, myProfile } from "$lib/stores/api/select";
   import { setContext } from "svelte";
   import Select from "$lib/components/form/Select.svelte";
   import { THEME_OPTIONS } from "../../../constants";
+  import { toggleModal } from "$lib/stores/modals";
+  import { supabase } from "$lib/stores/api/client";
 
   setContext("defaultValues", { theme: "light" });
 </script>
@@ -98,8 +109,21 @@
     </div>
   </section>
 
-  <button class="mt-4 flex items-center gap-2 text-error">
-    <Trash />
-    <span>Delete account</span>
-  </button>
+  <section class="flex flex-col gap-4">
+    <header class="mt-2 font-headers text-h3">Other</header>
+    <button
+      class="flex items-center gap-2 text-primary"
+      on:click={() => supabase.auth.signOut()}
+    >
+      <ArrowLeftOnRectangle />
+      <span>Logout</span>
+    </button>
+    <button
+      class="flex items-center gap-2 text-error"
+      on:click={() => toggleModal("deleteAccount")}
+    >
+      <Trash />
+      <span>Delete account</span>
+    </button>
+  </section>
 </section>

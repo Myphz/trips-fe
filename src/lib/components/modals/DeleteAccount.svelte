@@ -14,7 +14,7 @@
 </script>
 
 <section class="flex flex-col text-center">
-  <header class="text-h3">Deleting account</header>
+  <header class="text-h3">Delete Account</header>
   <div class="text-regular text-gray">This will delete all of your data.</div>
 
   <div class="mt-4 flex w-full gap-2 [&>*]:flex [&>*]:flex-1 [&>*]:justify-center">

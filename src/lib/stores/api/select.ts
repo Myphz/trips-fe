@@ -143,6 +143,6 @@ export async function getTripInfo() {
 
   const data = (await supabase.rpc("get_trip_info", { _trip_id: tripId })).data?.[0];
   if (!data) return;
-  console.log(data);
+
   return data;
 }

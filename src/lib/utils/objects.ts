@@ -28,7 +28,10 @@ export function rename<T extends object, K extends Record<keyof T, string>>(
 
 export function pick<T extends object, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {
   return Object.fromEntries(
-    Object.entries(obj).filter(([key, val]) => val && keys.includes(key as K)),
+    Object.entries(obj).filter(
+      // Don't exclude 0s
+      ([key, val]) => (typeof val === "number" || !!val) && keys.includes(key as K),
+    ),
   ) as Pick<T, K>;
 }
 

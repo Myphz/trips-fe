@@ -1,4 +1,5 @@
 <script lang="ts">
+  import UserImage from "$lib/components/UserImage.svelte";
   import Empty from "$lib/components/cards/Empty.svelte";
   import { del } from "$lib/stores/api/delete";
   import { getInvites, invitesN } from "$lib/stores/api/select";
@@ -43,7 +44,9 @@
     <article class="flex items-center justify-between">
       <div class="flex flex-col">
         <div class="flex items-center gap-2 text-regular text-primary">
-          <img src="/mattia.png" alt="Mattia" />
+          <div class="[&>*]:aspect-square [&>*]:w-8">
+            <UserImage photo={invite.trips?.entities?.profiles?.photo ?? ""} />
+          </div>
           <div>{invite.trips?.entities?.profiles?.displayed}</div>
         </div>
         <div class="text-small">

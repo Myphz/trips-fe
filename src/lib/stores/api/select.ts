@@ -109,7 +109,7 @@ export async function getInvites() {
   const { data, error } = await supabase
     .from("groups")
     .select(
-      "id, trip_id, trips ( destination, entities!trips_id_fkey ( profiles ( displayed ) ) )",
+      "id, trip_id, trips ( destination, entities!trips_id_fkey ( profiles ( displayed, photo ) ) )",
     )
     .eq("user_id", get(myId))
     .eq("accepted", false);

@@ -408,6 +408,22 @@ export interface Database {
           transport_arrival_place: string
         }[]
       }
+      get_trip_info: {
+        Args: {
+          _trip_id: number
+        }
+        Returns: {
+          total_cost: number
+          place_cost: number
+          transport_cost: number
+          lodging_cost: number
+          num_places: number
+          num_transports: number
+          num_lodgings: number
+          num_trips: number
+          num_photos: number
+        }[]
+      }
       get_tripid: {
         Args: {
           _id: number

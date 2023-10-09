@@ -1,5 +1,12 @@
 import { del } from "$lib/stores/api/delete";
-import type { EntityType, GetRowType, GetRowTypes, RPCRow } from "$lib/types/api";
+import type {
+  EntityCommon,
+  EntityType,
+  GetRowType,
+  GetRowTypes,
+  RPCRow,
+} from "$lib/types/api";
+import { datetimeToISO } from "./format";
 
 export function generateUsername(displayed: string) {
   const rand = Math.floor(Math.random() * 10001);
@@ -19,7 +26,7 @@ function filterObject<T extends EntityType>(startsWith: T, row: RPCRow): GetRowT
       .map(([key, val]) => [snakeToCamel(key.split(`${startsWith}_`)[1]), val]),
   );
 
-  return {
+  const base: EntityCommon & { type: EntityType } = {
     type: startsWith,
     id: row.id,
     description: row.description,
@@ -27,6 +34,11 @@ function filterObject<T extends EntityType>(startsWith: T, row: RPCRow): GetRowT
     rating: row.rating,
     parent: row.parent,
     photo: row.photo,
+    createdAt: datetimeToISO(row.created_at),
+  };
+
+  return {
+    ...base,
     ...rest,
   } as GetRowType<T>;
 }

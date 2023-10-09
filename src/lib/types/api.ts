@@ -20,6 +20,7 @@ export type EntityCommon = {
   rating: number;
   tripId: number;
   parent: number;
+  createdAt: string;
 };
 
 export type EntityType = "trip" | "place" | "transport" | "lodging";

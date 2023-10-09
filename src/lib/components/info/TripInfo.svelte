@@ -15,7 +15,11 @@
 <InfoLayout>
   <Details
     header="details"
-    data={rename(pickCard("trip", ["start", "end"]), { start: "Departure", end: "Return" })}
+    data={rename(pickCard("trip", ["start", "end", "createdAt"]), {
+      start: "Departure",
+      end: "Return",
+      createdAt: "Created at",
+    })}
   />
   {#if info}
     <Details

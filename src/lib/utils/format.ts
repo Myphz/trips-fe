@@ -13,6 +13,10 @@ export function datetimeToCard(date: string) {
   return format(new Date(date), "d MMM HH:mm");
 }
 
+export function datetimeToISO(date: string) {
+  return format(new Date(date), "yyy-MM-dd HH:mm");
+}
+
 export function getName(card: GetRowTypes | null) {
   if (!card) return "";
   if (card.type === "trip") return card.destination;

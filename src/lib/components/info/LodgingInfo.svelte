@@ -1,6 +1,7 @@
 <script lang="ts">
   import { pickCard } from "$utils/objects";
   import Details from "./Details.svelte";
+  import Photos from "../Photos.svelte";
   import InfoLayout from "./InfoLayout.svelte";
 </script>
 
@@ -14,4 +15,5 @@
       currency: "sadfasf",
     }}
   />
+  <Photos />
 </InfoLayout>

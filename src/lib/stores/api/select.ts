@@ -135,3 +135,14 @@ export async function setMe(id: string, profileParam?: UnwrapWritable<typeof myP
   myProfile.set(profile);
   return true;
 }
+
+export async function getTripInfo() {
+  const { entityId } = routeParams;
+  const tripId = get(entityId);
+  if (!tripId) return;
+
+  const data = (await supabase.rpc("get_trip_info", { _trip_id: tripId })).data?.[0];
+  if (!data) return;
+  console.log(data);
+  return data;
+}

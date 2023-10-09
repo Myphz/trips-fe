@@ -3,9 +3,11 @@
   export let header: string;
 
   const entries = Object.entries(data);
-  if (data.Departure && data.Return) {
+  const [start, end] = [data.Departure || data["Check-in"], data.Return || data["Check-out"]];
+
+  if (start && end) {
     // Automatically calculate duration in days
-    const delta = +new Date(data.Return) - +new Date(data.Departure);
+    const delta = +new Date(end) - +new Date(start);
     const daysDelta = Math.floor(delta / (1000 * 60 * 60 * 24));
     entries.push(["Duration", `${daysDelta} days`]);
   }

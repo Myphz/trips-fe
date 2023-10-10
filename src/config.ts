@@ -9,7 +9,6 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
 import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
-import { getTwConfig } from "$utils/tw";
 import {
   DarkMode,
   DarkModeAppearance,
@@ -27,19 +26,23 @@ App.addListener("backButton", async () => {
 StatusBar.setOverlaysWebView({ overlay: true });
 StatusBar.setStyle({ style: Style.Dark });
 
-// Navigation bar
-// TODO
-NavigationBar.setColor({ color: getTwConfig().theme.colors.primary });
-
 DarkMode.init({ getter: getAppearancePref, setter: setAppearancePref });
 
-export function getAppearancePref(): DarkModeGetterResult {
+export async function getAppearancePref(): Promise<DarkModeGetterResult> {
+  const primaryColor = await getPrimaryColor();
+  NavigationBar.setColor({ color: primaryColor });
   // @ts-ignore
   return localStorage.getItem("theme");
 }
 
 export function setAppearancePref(appearance: DarkModeAppearance) {
   localStorage.setItem("theme", appearance);
+}
+
+async function getPrimaryColor() {
+  const isDark = await DarkMode.isDarkMode();
+  if (isDark) return "#007F6D";
+  return "#00A991";
 }
 
 async function saveAppState() {

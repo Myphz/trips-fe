@@ -1,6 +1,6 @@
 import { goto } from "$app/navigation";
 import { filter } from "$lib/stores/api/select";
-import { paramsHistory, restore } from "$lib/stores/route";
+import { isDarkMode, paramsHistory, restore } from "$lib/stores/route";
 import { routeParams } from "$lib/stores/routeParams";
 import { goBack } from "$utils/guard";
 import { App } from "@capacitor/app";
@@ -9,11 +9,6 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
 import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
-import {
-  DarkMode,
-  DarkModeAppearance,
-  type DarkModeGetterResult,
-} from "@aparajita/capacitor-dark-mode";
 // import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 export function appConfig() {
@@ -29,7 +24,17 @@ export function appConfig() {
     StatusBar.setStyle({ style: Style.Dark });
   }
 
-  DarkMode.init({ getter: getAppearancePref, setter: setAppearancePref });
+  isDarkMode.subscribe((isDark) => {
+    if (isDark) {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    }
+  });
+
+  isDarkMode.set(localStorage.getItem("theme") === "dark");
 
   async function saveAppState() {
     // The app state has been changed to inactive.
@@ -74,20 +79,20 @@ export function appConfig() {
 }
 
 async function getPrimaryColor() {
-  const isDark = await DarkMode.isDarkMode();
-  if (isDark) return "#007F6D";
+  if (get(isDarkMode)) return "#007F6D";
   return "#00A991";
 }
 
-export async function getAppearancePref(): Promise<DarkModeGetterResult> {
+export async function getAppearancePref() {
   const primaryColor = await getPrimaryColor();
   NavigationBar.setColor({ color: primaryColor });
   // @ts-ignore
   return localStorage.getItem("theme");
 }
 
-export function setAppearancePref(appearance: DarkModeAppearance) {
+export function setAppearancePref(appearance: string) {
   localStorage.setItem("theme", appearance);
+  isDarkMode.set(localStorage.getItem("theme") === "dark");
 }
 
 // GoogleAuth.initialize({

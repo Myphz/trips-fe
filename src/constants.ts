@@ -35,10 +35,6 @@ export const MEANS_OF_TRANSPORT = [
 
 export const THEME_OPTIONS = [
   {
-    label: "System",
-    value: "system",
-  },
-  {
     label: "Light",
     value: "light",
   },

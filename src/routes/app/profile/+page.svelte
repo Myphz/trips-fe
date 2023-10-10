@@ -11,15 +11,14 @@
     User,
   } from "svelte-heros";
   import { invitesN, logout, myId, myProfile, setMe } from "$lib/stores/api/select";
-  import { onMount, setContext } from "svelte";
+  import { setContext } from "svelte";
   import Select from "$lib/components/form/Select.svelte";
   import { THEME_OPTIONS } from "../../../constants";
   import { toggleModal } from "$lib/stores/modals";
   import FilePicker from "$lib/components/form/FilePicker.svelte";
   import { update } from "$lib/stores/api/update";
   import UserImage from "$lib/components/UserImage.svelte";
-  import { getAppearancePref, setAppearancePref } from "../../../config";
-  import type { DarkModeAppearance } from "@aparajita/capacitor-dark-mode";
+  import { setAppearancePref } from "../../../config";
 
   let ref: HTMLInputElement;
 
@@ -30,13 +29,11 @@
     await setMe($myId);
   };
 
-  onMount(() => {
-    setContext("defaultValues", { theme: getAppearancePref() || "system" });
-  });
+  // setContext("defaultValues", { theme: getAppearancePref() || "system" });
 
   const setTheme = (value: string) => {
     if (typeof window === "undefined") return;
-    setAppearancePref(value as DarkModeAppearance);
+    setAppearancePref(value);
   };
 </script>
 

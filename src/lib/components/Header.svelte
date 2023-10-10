@@ -10,7 +10,7 @@
   $: advancedMode = $pageTitle !== MAIN_PAGE_TITLE;
 </script>
 
-{#if !$page.route.id?.startsWith("/profile")}
+{#if !$page.route.id?.startsWith("/profile") && $page.route.id !== "/old"}
   <div
     class="mb-9 flex w-full items-center justify-between"
     transition:blur={{ duration: 100 }}

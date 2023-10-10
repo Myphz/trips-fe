@@ -30,7 +30,7 @@
   };
 </script>
 
-<div class="gray group flex h-10 w-full max-w-[calc(50vw-1.5rem)] text-small">
+<div class="group flex h-10 w-full max-w-[calc(50vw-1.5rem)] text-small text-gray">
   <input class="visually-hidden" value={value ?? ""} {name} />
   <button
     type="button"
@@ -43,7 +43,7 @@
     >
       <div
         class={twMerge(
-          "bg epic-transition absolute flex w-fit items-center justify-start rounded-md text-small group-focus-within:-top-2.5 group-focus-within:text-xs",
+          "epic-transition absolute flex w-fit items-center justify-start rounded-md bg-white text-small group-focus-within:-top-2.5 group-focus-within:text-xs",
           value && "!-top-2.5 !text-xs",
         )}
       >

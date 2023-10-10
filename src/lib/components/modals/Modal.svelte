@@ -17,7 +17,7 @@
   transition:fade={{ duration: 100 }}
 >
   <div
-    class="text fixed bottom-0 w-full rounded-t-xl bg-white px-4 pb-8 pt-2 text-black"
+    class="fixed bottom-0 w-full rounded-t-xl bg-white px-4 pb-8 pt-2 text-black"
     use:clickoutside
     on:clickoutside={onClickOutside}
   >

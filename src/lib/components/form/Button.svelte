@@ -6,7 +6,7 @@
   export let disabled = false;
 
   const styleClasses: Record<typeof variant, string> = {
-    primary: "primary",
+    primary: "bg-primary",
     error: "bg-error",
     outlined: "border border-primary text-black",
   };

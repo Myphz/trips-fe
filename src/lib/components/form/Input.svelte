@@ -26,7 +26,7 @@
   };
 </script>
 
-<label class="gray group relative block h-10 w-full text-small">
+<label class="group relative block h-10 w-full text-small text-gray">
   <input
     class={twMerge(
       "peer absolute inset-0 mt-auto h-8 w-full rounded-md border border-primary p-2 text-black",
@@ -50,7 +50,7 @@
   />
   <div
     class={twMerge(
-      "bg epic-transition absolute left-2 top-3 rounded-md px-1 text-small group-focus-within:top-0 group-focus-within:text-xs",
+      "epic-transition absolute left-2 top-3 rounded-md bg-white px-1 text-small group-focus-within:top-0 group-focus-within:text-xs",
       isFilled && "!top-0 !text-xs",
     )}
   >

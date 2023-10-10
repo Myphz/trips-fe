@@ -62,7 +62,7 @@
         />
         <span
           class={twMerge(
-            "bg epic-transition absolute top-1 mx-3 flex w-fit items-center truncate group-focus-within:-top-2 group-focus-within:text-xs",
+            "epic-transition absolute top-1 mx-3 flex w-fit items-center truncate bg-white group-focus-within:-top-2 group-focus-within:text-xs",
             ($combobox.selected?.value || $combobox.expanded) && "-top-2 text-xs",
           )}
         >
@@ -84,7 +84,7 @@
         <ul
           transition:fade={{ duration: 100 }}
           use:combobox.items
-          class="bg absolute z-40 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary text-black"
+          class="absolute z-40 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary bg-white text-black"
         >
           {#each filtered as option}
             {@const active = $combobox.active === option}

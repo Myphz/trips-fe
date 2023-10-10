@@ -40,7 +40,7 @@
         </span>
         <span
           class={twMerge(
-            "bg epic-transition absolute top-1 z-30 mx-3 flex w-fit items-center truncate",
+            "epic-transition absolute top-1 z-30 mx-3 flex w-fit items-center truncate bg-white",
             ($listbox.selected?.value || $listbox.expanded) && "-top-2 text-xs",
           )}
         >
@@ -61,7 +61,7 @@
         <ul
           transition:fade={{ duration: 100 }}
           use:listbox.items
-          class="bg absolute z-40 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary text-black"
+          class="absolute z-40 max-h-60 w-full overflow-auto rounded-b-md border border-t-0 border-primary bg-white text-black"
         >
           {#each options as option}
             {@const active = $listbox.active === option}

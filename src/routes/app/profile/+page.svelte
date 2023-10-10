@@ -11,13 +11,15 @@
     User,
   } from "svelte-heros";
   import { invitesN, logout, myId, myProfile, setMe } from "$lib/stores/api/select";
-  import { setContext } from "svelte";
+  import { onMount, setContext } from "svelte";
   import Select from "$lib/components/form/Select.svelte";
   import { THEME_OPTIONS } from "../../../constants";
   import { toggleModal } from "$lib/stores/modals";
   import FilePicker from "$lib/components/form/FilePicker.svelte";
   import { update } from "$lib/stores/api/update";
   import UserImage from "$lib/components/UserImage.svelte";
+  import { getAppearancePref, setAppearancePref } from "../../../config";
+  import type { DarkModeAppearance } from "@aparajita/capacitor-dark-mode";
 
   let ref: HTMLInputElement;
 
@@ -28,7 +30,13 @@
     await setMe($myId);
   };
 
-  setContext("defaultValues", { theme: "light" });
+  onMount(() => {
+    setContext("defaultValues", { theme: getAppearancePref() || "system" });
+  });
+
+  const setTheme = (value: string) => {
+    setAppearancePref(value as DarkModeAppearance);
+  };
 </script>
 
 <section class="flex flex-col gap-8">
@@ -127,7 +135,7 @@
       </div>
 
       <div class="w-1/2">
-        <Select label="" name="theme" options={THEME_OPTIONS} />
+        <Select label="" name="theme" options={THEME_OPTIONS} onSelect={setTheme} />
       </div>
     </div>
   </section>

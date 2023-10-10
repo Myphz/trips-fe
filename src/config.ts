@@ -10,6 +10,11 @@ import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
 import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
 import { getTwConfig } from "$utils/tw";
+import {
+  DarkMode,
+  DarkModeAppearance,
+  type DarkModeGetterResult,
+} from "@aparajita/capacitor-dark-mode";
 // import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 App.addListener("backButton", async () => {
@@ -25,6 +30,17 @@ StatusBar.setStyle({ style: Style.Dark });
 // Navigation bar
 // TODO
 NavigationBar.setColor({ color: getTwConfig().theme.colors.primary });
+
+DarkMode.init({ getter: getAppearancePref, setter: setAppearancePref });
+
+export function getAppearancePref(): DarkModeGetterResult {
+  // @ts-ignore
+  return localStorage.getItem("theme");
+}
+
+export function setAppearancePref(appearance: DarkModeAppearance) {
+  localStorage.setItem("theme", appearance);
+}
 
 async function saveAppState() {
   // The app state has been changed to inactive.

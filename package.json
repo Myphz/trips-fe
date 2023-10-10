@@ -44,6 +44,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@aparajita/capacitor-dark-mode": "^4.0.0",
     "@capacitor-community/date-picker": "^5.0.0",
     "@capacitor-community/file-opener": "^1.0.5",
     "@capacitor/android": "^5.4.1",

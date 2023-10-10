@@ -1,4 +1,4 @@
-package com.trips.app;
+package com.tripsphoexa.app;
 
 import com.getcapacitor.BridgeActivity;
 

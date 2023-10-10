@@ -2,6 +2,6 @@
 <resources>
     <string name="app_name">Trips!</string>
     <string name="title_activity_main">Trips!</string>
-    <string name="package_name">com.trips.app</string>
-    <string name="custom_url_scheme">com.trips.app</string>
+    <string name="package_name">com.tripsphoexa.app</string>
+    <string name="custom_url_scheme">com.tripsphoexa.app</string>
 </resources>

@@ -7,9 +7,10 @@
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { keyboardOpen } from "$lib/stores/ui";
   import { Modals } from "$lib/components/modals";
+  import { appConfig } from "../config";
 
   onMount(() => {
-    import("../config");
+    appConfig();
     if (!("visualViewport" in window && window.visualViewport)) return;
 
     const VIEWPORT_VS_CLIENT_HEIGHT_RATIO = 0.75;

@@ -35,6 +35,7 @@
   });
 
   const setTheme = (value: string) => {
+    if (typeof window === "undefined") return;
     setAppearancePref(value as DarkModeAppearance);
   };
 </script>

@@ -16,17 +16,68 @@ import {
 } from "@aparajita/capacitor-dark-mode";
 // import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
-App.addListener("backButton", async () => {
-  if (window.location.pathname === "/app" || window.location.pathname === "/")
-    return await App.exitApp();
-  goBack();
-});
+export function appConfig() {
+  App.addListener("backButton", async () => {
+    if (window.location.pathname === "/app" || window.location.pathname === "/")
+      return await App.exitApp();
+    goBack();
+  });
 
-// Display content under transparent status bar (Android only)
-StatusBar.setOverlaysWebView({ overlay: true });
-StatusBar.setStyle({ style: Style.Dark });
+  if (Capacitor.getPlatform() !== "web") {
+    // Display content under transparent status bar (Android only)
+    StatusBar.setOverlaysWebView({ overlay: true });
+    StatusBar.setStyle({ style: Style.Dark });
+  }
 
-DarkMode.init({ getter: getAppearancePref, setter: setAppearancePref });
+  DarkMode.init({ getter: getAppearancePref, setter: setAppearancePref });
+
+  async function saveAppState() {
+    // The app state has been changed to inactive.
+    // Start the background task by calling `beforeExit`.
+    const taskId = await BackgroundTask.beforeExit(() => {
+      const currentRouteParams = {
+        entityId: get(routeParams.entityId),
+        parent: get(routeParams.parent),
+        tripId: get(routeParams.tripId),
+      };
+
+      // Save current status
+      sessionStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
+      sessionStorage.setItem("paramsHistory", JSON.stringify(paramsHistory));
+      get(filter) && sessionStorage.setItem("filter", get(filter)!);
+      sessionStorage.setItem("currentURL", window.location.pathname);
+
+      // Finish the background task as soon as everything is done.
+      BackgroundTask.finish({ taskId });
+    });
+  }
+
+  if (Capacitor.getPlatform() !== "web") {
+    App.addListener("appStateChange", async ({ isActive }) => {
+      if (isActive) {
+        // Restore status
+        const routeParams = JSON.parse(sessionStorage.getItem("currentRouteParams")!);
+        const paramsHistory = JSON.parse(sessionStorage.getItem("paramsHistory")!);
+        const filter = sessionStorage.getItem("filter");
+        const currentURL = sessionStorage.getItem("currentURL")!;
+
+        restore(routeParams, paramsHistory, filter as Parameters<typeof restore>[2]);
+        goto(currentURL);
+        return;
+      }
+
+      await saveAppState();
+    });
+
+    App.addListener("pause", saveAppState);
+  }
+}
+
+async function getPrimaryColor() {
+  const isDark = await DarkMode.isDarkMode();
+  if (isDark) return "#007F6D";
+  return "#00A991";
+}
 
 export async function getAppearancePref(): Promise<DarkModeGetterResult> {
   const primaryColor = await getPrimaryColor();
@@ -37,53 +88,6 @@ export async function getAppearancePref(): Promise<DarkModeGetterResult> {
 
 export function setAppearancePref(appearance: DarkModeAppearance) {
   localStorage.setItem("theme", appearance);
-}
-
-async function getPrimaryColor() {
-  const isDark = await DarkMode.isDarkMode();
-  if (isDark) return "#007F6D";
-  return "#00A991";
-}
-
-async function saveAppState() {
-  // The app state has been changed to inactive.
-  // Start the background task by calling `beforeExit`.
-  const taskId = await BackgroundTask.beforeExit(() => {
-    const currentRouteParams = {
-      entityId: get(routeParams.entityId),
-      parent: get(routeParams.parent),
-      tripId: get(routeParams.tripId),
-    };
-
-    // Save current status
-    sessionStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
-    sessionStorage.setItem("paramsHistory", JSON.stringify(paramsHistory));
-    get(filter) && sessionStorage.setItem("filter", get(filter)!);
-    sessionStorage.setItem("currentURL", window.location.pathname);
-
-    // Finish the background task as soon as everything is done.
-    BackgroundTask.finish({ taskId });
-  });
-}
-
-if (Capacitor.getPlatform() !== "web") {
-  App.addListener("appStateChange", async ({ isActive }) => {
-    if (isActive) {
-      // Restore status
-      const routeParams = JSON.parse(sessionStorage.getItem("currentRouteParams")!);
-      const paramsHistory = JSON.parse(sessionStorage.getItem("paramsHistory")!);
-      const filter = sessionStorage.getItem("filter");
-      const currentURL = sessionStorage.getItem("currentURL")!;
-
-      restore(routeParams, paramsHistory, filter as Parameters<typeof restore>[2]);
-      goto(currentURL);
-      return;
-    }
-
-    await saveAppState();
-  });
-
-  App.addListener("pause", saveAppState);
 }
 
 // GoogleAuth.initialize({

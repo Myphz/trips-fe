@@ -15,9 +15,13 @@
   export let label: string;
   export let name: string;
   export let onSelect: (value: string) => unknown = () => {};
+  export let startValue: string | null = null;
 
   const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
-  const selected = ctx[name] ? options.find((opt) => opt.value === ctx[name]) : null;
+  const selected =
+    ctx[name] || startValue
+      ? options.find((opt) => opt.value === (ctx[name] || startValue))
+      : null;
   const listbox = createListbox(selected ? { selected } : {});
 
   $: onSelect($listbox.selected?.value);

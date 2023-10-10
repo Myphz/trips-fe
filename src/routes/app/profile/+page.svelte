@@ -11,7 +11,6 @@
     User,
   } from "svelte-heros";
   import { invitesN, logout, myId, myProfile, setMe } from "$lib/stores/api/select";
-  import { setContext } from "svelte";
   import Select from "$lib/components/form/Select.svelte";
   import { THEME_OPTIONS } from "../../../constants";
   import { toggleModal } from "$lib/stores/modals";
@@ -19,6 +18,7 @@
   import { update } from "$lib/stores/api/update";
   import UserImage from "$lib/components/UserImage.svelte";
   import { setAppearancePref } from "../../../config";
+  import { isDarkMode } from "$lib/stores/route";
 
   let ref: HTMLInputElement;
 
@@ -29,7 +29,7 @@
     await setMe($myId);
   };
 
-  // setContext("defaultValues", { theme: getAppearancePref() || "system" });
+  $: startValue = $isDarkMode ? "dark" : "light";
 
   const setTheme = (value: string) => {
     if (typeof window === "undefined") return;
@@ -133,7 +133,13 @@
       </div>
 
       <div class="w-1/2">
-        <Select label="" name="theme" options={THEME_OPTIONS} onSelect={setTheme} />
+        <Select
+          label=""
+          name="theme"
+          options={THEME_OPTIONS}
+          onSelect={setTheme}
+          {startValue}
+        />
       </div>
     </div>
   </section>

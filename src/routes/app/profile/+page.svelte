@@ -10,12 +10,11 @@
     Trash,
     User,
   } from "svelte-heros";
-  import { invitesN, myId, myProfile, setMe } from "$lib/stores/api/select";
+  import { invitesN, logout, myId, myProfile, setMe } from "$lib/stores/api/select";
   import { setContext } from "svelte";
   import Select from "$lib/components/form/Select.svelte";
   import { THEME_OPTIONS } from "../../../constants";
   import { toggleModal } from "$lib/stores/modals";
-  import { supabase } from "$lib/stores/api/client";
   import FilePicker from "$lib/components/form/FilePicker.svelte";
   import { update } from "$lib/stores/api/update";
   import UserImage from "$lib/components/UserImage.svelte";
@@ -135,10 +134,7 @@
 
   <section class="flex flex-col gap-4">
     <header class="mt-2 font-headers text-h3">Other</header>
-    <button
-      class="flex items-center gap-2 text-primary"
-      on:click={() => supabase.auth.signOut()}
-    >
+    <button class="flex items-center gap-2 text-primary" on:click={logout}>
       <ArrowLeftOnRectangle />
       <span>Logout</span>
     </button>

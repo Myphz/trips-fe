@@ -48,9 +48,9 @@ export const restore = async (
 
 export const setRouteParams = (
   params: Partial<RoutesUnwrapped>,
-  opts?: { saveParams: boolean },
+  opts?: { saveParams?: boolean; paramsRedirect?: boolean },
 ) => {
-  const { saveParams = true } = opts ?? {};
+  const { saveParams = true, paramsRedirect = true } = opts ?? {};
 
   Object.entries(params).map(([key, val]) => {
     routeParams[key as keyof RouteParams].set(val);
@@ -59,7 +59,7 @@ export const setRouteParams = (
   if (saveParams) paramsHistory.push(params);
   if ("parent" in params || "tripId" in params) load();
   if ("entityId" in params) loadSingle();
-  if (window.location.pathname !== "/app/trip") {
+  if (window.location.pathname !== "/app/trip" && paramsRedirect) {
     if (params.tripId) goto("/app/trip");
     else goto("/app");
   }

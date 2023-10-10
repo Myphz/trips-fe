@@ -10,8 +10,10 @@ function redirect(isLogged: boolean, mustBeLogged: boolean) {
 
   if (isLogged !== mustBeLogged) {
     // Don't redirect after restore
-    if (!sessionStorage.getItem("currentURL")) goto(redirectTo);
-    if (mustBeLogged) fail({ msg: "Login to continue", title: "Auth required" });
+    if (!sessionStorage.getItem("currentURL")) {
+      goto(redirectTo);
+      mustBeLogged && fail({ msg: "Login to continue", title: "Auth required" });
+    }
   }
 }
 
@@ -24,7 +26,6 @@ export function authGuard(mustBeLogged = true) {
     }
     redirect(!!session, mustBeLogged);
 
-    // TODO: Add redirect to create profile if not set
     supabase.auth.onAuthStateChange(async (event, session) => {
       // Prevent duplicates
       if (event === "INITIAL_SESSION") return;

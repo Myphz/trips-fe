@@ -136,6 +136,12 @@ export async function setMe(id: string, profileParam?: UnwrapWritable<typeof myP
   return true;
 }
 
+export async function logout() {
+  await supabase.auth.signOut();
+  myId.set("");
+  myProfile.set(null);
+}
+
 export async function getTripInfo() {
   const { entityId } = routeParams;
   const tripId = get(entityId);

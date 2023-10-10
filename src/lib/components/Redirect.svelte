@@ -4,13 +4,14 @@
   export let href: string;
   export let classes = "";
   export let params: Partial<RoutesUnwrapped>;
+  export let paramsRedirect = true;
 </script>
 
 <a
   {href}
   class={classes}
   on:click={() => {
-    setRouteParams(params);
+    setRouteParams(params, { paramsRedirect });
   }}
 >
   <slot />

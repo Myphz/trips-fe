@@ -2,6 +2,8 @@ import Toast from "$lib/components/Toast.svelte";
 import { toast } from "@zerodevx/svelte-toast";
 
 export function success({ msg, title }: { msg: string; title: string }) {
+  toast.pop(0);
+
   toast.push({
     component: {
       src: Toast,
@@ -11,6 +13,8 @@ export function success({ msg, title }: { msg: string; title: string }) {
 }
 
 export function fail({ msg, title }: { msg: string; title: string }) {
+  toast.pop(0);
+
   toast.push({
     component: {
       src: Toast,

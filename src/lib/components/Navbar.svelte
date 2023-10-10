@@ -20,6 +20,7 @@
     classes="relative flex aspect-square w-16 items-center justify-center"
     href="/app"
     params={{ entityId: 0, parent: 0, tripId: 0 }}
+    paramsRedirect={false}
   >
     {@html Logo}
   </Redirect>

@@ -27,8 +27,10 @@ textarea {
 }
 
 * {
+  outline: none !important;
   -ms-overflow-style: none !important;
   scrollbar-width: none !important;
+  -webkit-tap-highlight-color: transparent;
 }
 
 *::-webkit-scrollbar {

@@ -18,14 +18,14 @@
 >
   <Redirect
     classes="relative flex aspect-square w-16 items-center justify-center"
-    href="/app"
+    href="/"
     params={{ entityId: 0, parent: 0, tripId: 0 }}
     paramsRedirect={false}
   >
     {@html Logo}
   </Redirect>
 
-  <a href="/app/profile" class="relative">
+  <a href="/profile" class="relative">
     <div
       class="aspect-auto w-10 overflow-hidden rounded-full border-2 border-primary [&>*]:aspect-square [&>*]:w-full"
     >

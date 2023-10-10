@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { Menu } from "$lib/components";
   import { authGuard } from "$utils/guard";
   import { onMount } from "svelte";
 
@@ -8,5 +7,4 @@
   });
 </script>
 
-<Menu />
 <slot />

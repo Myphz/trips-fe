@@ -62,9 +62,9 @@ export const setRouteParams = (
   if (saveParams) paramsHistory.push(params);
   if ("parent" in params || "tripId" in params) load();
   if ("entityId" in params) loadSingle();
-  if (window.location.pathname !== "/app/trip" && paramsRedirect) {
-    if (params.tripId) goto("/app/trip");
-    else goto("/app");
+  if (window.location.pathname !== "/trip" && paramsRedirect) {
+    if (params.tripId) goto("/trip");
+    else goto("/");
   }
 };
 

@@ -23,7 +23,7 @@
   <nav
     class="fixed bottom-0 left-0 z-50 flex h-16 w-full items-center justify-between bg-primary px-9"
   >
-    <Redirect params={{ entityId: 0, parent: 0, tripId: 0 }} href="/app" classes="text-tab">
+    <Redirect params={{ entityId: 0, parent: 0, tripId: 0 }} href="/" classes="text-tab">
       {@html Home}
     </Redirect>
     {#each TABS as { icon, name }}

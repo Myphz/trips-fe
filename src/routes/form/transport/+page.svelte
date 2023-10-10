@@ -11,9 +11,9 @@
   import { update } from "$lib/stores/api/update";
   import { addEntity } from "$lib/stores/api/create";
   import type { FormParams } from "$lib/types/forms";
-  import { MEANS_OF_TRANSPORT } from "../../../../constants";
   import type { GetRowType } from "$lib/types/api";
   import { fail } from "$utils/toasts";
+  import { MEANS_OF_TRANSPORT } from "../../../constants";
 
   const { entityId } = routeParams;
 

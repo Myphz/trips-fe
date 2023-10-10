@@ -25,7 +25,7 @@
       });
 
     if (await register({ email, password, displayed })) {
-      goto("/app");
+      goto("/");
       success({ title: "User Registered", msg: "Verify your email!" });
     }
   };

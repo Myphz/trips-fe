@@ -1,15 +1,13 @@
 <script lang="ts">
-  import { Menu } from "$lib/components";
-  import { onMount } from "svelte";
-
   import "../app.css";
   import "../toast.css";
 
   import { Navbar, Header } from "$lib/components";
+  import { onMount } from "svelte";
   import { SvelteToast } from "@zerodevx/svelte-toast";
   import { keyboardOpen } from "$lib/stores/ui";
   import { Modals } from "$lib/components/modals";
-  import { appConfig } from "../config";
+  import { appConfig } from "../../config";
 
   onMount(() => {
     appConfig();
@@ -29,7 +27,6 @@
 <Navbar />
 <section class="relative mx-4 h-full pb-20">
   <Header />
-  <Menu />
   <slot />
 </section>
 

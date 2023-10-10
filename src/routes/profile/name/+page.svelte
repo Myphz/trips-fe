@@ -32,7 +32,7 @@
     }
 
     await setMe($myId);
-    goto("/app");
+    goto("/");
     success({ title: "Name updated", msg: "Name successfully updated" });
   };
 </script>

@@ -4,9 +4,15 @@
   import { card } from "$lib/stores/api/select";
   import { setPageTitle } from "$lib/stores/route";
   import { getName } from "$utils/format";
+  import { authGuard } from "$utils/guard";
+  import { onMount } from "svelte";
   import { blur } from "svelte/transition";
 
   $: setPageTitle(getName($card));
+
+  onMount(async () => {
+    authGuard();
+  });
 </script>
 
 {#if $card}

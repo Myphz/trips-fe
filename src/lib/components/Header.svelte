@@ -10,7 +10,7 @@
   $: advancedMode = $pageTitle !== MAIN_PAGE_TITLE;
 </script>
 
-{#if $page.route.id !== "/" && !$page.route.id?.startsWith("/app/profile")}
+{#if !$page.route.id?.startsWith("/profile")}
   <div
     class="mb-9 flex w-full items-center justify-between"
     transition:blur={{ duration: 100 }}
@@ -31,7 +31,7 @@
       {#if !advancedMode || $page.route.id?.endsWith("/trip")}
         {#if !advancedMode}
           <a
-            href="/app/form/trip"
+            href="/form/trip"
             class="ml-auto text-primary"
             transition:blur={{ duration: 100 }}
           >
@@ -46,7 +46,7 @@
 
       {#if $page.route.id?.includes("info") && $card}
         <a
-          href="/app/form/{$card.type}"
+          href="/form/{$card.type}"
           class="ml-auto text-primary"
           transition:blur={{ duration: 100 }}
         >

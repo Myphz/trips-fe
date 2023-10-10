@@ -28,7 +28,7 @@
 
     await setMe(data.user.id);
     success({ title: "Logged in", msg: "Logged in successfully!" });
-    goto("/app");
+    goto("/");
   };
 </script>
 

@@ -6,7 +6,7 @@ import { load, setMe } from "$lib/stores/api/select";
 import { get } from "svelte/store";
 
 function redirect(isLogged: boolean, mustBeLogged: boolean) {
-  const redirectTo = mustBeLogged ? "/" : "/app";
+  const redirectTo = mustBeLogged ? "/auth/login" : "/";
 
   if (isLogged !== mustBeLogged) {
     // Don't redirect after restore
@@ -40,12 +40,12 @@ export async function authGuard(mustBeLogged = true) {
 
 export function goBack() {
   const inTrip =
-    window.location.pathname === "/app/trip" ||
-    window.location.pathname === "/app/info" ||
-    window.location.pathname.startsWith("/app/form");
+    window.location.pathname === "/trip" ||
+    window.location.pathname === "/info" ||
+    window.location.pathname.startsWith("/form");
   if (inTrip && undo()) return;
   if (inTrip) {
-    goto("/app");
+    goto("/");
   } else {
     history.back();
   }

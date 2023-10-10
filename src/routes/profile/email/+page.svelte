@@ -5,7 +5,7 @@
   import { goBack } from "$utils/guard";
   import { fail, success } from "$utils/toasts";
   import { ArrowLeft } from "svelte-heros";
-  import { AUTH_SERVER_URL } from "../../../../constants";
+  import { AUTH_SERVER_URL } from "../../../constants";
 
   const onSubmit = async ({ email }: { email: string }) => {
     const { error } = await supabase.auth.updateUser(

@@ -13,8 +13,7 @@ import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
 
 export function appConfig() {
   App.addListener("backButton", async () => {
-    if (window.location.pathname === "/app" || window.location.pathname === "/")
-      return await App.exitApp();
+    if (window.location.pathname === "/") return await App.exitApp();
     goBack();
   });
 

@@ -12,13 +12,13 @@
   } from "svelte-heros";
   import { invitesN, logout, myId, myProfile, setMe } from "$lib/stores/api/select";
   import Select from "$lib/components/form/Select.svelte";
-  import { THEME_OPTIONS } from "../../../constants";
   import { toggleModal } from "$lib/stores/modals";
   import FilePicker from "$lib/components/form/FilePicker.svelte";
   import { update } from "$lib/stores/api/update";
   import UserImage from "$lib/components/UserImage.svelte";
-  import { setAppearancePref } from "../../../config";
   import { isDarkMode } from "$lib/stores/route";
+  import { setAppearancePref } from "../../config";
+  import { THEME_OPTIONS } from "../../constants";
 
   let ref: HTMLInputElement;
 
@@ -66,7 +66,7 @@
     <FilePicker bind:ref mediaType="image" onNewPhotos={updatePhoto} />
 
     <header class="font-headers text-h3">Notifications</header>
-    <a class="flex justify-between" href="/app/profile/invites">
+    <a class="flex justify-between" href="/profile/invites">
       <div class="flex items-center gap-2">
         <div class="relative text-primary">
           <EnvelopeOpen size="1.5rem" />
@@ -87,7 +87,7 @@
 
   <section class="flex flex-col gap-4">
     <header class="mt-2 font-headers text-h3">Settings</header>
-    <a class="flex justify-between" href="/app/profile/name">
+    <a class="flex justify-between" href="/profile/name">
       <div class="flex items-center gap-2">
         <div class="text-primary">
           <User size="1.5rem" />
@@ -98,7 +98,7 @@
       <ChevronRight />
     </a>
 
-    <a class="flex justify-between" href="/app/profile/email">
+    <a class="flex justify-between" href="/profile/email">
       <div class="flex items-center gap-2">
         <div class="text-primary">
           <Envelope size="1.5rem" />
@@ -109,7 +109,7 @@
       <ChevronRight />
     </a>
 
-    <a class="flex justify-between" href="/app/profile/password">
+    <a class="flex justify-between" href="/profile/password">
       <div class="flex items-center gap-2">
         <div class="text-primary">
           <Key size="1.5rem" />

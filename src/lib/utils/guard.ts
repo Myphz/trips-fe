@@ -6,7 +6,7 @@ import { load, setMe } from "$lib/stores/api/select";
 import { get } from "svelte/store";
 
 function redirect(isLogged: boolean, mustBeLogged: boolean) {
-  const redirectTo = mustBeLogged ? "/auth/login" : "/";
+  const redirectTo = mustBeLogged ? "/old" : "/";
 
   if (isLogged !== mustBeLogged) {
     // Don't redirect after restore

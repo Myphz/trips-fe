@@ -11,7 +11,7 @@
 {#if !photo}
   {@html Userr}
 {:else if url}
-  <img src={url} alt="user" />
+  <img src={url} alt="user" class="object-cover" />
 {:else}
   <div class="skeleton" />
 {/if}

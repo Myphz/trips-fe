@@ -38,6 +38,6 @@
     >
       {@html iconComponents[icon]}
     </div>
-    <div class="capitalize">{icon}</div>
+    <div class="capitalize">{icon === "place" ? "Activity" : icon}</div>
   </Redirect>
 </div>

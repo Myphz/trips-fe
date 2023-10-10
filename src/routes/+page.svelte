@@ -2,7 +2,11 @@
   import { goto } from "$app/navigation";
   import { Button } from "$lib/components/form";
   import { authGuard } from "$utils/guard";
-  authGuard(false);
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    authGuard(false);
+  });
 </script>
 
 <section class="flex flex-col gap-4 text-small">
@@ -51,5 +55,5 @@
     </div>
   </section>
 
-  <Button on:click={() => goto("/app")}>GET STARTED</Button>
+  <Button on:click={() => goto("/auth/login")}>GET STARTED</Button>
 </section>

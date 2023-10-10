@@ -15,6 +15,7 @@ export type RoutesUnwrapped = { [K in keyof RouteParams]: UnwrapWritable<RoutePa
 export let paramsHistory: Partial<RoutesUnwrapped>[] = [];
 
 export const isDarkMode = writable(false);
+export const showWarningRedirect = writable(false);
 
 export const undo = () => {
   paramsHistory.pop();

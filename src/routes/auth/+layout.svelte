@@ -1,6 +1,10 @@
 <script lang="ts">
   import { authGuard } from "$utils/guard";
-  authGuard(false);
+  import { onMount } from "svelte";
+
+  onMount(() => {
+    authGuard(false);
+  });
 </script>
 
 <slot />

@@ -31,7 +31,10 @@
     tripId: data.tripId || data.id,
   }}
   {#if !isLoading}
-    <article class="relative flex h-52 w-full text-white" transition:fade={{ duration: 100 }}>
+    <article
+      class="relative flex h-52 w-full text-white dark:text-black"
+      transition:fade={{ duration: 100 }}
+    >
       <img
         class="darker-image absolute -z-10 h-full w-full rounded-xl object-cover shadow-md"
         src={url}

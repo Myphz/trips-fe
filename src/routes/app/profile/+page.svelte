@@ -34,7 +34,7 @@
 <section class="flex flex-col gap-8">
   <section class="flex flex-col items-center justify-center gap-4">
     <button
-      class="relative flex aspect-square w-[100px] items-center justify-center text-white"
+      class="relative flex aspect-square w-[100px] items-center justify-center text-white dark:text-black"
       on:click={() => ref.showPicker()}
     >
       <div

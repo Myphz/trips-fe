@@ -14,7 +14,7 @@
 </script>
 
 <header
-  class="sticky top-0 z-50 mb-12 flex items-center justify-between bg-gradient px-4 pt-6 text-white"
+  class="sticky top-0 z-50 mb-12 flex items-center justify-between bg-gradient px-4 pt-6 text-white dark:text-black"
 >
   <Redirect
     classes="relative flex aspect-square w-16 items-center justify-center"

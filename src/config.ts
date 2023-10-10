@@ -23,6 +23,7 @@ StatusBar.setOverlaysWebView({ overlay: true });
 StatusBar.setStyle({ style: Style.Dark });
 
 // Navigation bar
+// TODO
 NavigationBar.setColor({ color: getTwConfig().theme.colors.primary });
 
 async function saveAppState() {

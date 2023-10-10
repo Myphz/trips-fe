@@ -29,7 +29,7 @@
     {#each TABS as { icon, name }}
       <button
         on:click={() => filterOnly(name)}
-        class={$filter === name ? "text-white" : "text-tab"}
+        class={$filter === name ? "text-white dark:text-black" : "text-tab"}
       >
         {@html icon}
       </button>

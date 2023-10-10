@@ -18,7 +18,7 @@
 
 {#if $isModalOpen}
   <dialog
-    class="fixed inset-0 z-[60] flex h-full w-full items-center justify-center bg-black bg-opacity-70 text-white"
+    class="fixed inset-0 z-[60] flex h-full w-full items-center justify-center bg-black bg-opacity-70 text-white dark:bg-[#000000B3] dark:text-black"
     open={true}
     transition:fade={{ duration: 100 }}
   >

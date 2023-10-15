@@ -4,7 +4,7 @@ import { addOptionals } from "$utils/objects";
 import { get, writable } from "svelte/store";
 import { supabase } from "./client";
 import { routeParams } from "../routeParams";
-import type { UnwrapWritable } from "../route";
+import type { UnwrapWritable } from "$lib/types/route";
 
 export const loading = writable(true);
 export const uploading = writable(false);

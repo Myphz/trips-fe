@@ -47,7 +47,7 @@ export function appConfig() {
 
       // Save current status
       sessionStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
-      sessionStorage.setItem("paramsHistory", JSON.stringify(paramsHistory));
+      sessionStorage.setItem("paramsHistory", JSON.stringify(get(paramsHistory)));
       get(filter) && sessionStorage.setItem("filter", get(filter)!);
       sessionStorage.setItem("currentURL", window.location.pathname);
 

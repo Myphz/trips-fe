@@ -61,11 +61,13 @@
       <Loading />
     {/if}
   {:else}
-    <div class="fixed inset-0 z-50 flex h-full w-full items-center justify-center bg-black">
+    <div
+      class="fixed inset-0 z-50 flex h-full w-full items-center justify-center bg-black dark:bg-[#000]"
+    >
       <div
-        class="fixed top-0 flex h-24 w-full items-center justify-between bg-black bg-opacity-10 px-4 pt-6 text-white"
+        class="fixed top-0 flex h-24 w-full items-center justify-between bg-black bg-opacity-10 px-4 pt-6 text-white dark:bg-[#000]"
       >
-        <button on:click={() => (fullScreen = false)}>
+        <button on:click={() => (fullScreen = false)} class="dark:text-black">
           <ArrowLeft size="2rem" />
         </button>
 

@@ -1,7 +1,7 @@
 import type { Register } from "$lib/types/forms";
+import type { UnwrapWritable } from "$lib/types/route";
 import { generateUsername } from "$utils/api";
 import { fail } from "$utils/toasts";
-import type { UnwrapWritable } from "../route";
 import { supabase } from "./client";
 import { myProfile, setMe } from "./select";
 

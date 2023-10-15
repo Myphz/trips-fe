@@ -72,7 +72,7 @@
           <EnvelopeOpen size="1.5rem" />
           {#if $invitesN}
             <div
-              class="absolute -right-[2px] -top-[2px] flex aspect-square w-3 justify-center rounded-full bg-error text-[7px] leading-none text-white"
+              class="absolute -right-[2px] -top-[2px] flex aspect-square w-3 justify-center rounded-full bg-error text-[7px] leading-none text-white dark:text-black"
             >
               <span class="pt-[2px]">{$invitesN}</span>
             </div>

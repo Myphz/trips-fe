@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { setRouteParams, type RoutesUnwrapped } from "$lib/stores/route";
+  import { setRouteParams } from "$lib/stores/route";
 
   export let href: string;
   export let classes = "";
-  export let params: Partial<RoutesUnwrapped>;
+  export let params: Parameters<typeof setRouteParams>[0];
   export let paramsRedirect = true;
 </script>
 

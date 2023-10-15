@@ -56,7 +56,7 @@
           </span>
         </div>
       </div>
-      <div class="flex gap-2 text-white">
+      <div class="flex gap-2 text-white dark:text-black">
         <button class="rounded-lg bg-primary p-1" on:click={() => acceptInvite(invite.id)}>
           <Check />
         </button>

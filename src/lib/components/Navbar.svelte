@@ -27,13 +27,13 @@
 
   <a href="/profile" class="relative">
     <div
-      class="aspect-auto w-10 overflow-hidden rounded-full border-2 border-primary [&>*]:aspect-square [&>*]:w-full"
+      class="aspect-auto w-10 overflow-hidden rounded-full [&>*]:aspect-square [&>*]:w-full"
     >
       <UserImage photo={$myProfile?.photo ?? ""} />
     </div>
     {#if $invitesN}
       <div
-        class="absolute right-0 top-0 flex aspect-square w-3 justify-center rounded-full bg-error text-[7px] leading-none text-white"
+        class="absolute right-0 top-0 flex aspect-square w-3 justify-center rounded-full bg-error text-[7px] leading-none text-white dark:text-black"
       >
         <span class="pt-[2px]">{$invitesN}</span>
       </div>

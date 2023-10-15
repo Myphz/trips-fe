@@ -1,6 +1,9 @@
 <script lang="ts">
   import { MAIN_PAGE_TITLE, pageTitle } from "$lib/stores/route";
-  import { Plus, ArrowLeft, Pencil } from "svelte-heros";
+  import { Plus, ArrowLeft } from "svelte-heros";
+  import Pencil from "$lib/assets/icons/pencil.svg?raw";
+  import Move from "$lib/assets/icons/move.svg?raw";
+
   import { page } from "$app/stores";
   import { goBack } from "$utils/guard";
   import { modal } from "$utils/modal";
@@ -45,13 +48,22 @@
       {/if}
 
       {#if $page.route.id?.includes("info") && $card}
-        <a
-          href="/form/{$card.type}"
-          class="ml-auto text-primary"
-          transition:blur={{ duration: 100 }}
-        >
-          <Pencil size="1.5rem" />
-        </a>
+        <div class="ml-auto flex gap-4">
+          <a
+            href="/form/{$card.type}"
+            class="ml-auto text-primary"
+            transition:blur={{ duration: 100 }}
+          >
+            {@html Move}
+          </a>
+          <a
+            href="/form/{$card.type}"
+            class="ml-auto text-primary"
+            transition:blur={{ duration: 100 }}
+          >
+            {@html Pencil}
+          </a>
+        </div>
       {/if}
     </div>
   </div>

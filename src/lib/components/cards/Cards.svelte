@@ -8,6 +8,7 @@
   import type { ComponentType } from "svelte";
   import { cards, loading } from "$lib/stores/api/select";
   import Empty from "./Empty.svelte";
+  import Breadcrumbs from "./Breadcrumbs.svelte";
 
   const components: Record<EntityType, ComponentType> = {
     trip: Trip,
@@ -16,6 +17,8 @@
     transport: Transport,
   };
 </script>
+
+<Breadcrumbs />
 
 <main class="flex h-full flex-col gap-8">
   {#if !$loading}

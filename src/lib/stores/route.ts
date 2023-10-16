@@ -1,4 +1,4 @@
-import { get, writable, type Writable } from "svelte/store";
+import { derived, get, writable, type Writable } from "svelte/store";
 import { loadSingle, load, card, filter } from "./api/select";
 import { goto } from "$app/navigation";
 import { moveEntity, routeParams } from "./routeParams";
@@ -10,6 +10,9 @@ export const MAIN_PAGE_TITLE = "My Trips";
 export const pageTitle = writable(MAIN_PAGE_TITLE);
 
 export const paramsHistory: Writable<Partial<RoutesUnwrapped>[]> = writable([]);
+export const history = derived(paramsHistory, ($paramsHistory) =>
+  $paramsHistory.slice($paramsHistory.findLastIndex((history) => history.entityId === 0) + 1),
+);
 
 export const isDarkMode = writable(false);
 export const showWarningRedirect = writable(false);

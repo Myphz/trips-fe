@@ -1,8 +1,9 @@
 <script lang="ts">
-  import { move, pageTitle } from "$lib/stores/route";
+  import { pageTitle } from "$lib/stores/route";
   import { moveEntity } from "$lib/stores/routeParams";
   import { ArrowRight } from "svelte-heros";
   import Button from "../form/Button.svelte";
+  import { move } from "$lib/stores/api/update";
 </script>
 
 <div

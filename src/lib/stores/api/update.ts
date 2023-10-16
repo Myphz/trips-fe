@@ -3,6 +3,7 @@ import { fail, success } from "$utils/toasts";
 import { get } from "svelte/store";
 import { supabase } from "./client";
 import { card, load, loadSingle } from "./select";
+import { moveEntity, routeParams } from "../routeParams";
 
 type UpdateParams<T extends keyof Tables> = {
   table: T;
@@ -48,3 +49,20 @@ export async function updateCard(
     setNull: false,
   });
 }
+
+export const move = async () => {
+  const moveObj = get(moveEntity);
+  if (!moveObj) return console.error("Can't move null!");
+
+  const entityId = get(routeParams.entityId);
+  if (!entityId) return console.error("Can't move in null!");
+
+  await supabase.rpc("move", { moveid: moveObj.id, tripid: get(routeParams.tripId) });
+  await update({
+    table: "entities",
+    id: moveObj.id,
+    params: { parent: get(routeParams.parent), trip_id: get(routeParams.tripId) },
+  });
+
+  moveEntity.set(null);
+};

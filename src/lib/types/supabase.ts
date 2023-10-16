@@ -419,6 +419,13 @@ export interface Database {
         }
         Returns: boolean
       }
+      move: {
+        Args: {
+          moveid: number
+          tripid: number
+        }
+        Returns: undefined
+      }
       tripid_or_id: {
         Args: {
           trip_id: number

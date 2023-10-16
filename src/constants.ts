@@ -6,6 +6,9 @@ export const SUPABASE_URL = "https://osbnntqdwcamhqbpdzwz.supabase.co";
 export const SERVER_URL = "https://tripss.fly.dev";
 export const AUTH_SERVER_URL = "https://wopp.dev/trips";
 
+export const GOOGLE_CLIENT_ID =
+  "263345879363-ba9oddhtjt1usuvhv6omjfqe6bpbavb9.apps.googleusercontent.com";
+
 export const MEANS_OF_TRANSPORT = [
   {
     label: "Autobus",

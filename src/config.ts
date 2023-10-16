@@ -8,7 +8,8 @@ import { Capacitor } from "@capacitor/core";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
-// import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
+import { GOOGLE_CLIENT_ID } from "./constants";
 
 export function appConfig() {
   App.addListener("backButton", async () => {
@@ -74,6 +75,11 @@ export function appConfig() {
 
     App.addListener("pause", saveAppState);
   }
+
+  GoogleAuth.initialize({
+    clientId: GOOGLE_CLIENT_ID,
+    scopes: ["profile", "email"],
+  });
 }
 
 export async function getAppearancePref() {
@@ -85,9 +91,3 @@ export function setAppearancePref(appearance: string) {
   localStorage.setItem("theme", appearance);
   isDarkMode.set(localStorage.getItem("theme") === "dark");
 }
-
-// GoogleAuth.initialize({
-//   clientId: 'CLIENT_ID.apps.googleusercontent.com',
-//   scopes: ['profile', 'email'],
-//   grantOfflineAccess: true,
-// });

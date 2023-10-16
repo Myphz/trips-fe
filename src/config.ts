@@ -8,7 +8,6 @@ import { Capacitor } from "@capacitor/core";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
-import { NavigationBar } from "@hugotomazi/capacitor-navigation-bar";
 // import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
 export function appConfig() {
@@ -77,14 +76,7 @@ export function appConfig() {
   }
 }
 
-async function getPrimaryColor() {
-  if (get(isDarkMode)) return "#007F6D";
-  return "#00A991";
-}
-
 export async function getAppearancePref() {
-  const primaryColor = await getPrimaryColor();
-  NavigationBar.setColor({ color: primaryColor });
   // @ts-ignore
   return localStorage.getItem("theme");
 }

@@ -53,7 +53,6 @@
     "@capacitor/filesystem": "^5.1.4",
     "@capacitor/status-bar": "^5.0.6",
     "@capawesome/capacitor-background-task": "^5.0.0",
-    "@hugotomazi/capacitor-navigation-bar": "^2.0.1",
     "@supabase/supabase-js": "^2.38.1",
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",

@@ -1,5 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
+  import { GoogleLogin } from "$lib/components";
   import { Form, Input } from "$lib/components/form";
   import { supabase } from "$lib/stores/api/client";
   import { setMe } from "$lib/stores/api/select";
@@ -42,7 +43,7 @@
   </div>
 </Form>
 
-<!-- <div class="mt-4 flex flex-col gap-4 text-small">
+<div class="mt-4 flex flex-col gap-4 text-small">
   <div class="flex items-center gap-4">
     <div class="h-px flex-1 bg-primary"></div>
     <div>OR</div>
@@ -50,7 +51,7 @@
   </div>
 
   <GoogleLogin />
-</div> -->
+</div>
 
 <div class="mt-3 flex justify-center gap-1 text-small">
   <span>New user?</span>

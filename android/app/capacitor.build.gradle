@@ -15,7 +15,7 @@ dependencies {
     implementation project(':capacitor-filesystem')
     implementation project(':capacitor-status-bar')
     implementation project(':capawesome-capacitor-background-task')
-    implementation project(':hugotomazi-capacitor-navigation-bar')
+    implementation project(':codetrix-studio-capacitor-google-auth')
 
 }
 

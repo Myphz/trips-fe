@@ -1,5 +1,5 @@
 import { CapacitorConfig } from "@capacitor/cli";
-import { GOOGLE_CLIENT_ID } from "./src/constants";
+import { GOOGLE_CLIENT_ID_ANDROID } from "./src/constants";
 
 const config: CapacitorConfig = {
   appId: "com.tripsphoexa.app",
@@ -10,7 +10,9 @@ const config: CapacitorConfig = {
   },
   plugins: {
     GoogleAuth: {
-      clientId: GOOGLE_CLIENT_ID,
+      clientId: GOOGLE_CLIENT_ID_ANDROID,
+      androidClientId: GOOGLE_CLIENT_ID_ANDROID,
+      serverClientId: GOOGLE_CLIENT_ID_ANDROID,
       scopes: ["profile", "email"],
     },
   },

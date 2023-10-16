@@ -3,8 +3,15 @@
   import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 
   const signIn = async () => {
-    const response = await GoogleAuth.signIn();
-    console.log(response);
+    try {
+      const response = await GoogleAuth.signIn();
+      console.log(response);
+      alert(JSON.stringify(response));
+    } catch (err) {
+      console.log(err);
+      alert(err);
+      alert(JSON.stringify(err));
+    }
   };
 </script>
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { photos } from "$lib/stores/api/select";
-  import type { UnwrapWritable } from "$lib/stores/route";
+  import type { UnwrapWritable } from "$lib/types/route";
   import { downloadOrViewFile } from "$utils/files";
   import { ArrowDownTray } from "svelte-heros";
 

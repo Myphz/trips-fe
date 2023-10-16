@@ -1,9 +1,11 @@
 import { get, writable, type Writable } from "svelte/store";
 import { loadSingle, load, card, filter } from "./api/select";
 import { goto } from "$app/navigation";
-import { routeParams } from "./routeParams";
+import { moveEntity, routeParams } from "./routeParams";
 import { getName } from "$utils/format";
 import type { RoutesUnwrapped, UnwrapWritable } from "$lib/types/route";
+import { goBack } from "$utils/guard";
+import { update } from "./api/update";
 
 export const MAIN_PAGE_TITLE = "My Trips";
 export const pageTitle = writable(MAIN_PAGE_TITLE);
@@ -68,4 +70,26 @@ export const setRouteParams = (
 
 export const setPageTitle = (title: string) => {
   pageTitle.set(title);
+};
+
+export const activateMode = () => {
+  const entityId = get(routeParams.entityId);
+  moveEntity.set({ id: entityId, name: getName(get(card)) });
+  goBack();
+};
+
+export const move = async () => {
+  const moveObj = get(moveEntity);
+  if (!moveObj) return console.error("Can't move null!");
+
+  const entityId = get(routeParams.entityId);
+  if (!entityId) return console.error("Can't move in null!");
+
+  await update({
+    table: "entities",
+    id: moveObj.id,
+    params: { parent: get(routeParams.parent), trip_id: get(routeParams.tripId) },
+  });
+
+  moveEntity.set(null);
 };

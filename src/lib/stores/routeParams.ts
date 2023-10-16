@@ -5,3 +5,5 @@ export const routeParams = {
   parent: writable(0),
   tripId: writable(0),
 };
+
+export const moveEntity = writable<{ name: string; id: number } | null>(null);

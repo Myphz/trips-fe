@@ -2,9 +2,9 @@ import type { GetRowType, GetRowTypes } from "$lib/types/api";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 import { MEANS_OF_TRANSPORT, SERVER_URL } from "../../constants";
 import { success } from "./toasts";
-import type { UnwrapWritable } from "$lib/stores/route";
 import type { photos } from "$lib/stores/api/select";
 import { FileOpener } from "@capacitor-community/file-opener";
+import type { UnwrapWritable } from "$lib/types/route";
 
 const QUALITY = 0.75;
 

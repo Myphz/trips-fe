@@ -1,6 +1,6 @@
 import type { myProfile } from "$lib/stores/api/select";
-import type { UnwrapWritable } from "$lib/stores/route";
 import type { Tables } from "./api";
+import type { UnwrapWritable } from "./route";
 
 export type Register = { email: string; password: string; displayed: string };
 export type FormParams<T extends keyof Tables> = Tables["entities"]["Insert"] &

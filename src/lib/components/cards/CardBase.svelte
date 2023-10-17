@@ -47,7 +47,7 @@
           params={data.type === "trip" ? redirectParams : { entityId: data.id }}
           classes="z-20 pb-4 pl-2 pr-4 pt-2 flex flex-1 flex-col"
         >
-          <header class="line-clamp-2 text-h3">{getName(data)}</header>
+          <header class="line-clamp-2 break-all text-h3">{getName(data)}</header>
           <slot name="header" />
         </Redirect>
 

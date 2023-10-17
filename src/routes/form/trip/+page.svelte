@@ -18,6 +18,8 @@
   import type { GetRowType, Tables } from "$lib/types/api";
   import { update } from "$lib/stores/api/update";
   import { addEntity, inviteUsers } from "$lib/stores/api/create";
+  import Combobox from "$lib/components/form/Combobox.svelte";
+  import currencies from "$lib/assets/currencies.json";
 
   const { entityId } = routeParams;
 
@@ -31,6 +33,7 @@
           "start_date",
           "end_date",
           "photo",
+          "currency",
         ])
       : {};
 
@@ -72,14 +75,8 @@
     <Datepicker name="start_date" placeholder="Departure" />
     <Datepicker name="end_date" placeholder="Return" />
   </div>
-  <!-- <Select
-    name="currency"
-    label="Currency"
-    options={[
-      { label: "Daniel", value: "2" },
-      { label: "b", value: "3" },
-    ]}
-  /> -->
+
+  <Combobox name="currency" label="Currency" options={currencies} />
 
   <PeopleSelector name="people" />
   <MediaUploader name="photo" mediaType="image" />

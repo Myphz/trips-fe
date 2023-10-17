@@ -276,18 +276,21 @@ export interface Database {
       }
       trips: {
         Row: {
+          currency: string | null
           destination: string
           end_date: string | null
           id: number
           start_date: string | null
         }
         Insert: {
+          currency?: string | null
           destination: string
           end_date?: string | null
           id: number
           start_date?: string | null
         }
         Update: {
+          currency?: string | null
           destination?: string
           end_date?: string | null
           id?: number
@@ -327,6 +330,7 @@ export interface Database {
           trip_destination: string
           trip_start: string
           trip_end: string
+          trip_currency: string
           place_name: string
           place_date: string
           place_address: string
@@ -359,6 +363,7 @@ export interface Database {
           trip_destination: string
           trip_start: string
           trip_end: string
+          trip_currency: string
           place_name: string
           place_date: string
           place_address: string

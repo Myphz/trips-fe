@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext } from "svelte";
+  import { getContext, onMount } from "svelte";
   import { twMerge } from "tailwind-merge";
 
   import { createCombobox } from "svelte-headlessui";
@@ -31,6 +31,10 @@
     if (displaySelected) inputRef.value = selected.label;
     else inputRef.value = "";
   };
+
+  onMount(() => {
+    if (selected) inputRef.value = selected.label;
+  });
 
   $: filtered = options.filter((option) =>
     option.label

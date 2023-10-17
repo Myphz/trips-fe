@@ -1,5 +1,6 @@
 <script lang="ts">
   import { supabase } from "$lib/stores/api/client";
+  import { setMe } from "$lib/stores/api/select";
   import { createProfile } from "$lib/stores/api/user";
   import { fail } from "$utils/toasts";
   import { Button } from "./form";
@@ -8,23 +9,20 @@
   const signIn = async () => {
     try {
       const response = await GoogleAuth.signIn();
-      console.log(response);
-      alert(JSON.stringify(response));
-
       const { data } = await supabase.auth.signInWithIdToken({
         provider: "google",
         token: response.authentication.idToken,
       });
-      console.log(data);
 
-      if (!data.session?.user.id)
-        return fail({ title: "Error", msg: "Something went wrong. Please retry" });
+      const userId = data.session?.user.id;
 
-      await createProfile({ id: data.session.user.id, displayed: response.givenName });
+      if (!userId) return fail({ title: "Error", msg: "Something went wrong. Please retry" });
+      // Create profile only if it doesn't exist
+      if (!(await setMe(userId))) {
+        await createProfile({ id: userId, displayed: response.givenName });
+      }
     } catch (err) {
-      console.log(err);
-      alert(err);
-      alert(JSON.stringify(err));
+      fail({ title: "Error", msg: "Something went wrong. Please retry" });
     }
   };
 </script>

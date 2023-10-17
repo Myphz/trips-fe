@@ -76,12 +76,10 @@ export function appConfig() {
     App.addListener("pause", saveAppState);
   }
 
-  if (Capacitor.getPlatform() === "web") {
-    GoogleAuth.initialize({
-      clientId: GOOGLE_CLIENT_ID_WEB,
-      scopes: ["profile", "email"],
-    });
-  }
+  GoogleAuth.initialize({
+    clientId: GOOGLE_CLIENT_ID_WEB,
+    scopes: ["profile", "email"],
+  });
 }
 
 export async function getAppearancePref() {

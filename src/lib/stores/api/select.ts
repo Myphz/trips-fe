@@ -5,6 +5,7 @@ import { get, writable } from "svelte/store";
 import { supabase } from "./client";
 import { routeParams } from "../routeParams";
 import type { UnwrapWritable } from "$lib/types/route";
+import { goto } from "$app/navigation";
 
 export const loading = writable(true);
 export const uploading = writable(false);
@@ -140,6 +141,7 @@ export async function logout() {
   await supabase.auth.signOut();
   myId.set("");
   myProfile.set(null);
+  goto("/old");
 }
 
 export async function getTripInfo() {

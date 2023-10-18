@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { tripCurrency } from "$lib/stores/route";
   import { differenceInHours } from "date-fns";
 
   export let data: Record<string, string | number>;
@@ -7,6 +8,13 @@
   const entries = Object.entries(data);
   const [start, end] = [data.Departure || data["Check-in"], data.Return || data["Check-out"]];
   const [startTime, endTime] = [data.departure, data.arrival];
+
+  function addCurrency(key: string) {
+    const idx = entries.findIndex(([k, _]) => k === key);
+    if (idx !== -1) {
+      entries[idx] = [key, `${entries[idx][1]} ${$tripCurrency}`];
+    }
+  }
 
   if (start && end) {
     // Automatically calculate duration in days
@@ -21,6 +29,13 @@
       `${differenceInHours(new Date(startTime), new Date(endTime))} hours`,
     ]);
   }
+
+  // Add trip currency symbol
+  addCurrency("price");
+  addCurrency("Total");
+  addCurrency("Activities");
+  addCurrency("Lodgings");
+  addCurrency("Transports");
 </script>
 
 {#if entries.length}

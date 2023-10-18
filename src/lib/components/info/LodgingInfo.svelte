@@ -14,7 +14,6 @@
         start: "Check-in",
         end: "Check-out",
         createdAt: "Created at",
-        price: "Total price",
       }),
       photos: $photos.length,
     }}

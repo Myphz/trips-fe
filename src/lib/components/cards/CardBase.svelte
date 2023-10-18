@@ -6,6 +6,7 @@
   import { getPhotoURL, getPlaceholderImage } from "$utils/files";
   import Loading from "./Loading.svelte";
   import { fade } from "svelte/transition";
+  import { addOptionals } from "$utils/objects";
 
   export let data: GetRowTypes;
 
@@ -29,6 +30,7 @@
     entityId: data.id,
     parent: data.id,
     tripId: data.tripId || data.id,
+    ...(data.type === "trip" && { currency: data.currency }),
   }}
   {#if !isLoading}
     <article
@@ -57,7 +59,14 @@
           <Stars rating={data.rating || 0} mode="rating" />
 
           {#if data.type === "trip"}
-            <Redirect href="/info" classes="z-30" params={{ entityId: data.id }}>
+            <Redirect
+              href="/info"
+              classes="z-30"
+              params={{
+                entityId: data.id,
+                currency: data.currency,
+              }}
+            >
               <InformationCircle size="2rem" />
             </Redirect>
           {/if}

@@ -13,6 +13,7 @@ export const paramsHistory: Writable<Partial<RoutesUnwrapped>[]> = writable([]);
 export const history = derived(paramsHistory, ($paramsHistory) =>
   $paramsHistory.slice($paramsHistory.findLastIndex((history) => history.entityId === 0) + 1),
 );
+export const tripCurrency = writable("");
 
 export const isDarkMode = writable(false);
 export const showWarningRedirect = writable(false);
@@ -54,14 +55,17 @@ export const setRouteParams = (
   opts?: { saveParams?: boolean; paramsRedirect?: boolean },
 ) => {
   const { saveParams = true, paramsRedirect = true } = opts ?? {};
-  const { title, ...rest } = params;
+  const { title, currency, ...rest } = params;
 
   Object.entries(rest).map(([key, val]) => {
     routeParams[key as keyof typeof routeParams].set(val);
   });
 
-  if (saveParams)
+  if (currency || !get(routeParams.tripId)) tripCurrency.set(currency || "");
+
+  if (saveParams) {
     paramsHistory.set([...get(paramsHistory), { ...params, title: title ?? get(pageTitle) }]);
+  }
   if ("parent" in params || "tripId" in params) load();
   if ("entityId" in params) loadSingle();
   if (window.location.pathname !== "/trip" && paramsRedirect) {

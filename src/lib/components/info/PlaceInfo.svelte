@@ -12,7 +12,6 @@
     data={{
       ...rename(pickCard("place", ["name", "date", "createdAt", "address", "price"]), {
         createdAt: "Created at",
-        price: "Total price",
       }),
       photos: $photos.length,
     }}

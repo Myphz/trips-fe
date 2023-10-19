@@ -6,6 +6,7 @@ export const SUPABASE_URL = "https://osbnntqdwcamhqbpdzwz.supabase.co";
 export const SERVER_URL = "https://tripss.fly.dev";
 export const AUTH_SERVER_URL = "https://wopp.dev/trips";
 
+// Unused
 export const GOOGLE_CLIENT_ID_ANDROID =
   "263345879363-ba9oddhtjt1usuvhv6omjfqe6bpbavb9.apps.googleusercontent.com";
 

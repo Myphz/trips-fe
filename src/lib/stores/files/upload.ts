@@ -5,7 +5,7 @@ import { uploadProgress, uploading } from "../api/select";
 import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
 
-export const uploadFiles = async (files: FileList, allowAny = false) => {
+export const uploadFiles = async (files: Blob[], allowAny = false) => {
   if (!allowAny && [...files].some((file) => !file.type.includes("image"))) {
     fail({ title: "Invalid file", msg: "Invalid file type" });
     throwError("Invalid filetype");
@@ -32,4 +32,10 @@ export const uploadFiles = async (files: FileList, allowAny = false) => {
   uploading.set(false);
 
   return data as Record<string, string>;
+};
+
+export const uploadFileFromURL = async (url: string) => {
+  const res = await fetch(url);
+  const blob = await res.blob();
+  return await uploadFiles([blob]);
 };

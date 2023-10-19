@@ -8,6 +8,7 @@
   export let onSubmit: (data: T) => unknown;
   export let autocomplete = "off";
   export let buttonText: string;
+  export let classes = "";
 
   let loading = false;
 
@@ -41,11 +42,11 @@
   };
 </script>
 
-<form on:submit={realSubmit} {autocomplete}>
+<form on:submit={realSubmit} {autocomplete} class={classes}>
   <div class="flex select-none flex-col gap-4 text-gray">
     <slot />
   </div>
-  <div class="mt-8 flex gap-2">
+  <div class="mt-10 flex gap-2">
     <Button submit disabled={loading}>
       <div class="relative flex w-full flex-col items-center justify-center">
         <span>{loading ? "LOADING" : buttonText}</span>

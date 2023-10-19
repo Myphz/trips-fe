@@ -20,7 +20,7 @@
     const files = (e.currentTarget as HTMLInputElement).files;
     if (!files?.length) return;
 
-    photos = await uploadFiles(files, mediaType === "any");
+    photos = await uploadFiles(Array.from(files), mediaType === "any");
     onNewPhotos(photos);
   };
 </script>

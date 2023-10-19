@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <div class="mb-8 mt-2 flex flex-col gap-2 text-small text-black">
+  <div class="my-2 flex flex-col gap-2 text-small text-black">
     {#each selected as person}
       <div class="flex justify-between">
         <div class="flex items-center gap-2">

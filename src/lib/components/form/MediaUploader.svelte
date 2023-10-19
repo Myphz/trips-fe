@@ -3,8 +3,6 @@
   import { PhotoViewer } from "..";
   import { getContext } from "svelte";
   import FilePicker from "./FilePicker.svelte";
-  import { Button } from ".";
-  import { getPexelsPhoto } from "$utils/pexels";
   import PexelsModal from "./PexelsModal.svelte";
   import { uploadFileFromURL } from "$lib/stores/files/upload";
 

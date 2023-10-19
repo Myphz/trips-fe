@@ -5,12 +5,18 @@
   import { MagnifyingGlass } from "svelte-heros";
   import { getPexelsPhoto } from "$utils/pexels";
   import { BarLoader } from "svelte-loading-spinners";
+  import { getName } from "$utils/format";
+  import { card } from "$lib/stores/api/select";
+  import { setContext } from "svelte";
 
   export let open = false;
   export let onImageSelect: (src: string) => unknown;
 
   let clicked = false;
   let loading = false;
+
+  $: startSearch = getName($card);
+  $: setContext("defaultValues", { search: startSearch });
 
   let photos: Awaited<ReturnType<typeof getPexelsPhoto>> = [];
 

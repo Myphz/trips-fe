@@ -41,6 +41,8 @@ To run the Trips app locally, follow these steps:
 3. Clone and start the [backend repository](https://github.com/Myphz/trips-be)
 4. Start the live server with `npm run dev`
 
+The Svelte app will be available on `http://localhost:5173`
+
 ## Contributions and Feedback 🙌
 
 We welcome contributions and value your feedback. Feel free to submit issues, feature requests, or contribute to the project.

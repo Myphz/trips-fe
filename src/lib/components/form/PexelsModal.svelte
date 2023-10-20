@@ -49,14 +49,14 @@
     transition:fade={{ duration: 100 }}
   >
     <div
-      class="w-[80%] rounded-xl bg-white px-4 pb-8 pt-2 text-black"
+      class="mx-4 w-full rounded-xl bg-white px-4 pb-8 pt-2 text-black"
       use:clickoutside
       on:clickoutside={onClickOutside}
     >
       <form class="flex items-center gap-2" on:submit={onSubmit} autocomplete="off">
         <Input name="search" placeholder="Search" />
         <button
-          class="mt-2 aspect-square h-full rounded-md bg-primary p-1 text-white [&>*]:aspect-square [&>*]:h-full"
+          class="mt-2 aspect-square h-full p-1 text-primary [&>*]:aspect-square [&>*]:h-full"
         >
           <MagnifyingGlass />
         </button>
@@ -66,7 +66,7 @@
         {#if photos.length}
           <div class="flex max-h-[60vh] w-full flex-wrap gap-2 overflow-scroll">
             {#each photos as photo}
-              {@const src = photo.src.portrait}
+              {@const src = photo.src.landscape}
               <button
                 class="max-h-[30vh] max-w-[calc(50%-0.25rem)] rounded-md object-contain"
                 type="button"

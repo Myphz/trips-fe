@@ -19,7 +19,7 @@
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add an activity");
 
   $: defaultValues =
-    isEdit && $card ? pickCard("place", ["name", "address", "date", "price"]) : {};
+    isEdit && $card ? pickCard("place", ["name", "address", "date", "price", "photo"]) : {};
 
   const onSubmit = async (data: FormParams<"places">) => {
     if (data.price) {

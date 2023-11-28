@@ -7,15 +7,22 @@
   import { ArrowLeft } from "svelte-heros";
   import { AUTH_SERVER_URL } from "../../../constants";
 
+  let loading = false;
+
   const sendEmail = async () => {
+    if (loading) return;
+    loading = true;
+
     const user = await supabase.auth.getUser();
     const email = user.data.user?.email;
 
     if (!email) return fail({ title: "Error", msg: "Something went wrong. Please retry" });
 
-    await supabase.auth.resetPasswordForEmail(email, {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${AUTH_SERVER_URL}/password`,
     });
+
+    if (error) return fail({ title: "Error", msg: "Error sending the email. Please retry." });
 
     success({ title: "Success", msg: "Check your email" });
     goBack();
@@ -33,5 +40,13 @@
 
   <div class="text-small">You will receive a link to your email to update your password</div>
 
-  <Button on:click={sendEmail}>SEND EMAIL</Button>
+  <Button
+    disabled={loading}
+    on:click={async () => {
+      await sendEmail();
+      loading = false;
+    }}
+  >
+    SEND EMAIL
+  </Button>
 </section>

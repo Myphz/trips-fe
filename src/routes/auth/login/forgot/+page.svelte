@@ -4,16 +4,19 @@
   import { supabase } from "$lib/stores/api/client";
   import { setPageTitle } from "$lib/stores/route";
   import { goBack } from "$utils/guard";
-  import { success } from "$utils/toasts";
+  import { fail, success } from "$utils/toasts";
   import { AUTH_SERVER_URL } from "../../../../constants";
 
   setPageTitle("Recover password");
 
   const onSubmit = async ({ email }: { email: string }) => {
     if (!email) return;
-    await supabase.auth.resetPasswordForEmail(email, {
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${AUTH_SERVER_URL}/password`,
     });
+
+    if (error) return fail({ title: "Error", msg: "Error sending the email. Please retry." });
 
     success({ title: "Success", msg: "Check your email" });
     goBack();

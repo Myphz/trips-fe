@@ -9,6 +9,8 @@
   const [start, end] = [data.Departure || data["Check-in"], data.Return || data["Check-out"]];
   const [startTime, endTime] = [data.departure, data.arrival];
 
+  console.log([startTime, endTime]);
+
   function addCurrency(key: string) {
     const idx = entries.findIndex(([k, _]) => k === key);
     if (idx !== -1) {
@@ -26,7 +28,9 @@
   if (startTime && endTime) {
     entries.push([
       "Duration",
-      `${differenceInHours(new Date(startTime), new Date(endTime))} hours`,
+      `${differenceInHours(new Date(endTime), new Date(startTime), {
+        roundingMethod: "round",
+      })} hours`,
     ]);
   }
 

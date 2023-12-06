@@ -36,6 +36,7 @@
             "arrival_datetime",
             "mean",
             "photo",
+            "price",
           ],
         )
       : {};

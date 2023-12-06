@@ -9,8 +9,6 @@
   const [start, end] = [data.Departure || data["Check-in"], data.Return || data["Check-out"]];
   const [startTime, endTime] = [data.departure, data.arrival];
 
-  console.log([startTime, endTime]);
-
   function addCurrency(key: string) {
     const idx = entries.findIndex(([k, _]) => k === key);
     if (idx !== -1) {
@@ -49,7 +47,7 @@
       {#each entries as [key, value]}
         <div class="flex justify-between">
           <span class="capitalize-first">{key}</span>
-          <span class="capitalize-first">{value}</span>
+          <span class="capitalize-first text-right">{value}</span>
         </div>
       {/each}
     </div>

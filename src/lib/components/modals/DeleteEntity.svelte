@@ -1,14 +1,22 @@
 <script lang="ts">
-  import { del } from "$lib/stores/api/delete";
+  import { del, deleteGroup } from "$lib/stores/api/delete";
   import { card } from "$lib/stores/api/select";
   import { closeModal } from "$lib/stores/modals";
+  import { routeParams } from "$lib/stores/routeParams";
   import { getName } from "$utils/format";
   import { goBack } from "$utils/guard";
+  import { get } from "svelte/store";
   import { Button } from "../form";
 
   const onDeleteClick = async () => {
     closeModal();
-    await del({ table: "entities" });
+    const { entityId, parent, tripId } = routeParams;
+    const isMainTrip = !get(parent) && !get(tripId);
+    if (!(await del({ table: "entities", withErrorToast: !isMainTrip })) && isMainTrip) {
+      // Don't delete someone else's main trip, leave it
+      await deleteGroup(get(entityId));
+    }
+
     goBack();
   };
 </script>

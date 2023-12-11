@@ -7,7 +7,7 @@
   import { page } from "$app/stores";
   import { goBack } from "$utils/guard";
   import { modal } from "$utils/modal";
-  import { card } from "$lib/stores/api/select";
+  import { card, filter } from "$lib/stores/api/select";
   import { blur } from "svelte/transition";
 
   $: advancedMode = $pageTitle !== MAIN_PAGE_TITLE;

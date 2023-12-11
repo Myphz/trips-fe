@@ -43,6 +43,7 @@ export function goBack() {
     window.location.pathname === "/trip" ||
     window.location.pathname === "/info" ||
     window.location.pathname.startsWith("/form");
+
   if (inTrip && undo()) return;
   if (inTrip) {
     goto("/");

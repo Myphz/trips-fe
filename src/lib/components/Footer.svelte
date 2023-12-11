@@ -7,6 +7,7 @@
   import { filter, filterOnly } from "$lib/stores/api/select";
   import Redirect from "./Redirect.svelte";
   import { onMount } from "svelte";
+  import { get } from "svelte/store";
 
   const TABS = [
     { icon: Trip, name: "trip" },
@@ -15,7 +16,7 @@
   ] as const;
 
   onMount(() => {
-    filter.set("trip");
+    if (!get(filter)) filter.set("trip");
   });
 </script>
 

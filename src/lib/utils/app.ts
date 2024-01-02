@@ -14,7 +14,7 @@ export const restoreAppState = () => {
 
   restore(routeParams, paramsHistory, filter as Parameters<typeof restore>[2]);
   goto(currentURL);
-  return;
+  setTimeout(() => sessionStorage.setItem("hasRestored", "yes"), 500);
 };
 
 export function deleteAppState() {

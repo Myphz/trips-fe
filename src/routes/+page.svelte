@@ -8,7 +8,7 @@
 
   onMount(() => {
     authGuard();
-    deleteAppState();
+    if (sessionStorage.getItem("hasRestored")) deleteAppState();
     setPageTitle(MAIN_PAGE_TITLE);
     filter.set(null);
   });

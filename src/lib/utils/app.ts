@@ -22,22 +22,29 @@ export function deleteAppState() {
   for (const key of keys) localStorage.removeItem(key);
 }
 
+export function saveStateToLocalStorage() {
+  // Don't save anything if not in trip
+  if (window.location.pathname.includes("auth") || window.location.pathname.includes("old"))
+    return;
+
+  const currentRouteParams = {
+    entityId: get(routeParams.entityId),
+    parent: get(routeParams.parent),
+    tripId: get(routeParams.tripId),
+  };
+
+  // Save current status
+  localStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
+  localStorage.setItem("paramsHistory", JSON.stringify(get(paramsHistory)));
+  get(filter) && localStorage.setItem("filter", get(filter)!);
+  localStorage.setItem("currentURL", window.location.pathname);
+}
+
 export async function saveAppState() {
   // The app state has been changed to inactive.
   // Start the background task by calling `beforeExit`.
   const taskId = await BackgroundTask.beforeExit(() => {
-    const currentRouteParams = {
-      entityId: get(routeParams.entityId),
-      parent: get(routeParams.parent),
-      tripId: get(routeParams.tripId),
-    };
-
-    // Save current status
-    localStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
-    localStorage.setItem("paramsHistory", JSON.stringify(get(paramsHistory)));
-    get(filter) && localStorage.setItem("filter", get(filter)!);
-    localStorage.setItem("currentURL", window.location.pathname);
-
+    saveStateToLocalStorage();
     // Finish the background task as soon as everything is done.
     BackgroundTask.finish({ taskId });
   });

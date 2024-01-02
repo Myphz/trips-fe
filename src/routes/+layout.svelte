@@ -11,6 +11,8 @@
   import { Modals } from "$lib/components/modals";
   import { appConfig } from "../config";
   import { fail } from "$utils/toasts";
+  import { saveStateToLocalStorage } from "$utils/app";
+  import { afterNavigate } from "$app/navigation";
 
   onMount(() => {
     appConfig();
@@ -27,6 +29,8 @@
     window.onerror = handleError;
     window.onunhandledrejection = handleError;
   });
+
+  afterNavigate(saveStateToLocalStorage);
 
   function handleError() {
     fail({ title: "Error", msg: "Unexpected error. Please retry." });

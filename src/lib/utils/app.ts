@@ -1,5 +1,5 @@
 import { goto } from "$app/navigation";
-import { filter } from "$lib/stores/api/select";
+import { filter, myId } from "$lib/stores/api/select";
 import { paramsHistory, restore } from "$lib/stores/route";
 import { routeParams } from "$lib/stores/routeParams";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
@@ -24,7 +24,11 @@ export function deleteAppState() {
 
 export function saveStateToLocalStorage() {
   // Don't save anything if not in trip
-  if (window.location.pathname.includes("auth") || window.location.pathname.includes("old"))
+  if (
+    window.location.pathname.includes("auth") ||
+    window.location.pathname.includes("old") ||
+    !get(myId)
+  )
     return;
 
   const currentRouteParams = {

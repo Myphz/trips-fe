@@ -23,6 +23,7 @@
   />
   {#if info}
     <Details
+      withCurrency
       header="Price"
       data={rename(
         pick(info, ["lodging_cost", "place_cost", "total_cost", "transport_cost"]),

@@ -6,22 +6,15 @@ import type { photos } from "$lib/stores/api/select";
 import { FileOpener } from "@capacitor-community/file-opener";
 import type { UnwrapWritable } from "$lib/types/route";
 
-const worker = new Worker("webp-conversion-worker.js");
+const QUALITY = 0.75;
 
 export async function blobToWebp(blob: Blob): Promise<Blob> {
-  return new Promise((resolve, reject) => {
-    worker.addEventListener("message", (event) => {
-      if (event.data.webpBlob) {
-        resolve(event.data.webpBlob);
-      } else if (event.data.error) {
-        reject(new Error(event.data.error));
-      }
-    });
+  const imageBitmap = await createImageBitmap(blob);
 
-    worker.postMessage({
-      imageData: blob,
-    });
-  });
+  const canvas = new OffscreenCanvas(imageBitmap.width, imageBitmap.height);
+  const context = canvas.getContext("2d")!;
+  context.drawImage(imageBitmap, 0, 0, imageBitmap.width, imageBitmap.height);
+  return await canvas.convertToBlob({ type: "image/webp", quality: QUALITY });
 }
 
 function blobToJpeg(blob: Blob): Promise<Blob> {

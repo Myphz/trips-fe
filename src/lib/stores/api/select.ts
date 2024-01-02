@@ -8,8 +8,6 @@ import type { UnwrapWritable } from "$lib/types/route";
 import { goto } from "$app/navigation";
 
 export const loading = writable(true);
-export const uploading = writable(false);
-export const uploadProgress = writable(0);
 
 export const cards = writable<Awaited<ReturnType<typeof getAll>>>([]);
 export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);

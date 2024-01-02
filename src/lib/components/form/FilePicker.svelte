@@ -1,6 +1,5 @@
 <script lang="ts">
-  import { uploadProgress, uploading } from "$lib/stores/api/select";
-  import { uploadFiles } from "$lib/stores/files/upload";
+  import { uploadFiles, uploadProgress, uploading } from "$lib/stores/files/upload";
   import { BarLoader } from "svelte-loading-spinners";
 
   export let mediaType: "image" | "video" | "both" | "any";
@@ -23,6 +22,14 @@
     photos = await uploadFiles(Array.from(files), mediaType === "any");
     onNewPhotos(photos);
   };
+
+  const getStateLabel = (progress: number | null) => {
+    if (progress === null) return "Compressing images...";
+    if (progress === 100) return "Server processing...";
+    return `Uploading (${$uploadProgress}%)`;
+  };
+
+  $: stateLabel = getStateLabel($uploadProgress);
 </script>
 
 <input
@@ -36,7 +43,7 @@
 
 {#if $uploading}
   <div class="my-8 flex flex-col items-center justify-center gap-2">
-    <div class="text-regular">Uploading ({$uploadProgress}%)</div>
+    <div class="text-regular">{stateLabel}</div>
     <div class="text-primary">
       <BarLoader size="70" color="currentColor" />
     </div>

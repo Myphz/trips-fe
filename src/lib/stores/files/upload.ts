@@ -1,9 +1,12 @@
 import { SERVER_URL } from "../../../constants";
 import { blobToWebp } from "$utils/files";
 import axios from "axios";
-import { uploadProgress, uploading } from "../api/select";
 import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
+import { writable } from "svelte/store";
+
+export const uploading = writable(false);
+export const uploadProgress = writable<number | null>(null);
 
 export const uploadFiles = async (files: Blob[], allowAny = false) => {
   if (!allowAny && [...files].some((file) => !file.type.includes("image"))) {
@@ -11,7 +14,7 @@ export const uploadFiles = async (files: Blob[], allowAny = false) => {
     throwError("Invalid filetype");
   }
 
-  uploadProgress.set(0);
+  uploadProgress.set(null);
   uploading.set(true);
 
   const formData = new FormData();
@@ -21,17 +24,22 @@ export const uploadFiles = async (files: Blob[], allowAny = false) => {
     formData.append(file.name, blob);
   }
 
-  const { data } = await axios.post(`${SERVER_URL}/upload`, formData, {
-    onUploadProgress(progressEvent) {
-      const percentCompleted =
-        Math.round((progressEvent.loaded * 10000) / (progressEvent.total ?? 1)) / 100;
-      uploadProgress.set(percentCompleted);
-    },
-  });
+  let data: Record<string, string> = {};
+  uploadProgress.set(0);
+  try {
+    ({ data } = await axios.post(`${SERVER_URL}/upload`, formData, {
+      onUploadProgress(progressEvent) {
+        const percentCompleted =
+          Math.round((progressEvent.loaded * 10000) / (progressEvent.total ?? 1)) / 100;
+        uploadProgress.set(percentCompleted);
+      },
+    }));
+  } catch (err) {
+    fail({ msg: "Unexpected error", title: "Upload error" });
+  }
 
   uploading.set(false);
-
-  return data as Record<string, string>;
+  return data;
 };
 
 export const uploadFileFromURL = async (url: string) => {

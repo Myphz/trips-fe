@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { uploadFiles, uploadProgress, uploading } from "$lib/stores/files/upload";
+  import { uploadFiles, uploadProgress, isUploading } from "$lib/stores/files/upload";
   import { BarLoader } from "svelte-loading-spinners";
 
   export let mediaType: "image" | "video" | "both" | "any";
@@ -41,7 +41,7 @@
   on:change={onChange}
 />
 
-{#if $uploading}
+{#if $isUploading}
   <div class="my-8 flex flex-col items-center justify-center gap-2">
     <div class="text-regular">{stateLabel}</div>
     <div class="text-primary">

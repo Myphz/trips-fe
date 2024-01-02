@@ -17,7 +17,7 @@
   type={submit ? "submit" : "button"}
   {disabled}
   class={twMerge(
-    "w-full rounded-lg py-2 text-white disabled:opacity-70",
+    "w-full rounded-lg py-2 text-white disabled:opacity-50",
     styleClasses[variant],
   )}
 >

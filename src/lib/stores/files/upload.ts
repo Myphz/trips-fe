@@ -5,7 +5,7 @@ import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
 import { writable } from "svelte/store";
 
-export const uploading = writable(false);
+export const isUploading = writable(false);
 export const uploadProgress = writable<number | null>(null);
 
 export const uploadFiles = async (files: Blob[], allowAny = false) => {
@@ -15,7 +15,7 @@ export const uploadFiles = async (files: Blob[], allowAny = false) => {
   }
 
   uploadProgress.set(null);
-  uploading.set(true);
+  isUploading.set(true);
 
   const formData = new FormData();
 
@@ -38,7 +38,7 @@ export const uploadFiles = async (files: Blob[], allowAny = false) => {
     fail({ msg: "Unexpected error", title: "Upload error" });
   }
 
-  uploading.set(false);
+  isUploading.set(false);
   return data;
 };
 

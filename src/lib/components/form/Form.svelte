@@ -1,4 +1,6 @@
 <script lang="ts" generics="T extends object">
+  import { isUploading } from "$lib/stores/files/upload";
+
   import { setContext } from "svelte";
   import Button from "./Button.svelte";
   import { BarLoader } from "svelte-loading-spinners";
@@ -47,7 +49,7 @@
     <slot />
   </div>
   <div class="mt-10 flex gap-2">
-    <Button submit disabled={loading}>
+    <Button submit disabled={$isUploading || loading}>
       <div class="relative flex w-full flex-col items-center justify-center">
         <span>{loading ? "LOADING" : buttonText}</span>
         {#if loading}

@@ -5,10 +5,51 @@ import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
 import { get, writable } from "svelte/store";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
+import { splitArrayIntoChunks } from "$utils/objects";
 
 export const isUploading = writable(false);
-export const uploadProgress = writable<number | null>(null);
+export const uploadProgress = writable(0);
+export const uploadState = writable<"compressing" | "uploading" | "waiting">("compressing");
 export const uploadPromise = writable<Promise<unknown>>(new Promise(() => {}));
+
+const CHUNK_SIZE = 10;
+
+export const uploadFileChunk = async ({
+  files,
+  allowAny = false,
+  onProgress,
+}: {
+  files: Blob[];
+  allowAny?: boolean;
+  onProgress: (progress: number) => unknown;
+}) => {
+  uploadState.set("compressing");
+  const formData = new FormData();
+
+  for (const file of files) {
+    const blob = allowAny ? file : await blobToWebp(file);
+    formData.append(file.name, blob);
+  }
+
+  let data: Record<string, string> = {};
+  uploadState.set("uploading");
+
+  try {
+    ({ data } = await axios.post(`${SERVER_URL}/upload`, formData, {
+      onUploadProgress(progressEvent) {
+        const percentCompleted =
+          Math.round((progressEvent.loaded * 10000) / (progressEvent.total ?? 1)) / 100;
+        if (percentCompleted === 100) uploadState.set("waiting");
+
+        onProgress(percentCompleted);
+      },
+    }));
+  } catch (err) {
+    fail({ msg: "Unexpected error", title: "Upload error" });
+  }
+
+  return data;
+};
 
 export const uploadFiles = async ({
   files,
@@ -22,29 +63,27 @@ export const uploadFiles = async ({
     throwError("Invalid filetype");
   }
 
-  uploadProgress.set(null);
+  uploadProgress.set(0);
   isUploading.set(true);
 
-  const formData = new FormData();
+  let data: Awaited<ReturnType<typeof uploadFileChunk>> = {};
+  const chunks = splitArrayIntoChunks(files, CHUNK_SIZE);
+  let uploaded = 0;
 
-  for (const file of files) {
-    const blob = allowAny ? file : await blobToWebp(file);
-    formData.append(file.name, blob);
-  }
-
-  let data: Record<string, string> = {};
-  uploadProgress.set(0);
-
-  try {
-    ({ data } = await axios.post(`${SERVER_URL}/upload`, formData, {
-      onUploadProgress(progressEvent) {
-        const percentCompleted =
-          Math.round((progressEvent.loaded * 10000) / (progressEvent.total ?? 1)) / 100;
-        uploadProgress.set(percentCompleted);
+  for (const chunk of chunks) {
+    const previousChunkImportance = uploaded / files.length;
+    const chunkData = await uploadFileChunk({
+      files: chunk,
+      allowAny,
+      onProgress: (progress) => {
+        // Weigh the progress according to chunk size
+        const chunkImportance = chunk.length / files.length;
+        const totalProgress = previousChunkImportance * 100 + progress * chunkImportance;
+        uploadProgress.set(+totalProgress.toFixed(2));
       },
-    }));
-  } catch (err) {
-    fail({ msg: "Unexpected error", title: "Upload error" });
+    });
+    data = { ...data, ...chunkData };
+    uploaded += chunk.length;
   }
 
   isUploading.set(false);

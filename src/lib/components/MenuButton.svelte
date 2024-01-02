@@ -26,7 +26,6 @@
   }
 
   const label = (() => {
-    console.log({ icon });
     if (icon === "trip") return "group";
     if (icon === "place") return "activity";
     return icon;

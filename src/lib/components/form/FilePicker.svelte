@@ -4,6 +4,7 @@
     uploadProgress,
     isUploading,
     uploadPromise,
+    uploadState,
   } from "$lib/stores/files/upload";
   import { BarLoader } from "svelte-loading-spinners";
 
@@ -31,13 +32,16 @@
     await $uploadPromise;
   };
 
-  const getStateLabel = (progress: number | null) => {
-    if (progress === null) return "Compressing images...";
-    if (progress === 100) return "Server processing...";
-    return `Uploading (${$uploadProgress}%)`;
+  const getStateLabel = (progress: number | null, state: string) => {
+    let label: string;
+    if (state === "compressing") label = "Compressing images...";
+    else if (state === "waiting") label = "Server processing...";
+    else label = "Uploading...";
+
+    return `${label} (${progress}%)`;
   };
 
-  $: stateLabel = getStateLabel($uploadProgress);
+  $: stateLabel = getStateLabel($uploadProgress, $uploadState);
 </script>
 
 <input

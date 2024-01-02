@@ -6,34 +6,21 @@ import type { photos } from "$lib/stores/api/select";
 import { FileOpener } from "@capacitor-community/file-opener";
 import type { UnwrapWritable } from "$lib/types/route";
 
-const QUALITY = 0.75;
+const worker = new Worker("webp-conversion-worker.js");
 
-export function blobToWebp(blob: Blob): Promise<Blob> {
+export async function blobToWebp(blob: Blob): Promise<Blob> {
   return new Promise((resolve, reject) => {
-    const src = URL.createObjectURL(blob);
+    worker.addEventListener("message", (event) => {
+      if (event.data.webpBlob) {
+        resolve(event.data.webpBlob);
+      } else if (event.data.error) {
+        reject(new Error(event.data.error));
+      }
+    });
 
-    const canvas = document.createElement("canvas");
-    const context = canvas.getContext("2d") as CanvasRenderingContext2D;
-
-    const image = new Image();
-    image.src = src;
-    image.crossOrigin = "anonymous";
-    image.onload = (e) => {
-      canvas.width = image.width;
-      canvas.height = image.height;
-      // @ts-ignore
-      URL.revokeObjectURL(e.target.src);
-      // @ts-ignore
-      context.drawImage(e.target, 0, 0, canvas.width, canvas.height);
-      canvas.toBlob(
-        (data) => {
-          resolve(data as Blob);
-        },
-        "image/webp",
-        QUALITY,
-      );
-    };
-    image.onerror = (e) => reject(e);
+    worker.postMessage({
+      imageData: blob,
+    });
   });
 }
 

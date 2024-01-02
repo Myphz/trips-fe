@@ -6,10 +6,11 @@ import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
 
 export const restoreAppStatus = () => {
-  const routeParams = JSON.parse(sessionStorage.getItem("currentRouteParams")!);
-  const paramsHistory = JSON.parse(sessionStorage.getItem("paramsHistory")!);
-  const filter = sessionStorage.getItem("filter");
-  const currentURL = sessionStorage.getItem("currentURL")!;
+  if (!localStorage.getItem("paramsHistory")) return;
+  const routeParams = JSON.parse(localStorage.getItem("currentRouteParams")!);
+  const paramsHistory = JSON.parse(localStorage.getItem("paramsHistory")!);
+  const filter = localStorage.getItem("filter");
+  const currentURL = localStorage.getItem("currentURL")!;
 
   restore(routeParams, paramsHistory, filter as Parameters<typeof restore>[2]);
   goto(currentURL);
@@ -27,10 +28,10 @@ export async function saveAppState() {
     };
 
     // Save current status
-    sessionStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
-    sessionStorage.setItem("paramsHistory", JSON.stringify(get(paramsHistory)));
-    get(filter) && sessionStorage.setItem("filter", get(filter)!);
-    sessionStorage.setItem("currentURL", window.location.pathname);
+    localStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
+    localStorage.setItem("paramsHistory", JSON.stringify(get(paramsHistory)));
+    get(filter) && localStorage.setItem("filter", get(filter)!);
+    localStorage.setItem("currentURL", window.location.pathname);
 
     // Finish the background task as soon as everything is done.
     BackgroundTask.finish({ taskId });

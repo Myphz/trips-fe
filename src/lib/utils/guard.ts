@@ -10,7 +10,7 @@ function redirect(isLogged: boolean, mustBeLogged: boolean) {
 
   if (isLogged !== mustBeLogged) {
     // Don't redirect after restore
-    if (!sessionStorage.getItem("currentURL")) {
+    if (!localStorage.getItem("currentURL")) {
       if (mustBeLogged) {
         if (!get(showWarningRedirect)) showWarningRedirect.set(true);
         else fail({ msg: "Login to continue", title: "Auth required" });

@@ -6,7 +6,7 @@
   export let header: string;
   export let withCurrency = false;
 
-  const entries = Object.entries(data);
+  $: entries = Object.entries(data);
   const [start, end] = [data.Departure || data["Check-in"], data.Return || data["Check-out"]];
   const [startTime, endTime] = [data.departure, data.arrival];
 

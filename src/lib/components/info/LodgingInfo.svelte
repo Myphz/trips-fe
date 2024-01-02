@@ -4,20 +4,19 @@
   import Photos from "../Photos.svelte";
   import InfoLayout from "./InfoLayout.svelte";
   import { photos } from "$lib/stores/api/select";
+
+  $: lodgingDetails = {
+    ...rename(pickCard("lodging", ["start", "end", "createdAt", "address", "price"]), {
+      start: "Check-in",
+      end: "Check-out",
+      createdAt: "Created at",
+    }),
+    photos: $photos.length,
+  };
 </script>
 
 <InfoLayout>
-  <Details
-    header="details"
-    data={{
-      ...rename(pickCard("lodging", ["start", "end", "createdAt", "address", "price"]), {
-        start: "Check-in",
-        end: "Check-out",
-        createdAt: "Created at",
-      }),
-      photos: $photos.length,
-    }}
-  />
+  <Details header="details" data={lodgingDetails} />
 
   <Photos />
 </InfoLayout>

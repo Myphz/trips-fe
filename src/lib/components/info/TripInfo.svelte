@@ -49,7 +49,7 @@
         {
           num_places: "Activities",
           num_lodgings: "Lodgings",
-          num_trips: "Subtrips",
+          num_trips: "Groups",
           num_transports: "Transports",
           num_photos: "Photos",
         },

@@ -25,11 +25,11 @@
     <div class="flex flex-col gap-8">
       <div class="flex gap-24">
         <MenuButton icon="trip" />
-        <MenuButton icon="lodging" />
+        <MenuButton icon="place" />
       </div>
       <div class="flex gap-24">
-        <MenuButton icon="place" />
         <MenuButton icon="transport" />
+        <MenuButton icon="lodging" />
       </div>
     </div>
   </dialog>

@@ -24,6 +24,13 @@
     if (!clicked) return (clicked = true);
     isModalOpen.set(false);
   }
+
+  const label = (() => {
+    console.log({ icon });
+    if (icon === "trip") return "group";
+    if (icon === "place") return "activity";
+    return icon;
+  })();
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
@@ -38,6 +45,6 @@
     >
       {@html iconComponents[icon]}
     </div>
-    <div class="capitalize">{icon === "place" ? "Activity" : icon}</div>
+    <div class="capitalize">{label}</div>
   </Redirect>
 </div>

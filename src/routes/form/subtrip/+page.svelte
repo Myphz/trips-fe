@@ -16,7 +16,7 @@
   const { entityId } = routeParams;
 
   $: isEdit = !!$entityId;
-  $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a sub-trip");
+  $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a group");
 
   $: defaultValues =
     isEdit && $card

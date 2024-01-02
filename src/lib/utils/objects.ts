@@ -37,7 +37,7 @@ export function pickCard<T extends EntityType, K extends keyof GetRowType<T>>(
   keys: K[],
 ) {
   const cardData = get(card);
-  if (cardData?.type !== type) throw new Error("pickCard error type");
+  if (cardData?.type !== type) return {};
   return pick(cardData as unknown as GetRowType<T>, keys);
 }
 

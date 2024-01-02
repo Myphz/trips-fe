@@ -5,7 +5,7 @@ import { routeParams } from "$lib/stores/routeParams";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
 
-export const restoreAppStatus = () => {
+export const restoreAppState = () => {
   if (!localStorage.getItem("paramsHistory")) return;
   const routeParams = JSON.parse(localStorage.getItem("currentRouteParams")!);
   const paramsHistory = JSON.parse(localStorage.getItem("paramsHistory")!);
@@ -16,6 +16,11 @@ export const restoreAppStatus = () => {
   goto(currentURL);
   return;
 };
+
+export function deleteAppState() {
+  const keys = ["paramsHistory", "currentRouteParams", "filter", "currentURL"];
+  for (const key of keys) localStorage.removeItem(key);
+}
 
 export async function saveAppState() {
   // The app state has been changed to inactive.

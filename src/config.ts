@@ -5,7 +5,7 @@ import { Capacitor } from "@capacitor/core";
 import { StatusBar, Style } from "@capacitor/status-bar";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { GOOGLE_CLIENT_ID_WEB } from "./constants";
-import { restoreAppStatus, saveAppState } from "$utils/app";
+import { restoreAppState, saveAppState } from "$utils/app";
 
 export function appConfig() {
   App.addListener("backButton", async () => {
@@ -33,14 +33,14 @@ export function appConfig() {
 
   if (Capacitor.getPlatform() !== "web") {
     App.addListener("appStateChange", async ({ isActive }) => {
-      if (isActive) restoreAppStatus();
+      if (isActive) restoreAppState();
       else await saveAppState();
     });
 
     App.addListener("pause", saveAppState);
   }
 
-  restoreAppStatus();
+  restoreAppState();
 
   GoogleAuth.initialize({
     clientId: GOOGLE_CLIENT_ID_WEB,

@@ -98,7 +98,11 @@ export async function loadPhotos() {
   const cardData = get(card);
   if (!cardData) return;
 
-  photos.set(await select({ table: "photos", cond: { entity_id: cardData.id } }));
+  photos.set(
+    (await select({ table: "photos", cond: { entity_id: cardData.id } })).sort(
+      (p1, p2) => +new Date(p2.created_at) - +new Date(p1.created_at),
+    ),
+  );
 }
 
 export async function getInvites() {

@@ -1,32 +1,29 @@
 <script lang="ts">
   import { tripCurrency } from "$lib/stores/route";
-  import { differenceInHours } from "date-fns";
+  import { differenceBetweenDates } from "$utils/format";
 
   export let data: Record<string, string | number>;
   export let header: string;
   export let withCurrency = false;
 
-  $: entries = Object.entries(data) || [];
-  const [start, end] = [data.Departure || data["Check-in"], data.Return || data["Check-out"]];
-  const [startTime, endTime] = [data.departure, data.arrival];
-
-  if (start && end) {
-    // Automatically calculate duration in days
-    const delta = +new Date(end) - +new Date(start);
-    const daysDelta = Math.floor(delta / (1000 * 60 * 60 * 24));
-    entries = [...(entries || []), ["Duration", `${daysDelta} days`]];
-  }
-
-  if (startTime && endTime && +new Date(startTime) && +new Date(endTime)) {
-    entries = [
-      ...(entries || []),
-      [
-        "Duration",
-        `${differenceInHours(new Date(endTime), new Date(startTime), {
-          roundingMethod: "round",
-        })} hours`,
-      ],
+  $: entries = Object.entries(data);
+  $: {
+    const [start, end] = [
+      data.Departure || data["Check-in"],
+      data.Return || data["Check-out"],
     ];
+    const [startTime, endTime] = [data.departure, data.arrival];
+
+    if (start && end) {
+      // Automatically calculate duration in days
+      const delta = +new Date(end) - +new Date(start);
+      const daysDelta = Math.floor(delta / (1000 * 60 * 60 * 24));
+      entries = [...(entries || []), ["Duration", `${daysDelta} days`]];
+    }
+
+    if (startTime && endTime) {
+      entries = [...(entries || []), ["Duration", differenceBetweenDates(startTime, endTime)]];
+    }
   }
 </script>
 

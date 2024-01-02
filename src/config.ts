@@ -1,15 +1,11 @@
-import { goto } from "$app/navigation";
-import { filter } from "$lib/stores/api/select";
-import { isDarkMode, paramsHistory, restore } from "$lib/stores/route";
-import { routeParams } from "$lib/stores/routeParams";
+import { isDarkMode } from "$lib/stores/route";
 import { goBack } from "$utils/guard";
 import { App } from "@capacitor/app";
 import { Capacitor } from "@capacitor/core";
 import { StatusBar, Style } from "@capacitor/status-bar";
-import { BackgroundTask } from "@capawesome/capacitor-background-task";
-import { get } from "svelte/store";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { GOOGLE_CLIENT_ID_WEB } from "./constants";
+import { restoreAppStatus, saveAppState } from "$utils/app";
 
 export function appConfig() {
   App.addListener("backButton", async () => {
@@ -35,46 +31,16 @@ export function appConfig() {
 
   isDarkMode.set(localStorage.getItem("theme") === "dark");
 
-  async function saveAppState() {
-    // The app state has been changed to inactive.
-    // Start the background task by calling `beforeExit`.
-    const taskId = await BackgroundTask.beforeExit(() => {
-      const currentRouteParams = {
-        entityId: get(routeParams.entityId),
-        parent: get(routeParams.parent),
-        tripId: get(routeParams.tripId),
-      };
-
-      // Save current status
-      sessionStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
-      sessionStorage.setItem("paramsHistory", JSON.stringify(get(paramsHistory)));
-      get(filter) && sessionStorage.setItem("filter", get(filter)!);
-      sessionStorage.setItem("currentURL", window.location.pathname);
-
-      // Finish the background task as soon as everything is done.
-      BackgroundTask.finish({ taskId });
-    });
-  }
-
   if (Capacitor.getPlatform() !== "web") {
     App.addListener("appStateChange", async ({ isActive }) => {
-      if (isActive) {
-        // Restore status
-        const routeParams = JSON.parse(sessionStorage.getItem("currentRouteParams")!);
-        const paramsHistory = JSON.parse(sessionStorage.getItem("paramsHistory")!);
-        const filter = sessionStorage.getItem("filter");
-        const currentURL = sessionStorage.getItem("currentURL")!;
-
-        restore(routeParams, paramsHistory, filter as Parameters<typeof restore>[2]);
-        goto(currentURL);
-        return;
-      }
-
-      await saveAppState();
+      if (isActive) restoreAppStatus();
+      else await saveAppState();
     });
 
     App.addListener("pause", saveAppState);
   }
+
+  restoreAppStatus();
 
   GoogleAuth.initialize({
     clientId: GOOGLE_CLIENT_ID_WEB,

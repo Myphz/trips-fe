@@ -6,14 +6,17 @@ export function capitalize(text: string) {
 }
 
 export function dateToCard(date: string) {
+  if (!date) return "";
   return format(new Date(date), "d MMM u");
 }
 
 export function datetimeToCard(date: string) {
+  if (!date) return "";
   return format(new Date(date), "d MMM HH:mm");
 }
 
 export function datetimeToISO(date: string) {
+  if (!date) return "";
   return format(new Date(date), "yyy-MM-dd HH:mm");
 }
 

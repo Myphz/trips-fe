@@ -6,7 +6,7 @@
   export let header: string;
   export let withCurrency = false;
 
-  $: entries = Object.entries(data);
+  $: entries = Object.entries(data) || [];
   const [start, end] = [data.Departure || data["Check-in"], data.Return || data["Check-out"]];
   const [startTime, endTime] = [data.departure, data.arrival];
 
@@ -14,20 +14,23 @@
     // Automatically calculate duration in days
     const delta = +new Date(end) - +new Date(start);
     const daysDelta = Math.floor(delta / (1000 * 60 * 60 * 24));
-    entries.push(["Duration", `${daysDelta} days`]);
+    entries = [...(entries || []), ["Duration", `${daysDelta} days`]];
   }
 
-  if (startTime && endTime) {
-    entries.push([
-      "Duration",
-      `${differenceInHours(new Date(endTime), new Date(startTime), {
-        roundingMethod: "round",
-      })} hours`,
-    ]);
+  if (startTime && endTime && +new Date(startTime) && +new Date(endTime)) {
+    entries = [
+      ...(entries || []),
+      [
+        "Duration",
+        `${differenceInHours(new Date(endTime), new Date(startTime), {
+          roundingMethod: "round",
+        })} hours`,
+      ],
+    ];
   }
 </script>
 
-{#if entries.length}
+{#if entries?.length}
   <section>
     <header class="capitalize-first text-h3">{header}</header>
     <div class="mt-4 flex flex-col gap-1">

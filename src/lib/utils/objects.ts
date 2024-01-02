@@ -4,9 +4,9 @@ import { get } from "svelte/store";
 
 /* eslint-disable @typescript-eslint/no-unused-vars */
 export function addOptionals<T extends object>(optionals: T) {
-  return Object.fromEntries(
-    Object.entries(optionals).filter(([_, val]) => !!val),
-  ) as Partial<T>;
+  return Object.fromEntries(Object.entries(optionals).filter(([_, val]) => !!val)) as Partial<
+    Required<T>
+  >;
 }
 
 type RenameBy<T, U> = {

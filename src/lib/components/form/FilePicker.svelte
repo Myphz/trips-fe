@@ -1,5 +1,10 @@
 <script lang="ts">
-  import { uploadFiles, uploadProgress, isUploading } from "$lib/stores/files/upload";
+  import {
+    uploadFiles,
+    uploadProgress,
+    isUploading,
+    uploadPromise,
+  } from "$lib/stores/files/upload";
   import { BarLoader } from "svelte-loading-spinners";
 
   export let mediaType: "image" | "video" | "both" | "any";
@@ -19,8 +24,11 @@
     const files = (e.currentTarget as HTMLInputElement).files;
     if (!files?.length) return;
 
-    photos = await uploadFiles(Array.from(files), mediaType === "any");
-    onNewPhotos(photos);
+    $uploadPromise = (async () => {
+      photos = await uploadFiles({ files: Array.from(files), allowAny: mediaType === "any" });
+      await onNewPhotos(photos);
+    })();
+    await $uploadPromise;
   };
 
   const getStateLabel = (progress: number | null) => {

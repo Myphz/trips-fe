@@ -6,6 +6,7 @@ import { StatusBar, Style } from "@capacitor/status-bar";
 import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
 import { GOOGLE_CLIENT_ID_WEB } from "./constants";
 import { restoreAppState, saveAppState } from "$utils/app";
+import { finishUpload } from "$lib/stores/files/upload";
 
 export function appConfig() {
   App.addListener("backButton", async () => {
@@ -34,7 +35,10 @@ export function appConfig() {
   if (Capacitor.getPlatform() !== "web") {
     App.addListener("appStateChange", async ({ isActive }) => {
       if (isActive) restoreAppState();
-      else await saveAppState();
+      else {
+        await saveAppState();
+        await finishUpload();
+      }
     });
 
     App.addListener("pause", saveAppState);

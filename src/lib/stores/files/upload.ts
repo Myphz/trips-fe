@@ -3,12 +3,20 @@ import { blobToWebp } from "$utils/files";
 import axios from "axios";
 import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
-import { writable } from "svelte/store";
+import { get, writable } from "svelte/store";
+import { BackgroundTask } from "@capawesome/capacitor-background-task";
 
 export const isUploading = writable(false);
 export const uploadProgress = writable<number | null>(null);
+export const uploadPromise = writable<Promise<unknown>>(new Promise(() => {}));
 
-export const uploadFiles = async (files: Blob[], allowAny = false) => {
+export const uploadFiles = async ({
+  files,
+  allowAny = false,
+}: {
+  files: Blob[];
+  allowAny?: boolean;
+}) => {
   if (!allowAny && [...files].some((file) => !file.type.includes("image"))) {
     fail({ title: "Invalid file", msg: "Invalid file type" });
     throwError("Invalid filetype");
@@ -26,6 +34,7 @@ export const uploadFiles = async (files: Blob[], allowAny = false) => {
 
   let data: Record<string, string> = {};
   uploadProgress.set(0);
+
   try {
     ({ data } = await axios.post(`${SERVER_URL}/upload`, formData, {
       onUploadProgress(progressEvent) {
@@ -45,5 +54,12 @@ export const uploadFiles = async (files: Blob[], allowAny = false) => {
 export const uploadFileFromURL = async (url: string) => {
   const res = await fetch(url);
   const blob = await res.blob();
-  return await uploadFiles([blob]);
+  return await uploadFiles({ files: [blob] });
+};
+
+export const finishUpload = async () => {
+  const taskId = await BackgroundTask.beforeExit(async () => {
+    await get(uploadPromise);
+    BackgroundTask.finish({ taskId });
+  });
 };

@@ -3,13 +3,13 @@
   import Photos from "../Photos.svelte";
   import Details from "./Details.svelte";
   import InfoLayout from "./InfoLayout.svelte";
-  import { photos } from "$lib/stores/api/select";
+  import { card, photos } from "$lib/stores/api/select";
 
   $: placeDetails = {
     ...rename(pickCard("place", ["name", "date", "createdAt", "address", "price"]), {
       createdAt: "Created at",
     }),
-    photos: $photos.length,
+    photos: $photos.length + ($card?.photo ? 1 : 0),
   };
 </script>
 

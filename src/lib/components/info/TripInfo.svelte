@@ -47,7 +47,7 @@
           "num_photos",
         ]),
         {
-          num_places: "Places",
+          num_places: "Activities",
           num_lodgings: "Lodgings",
           num_trips: "Subtrips",
           num_transports: "Transports",

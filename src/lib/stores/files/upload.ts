@@ -28,7 +28,7 @@ export const uploadFileChunk = async ({
 
   for (const file of files) {
     const blob = allowAny ? file : await blobToWebp(file);
-    formData.append(file.name, blob);
+    formData.append("name" in file ? (file.name as string) : (+new Date()).toString(), blob);
   }
 
   let data: Record<string, string> = {};

@@ -1,20 +1,25 @@
 <script lang="ts">
-  import Place from "$lib/assets/icons/place.svg?raw";
-  import Bed from "$lib/assets/icons/bed.svg?raw";
-  import Train from "$lib/assets/icons/train.svg?raw";
-  import Trip from "$lib/assets/icons/trip.svg?raw";
   import { clickoutside } from "@svelte-put/clickoutside";
 
   import type { EntityType } from "$lib/types/api";
   import { isModalOpen } from "$lib/stores/ui";
   import { Redirect } from ".";
 
+  import { Icon } from "@steeze-ui/svelte-icon";
+  import {
+    Bed,
+    Folder,
+    PinDrop,
+    Train,
+    type IconSource,
+  } from "@steeze-ui/material-design-icons";
+
   export let icon: EntityType;
 
-  const iconComponents: Record<EntityType, string> = {
+  const iconComponents: Record<EntityType, IconSource> = {
     lodging: Bed,
-    place: Place,
-    trip: Trip,
+    place: PinDrop,
+    trip: Folder,
     transport: Train,
   };
 
@@ -42,7 +47,7 @@
     <div
       class="flex aspect-square w-20 items-center justify-center rounded-full bg-primary p-4 [&>*]:h-full [&>*]:w-full"
     >
-      {@html iconComponents[icon]}
+      <Icon src={iconComponents[icon]} />
     </div>
     <div class="capitalize">{label}</div>
   </Redirect>

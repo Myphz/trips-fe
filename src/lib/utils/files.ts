@@ -7,13 +7,36 @@ import { FileOpener } from "@capacitor-community/file-opener";
 import type { UnwrapWritable } from "$lib/types/route";
 
 const QUALITY = 0.75;
+const MAX_DIMENSION = 2000;
+
+// AI-generated ;)
+function getResizedDimensions(originalWidth: number, originalHeight: number) {
+  let width = originalWidth;
+  let height = originalHeight;
+
+  if (width > MAX_DIMENSION || height > MAX_DIMENSION) {
+    const aspectRatio = width / height;
+
+    if (width > height) {
+      // Width exceeds the limit, set width to MAX_DIMENSION
+      width = MAX_DIMENSION;
+      height = Math.round(width / aspectRatio);
+    } else {
+      // Height exceeds the limit, set height to MAX_DIMENSION
+      height = MAX_DIMENSION;
+      width = Math.round(height * aspectRatio);
+    }
+  }
+
+  return { width, height };
+}
 
 export async function blobToWebp(blob: Blob): Promise<Blob> {
   const imageBitmap = await createImageBitmap(blob);
-
-  const canvas = new OffscreenCanvas(imageBitmap.width, imageBitmap.height);
+  const { width, height } = getResizedDimensions(imageBitmap.width, imageBitmap.height);
+  const canvas = new OffscreenCanvas(width, height);
   const context = canvas.getContext("2d")!;
-  context.drawImage(imageBitmap, 0, 0, imageBitmap.width, imageBitmap.height);
+  context.drawImage(imageBitmap, 0, 0, width, height);
   return await canvas.convertToBlob({ type: "image/webp", quality: QUALITY });
 }
 

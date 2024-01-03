@@ -7,7 +7,7 @@ import { FileOpener } from "@capacitor-community/file-opener";
 import type { UnwrapWritable } from "$lib/types/route";
 
 const QUALITY = 0.75;
-const MAX_DIMENSION = 2000;
+const MAX_DIMENSION = 1500;
 
 // AI-generated ;)
 function getResizedDimensions(originalWidth: number, originalHeight: number) {

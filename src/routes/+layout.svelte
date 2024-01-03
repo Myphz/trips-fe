@@ -10,9 +10,9 @@
   import { keyboardOpen } from "$lib/stores/ui";
   import { Modals } from "$lib/components/modals";
   import { appConfig } from "../config";
-  import { fail } from "$utils/toasts";
   import { saveStateToLocalStorage } from "$utils/app";
   import { afterNavigate } from "$app/navigation";
+  import { setupErrorHandlers } from "$utils/error";
 
   onMount(() => {
     appConfig();
@@ -26,18 +26,11 @@
         VIEWPORT_VS_CLIENT_HEIGHT_RATIO;
       keyboardOpen.set(isOpen);
     });
-    window.onerror = handleError;
-    window.onunhandledrejection = handleError;
+    setupErrorHandlers();
   });
 
   afterNavigate(saveStateToLocalStorage);
-
-  function handleError() {
-    fail({ title: "Error", msg: "Unexpected error. Please retry." });
-  }
 </script>
-
-<svelte:window on:error={handleError} />
 
 <Navbar />
 <section class="relative mx-4 h-full pb-20">

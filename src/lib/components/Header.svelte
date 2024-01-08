@@ -50,7 +50,9 @@
         <div class="ml-auto flex gap-4">
           {#if $card.mapsId}
             <a
-              href="https://www.google.com/maps/place/?q=place_id:{$card.mapsId}"
+              href="https://www.google.com/maps/search/?api=1&query={'address' in $card
+                ? encodeURIComponent($card.address)
+                : ''}&query_place_id={$card.mapsId}"
               class="ml-auto text-primary"
               transition:blur={{ duration: 100 }}
             >

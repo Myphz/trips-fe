@@ -1,6 +1,6 @@
 <script lang="ts">
   import { setPageTitle } from "$lib/stores/route";
-  import { Input, Form, MediaUploader, Datepicker } from "$lib/components/form";
+  import { Input, Form, MediaUploader, Datepicker, MapsCombobox } from "$lib/components/form";
   import { fail } from "$utils/toasts";
   import { routeParams } from "$lib/stores/routeParams";
   import { Trash } from "svelte-heros";
@@ -47,8 +47,13 @@
     }
 
     if (isEdit) {
-      const { photo, ...rest } = data;
-      await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
+      const { photo, maps_id, ...rest } = data;
+      await update({
+        table: "entities",
+        params: { photo, maps_id },
+        id: $entityId,
+        withToast: false,
+      });
       await update({ table: "lodgings", params: emptyToNull(rest), id: $entityId });
     } else await addEntity("lodgings", data);
 
@@ -67,11 +72,12 @@
 
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Name" name="name" required on:input={updatePexelSearchOnInput} />
+
   <div class="flex gap-4">
     <Datepicker name="start_date" placeholder="Start date" />
     <Datepicker name="end_date" placeholder="End date" />
   </div>
-  <Input placeholder="Address" name="address" />
+  <MapsCombobox label="Address" name="address" />
   <Input placeholder="Total price" name="price" numeric />
 
   <MediaUploader name="photo" mediaType="image" />

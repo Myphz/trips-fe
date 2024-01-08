@@ -26,7 +26,6 @@
     isEdit && $card ? pickCard("place", ["name", "address", "date", "price", "photo"]) : {};
 
   const onSubmit = async (data: FormParams<"places">) => {
-    console.log({ data });
     if (data.price) {
       data.price = parseFloat(data.price as unknown as string);
       if (isNaN(data.price))
@@ -61,7 +60,6 @@
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Name" name="name" required on:input={updatePexelSearchOnInput} />
   <MapsCombobox label="Address" name="address" />
-  <!-- <Input placeholder="Address" name="address" /> -->
   <div class="flex gap-4">
     <Datepicker name="date" placeholder="Date" />
     <Input placeholder="Price" name="price" numeric />

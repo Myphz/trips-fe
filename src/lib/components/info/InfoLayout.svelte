@@ -32,7 +32,7 @@
       <slot />
     </div>
 
-    {#if $card.photo && $card.type !== "place"}
+    {#if $card.photo && $card.type !== "place" && $card.type !== "lodging"}
       <PhotoViewer photo={$card.photo} maxHeight={false} />
     {/if}
   </section>

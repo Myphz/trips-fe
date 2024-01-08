@@ -32,7 +32,7 @@
     <header class="capitalize-first text-h3">{header}</header>
     <div class="mt-4 flex flex-col gap-1">
       {#each entries as [key, value]}
-        <div class="flex justify-between">
+        <div class="flex justify-between gap-24">
           <span class="capitalize-first">{key}</span>
           <span class="capitalize-first text-right">
             {value}

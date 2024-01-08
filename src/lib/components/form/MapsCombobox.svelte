@@ -14,12 +14,16 @@
   let options: Option[] = [];
   async function setOptions(search: string) {
     const predictions = await getPredictions(search);
-    options = predictions.map((predict) => ({
-      label: `${predict.structured_formatting.main_text}, ${predict.terms.at(-2)?.value}, ${
-        predict.terms.at(-1)?.value
-      }`,
-      value: predict.place_id,
-    }));
+    options = predictions.map((predict) => {
+      const label = `${predict.structured_formatting.main_text}, ${
+        predict.terms.at(-2)?.value
+      }, ${predict.terms.at(-1)?.value}`;
+
+      return {
+        label,
+        value: JSON.stringify({ maps_id: predict.place_id, [name]: label }),
+      };
+    });
   }
 </script>
 

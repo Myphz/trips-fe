@@ -1,6 +1,6 @@
 <script lang="ts">
   import { setPageTitle } from "$lib/stores/route";
-  import { Input, Form, MediaUploader, Datepicker } from "$lib/components/form";
+  import { Input, Form, MediaUploader, Datepicker, MapsCombobox } from "$lib/components/form";
   import { routeParams } from "$lib/stores/routeParams";
   import { Trash } from "svelte-heros";
   import { toggleModal } from "$lib/stores/modals";
@@ -26,6 +26,7 @@
     isEdit && $card ? pickCard("place", ["name", "address", "date", "price", "photo"]) : {};
 
   const onSubmit = async (data: FormParams<"places">) => {
+    console.log({ data });
     if (data.price) {
       data.price = parseFloat(data.price as unknown as string);
       if (isNaN(data.price))
@@ -34,8 +35,13 @@
       delete data.price;
     }
     if (isEdit) {
-      const { photo, ...rest } = data;
-      await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
+      const { photo, maps_id, ...rest } = data;
+      await update({
+        table: "entities",
+        params: { photo, maps_id },
+        id: $entityId,
+        withToast: false,
+      });
       await update({ table: "places", params: emptyToNull(rest), id: $entityId });
     } else await addEntity("places", data);
 
@@ -54,7 +60,8 @@
 
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Name" name="name" required on:input={updatePexelSearchOnInput} />
-  <Input placeholder="Address" name="address" />
+  <MapsCombobox label="Address" name="address" />
+  <!-- <Input placeholder="Address" name="address" /> -->
   <div class="flex gap-4">
     <Datepicker name="date" placeholder="Date" />
     <Input placeholder="Price" name="price" numeric />

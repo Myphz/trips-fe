@@ -22,20 +22,28 @@
 
     e.preventDefault();
     const tempData = Object.fromEntries(new FormData(e.target as HTMLFormElement));
+
     const data = Object.fromEntries(
       Object.entries(tempData)
-        // Filter out empty values if it's not edit and __keys
+        // Filter out empty values and values with 2 underscores if it's not edit
         .filter(([key, val]) => !key.startsWith("__") && (isEdit || !!val))
         .map(([key, val]) => {
           // Try to convert to JSON
           try {
             const newValue = JSON.parse(val as string);
             if (typeof newValue === "number") throw new Error();
-            return [key, newValue];
+
+            if (typeof newValue !== "object") return [key, newValue];
+            return [...Object.entries(newValue)];
           } catch {
             return [key, val];
           }
-        }),
+        })
+        // If it's a nested array, flatten it
+        .reduce((prev, curr) => {
+          if (!Array.isArray(curr[0])) return [...prev, curr];
+          return [...prev, ...curr];
+        }, []),
     ) as T;
 
     await onSubmit(data);

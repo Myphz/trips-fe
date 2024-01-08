@@ -8,6 +8,7 @@
   import { getName } from "$utils/format";
   import { card } from "$lib/stores/api/select";
   import { setContext } from "svelte";
+  import { pexelSearch } from "$lib/stores/pexels";
 
   export let open = false;
   export let onImageSelect: (src: string) => unknown;
@@ -15,7 +16,7 @@
   let clicked = false;
   let loading = false;
 
-  $: startSearch = getName($card);
+  $: startSearch = $pexelSearch || getName($card);
   $: setContext("defaultValues", { search: startSearch });
 
   let photos: Awaited<ReturnType<typeof getPexelsPhoto>> = [];

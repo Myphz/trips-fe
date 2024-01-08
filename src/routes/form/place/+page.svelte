@@ -12,6 +12,10 @@
   import { addEntity } from "$lib/stores/api/create";
   import type { FormParams } from "$lib/types/forms";
   import { fail } from "$utils/toasts";
+  import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
+  import { onMount } from "svelte";
+
+  onMount(() => pexelSearch.set(""));
 
   const { entityId } = routeParams;
 
@@ -49,7 +53,7 @@
 {/if}
 
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
-  <Input placeholder="Name" name="name" required />
+  <Input placeholder="Name" name="name" required on:input={updatePexelSearchOnInput} />
   <Input placeholder="Address" name="address" />
   <div class="flex gap-4">
     <Datepicker name="date" placeholder="Date" />

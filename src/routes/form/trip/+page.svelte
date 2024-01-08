@@ -20,8 +20,12 @@
   import { addEntity, inviteUsers } from "$lib/stores/api/create";
   import Combobox from "$lib/components/form/Combobox.svelte";
   import currencies from "$lib/assets/currencies.json";
+  import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
+  import { onMount } from "svelte";
 
   const { entityId } = routeParams;
+
+  onMount(() => pexelSearch.set(""));
 
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a trip");
@@ -56,6 +60,7 @@
     } else tripId = (await addEntity("trips", restData)).id;
 
     await inviteUsers(people, tripId);
+
     goBack();
   };
 </script>
@@ -70,7 +75,12 @@
 {/if}
 
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
-  <Input placeholder="Destination" name="destination" required />
+  <Input
+    placeholder="Destination"
+    name="destination"
+    required
+    on:input={updatePexelSearchOnInput}
+  />
   <div class="flex gap-4">
     <Datepicker name="start_date" placeholder="Departure" />
     <Datepicker name="end_date" placeholder="Return" />

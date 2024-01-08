@@ -14,8 +14,12 @@
   import type { GetRowType } from "$lib/types/api";
   import { fail } from "$utils/toasts";
   import { MEANS_OF_TRANSPORT } from "../../../constants";
+  import { pexelSearch } from "$lib/stores/pexels";
+  import { onMount } from "svelte";
 
   const { entityId } = routeParams;
+
+  onMount(() => pexelSearch.set(""));
 
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a transport");

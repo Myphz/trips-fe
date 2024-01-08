@@ -12,6 +12,10 @@
   import type { GetRowType, Tables } from "$lib/types/api";
   import { update } from "$lib/stores/api/update";
   import { addEntity } from "$lib/stores/api/create";
+  import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
+  import { onMount } from "svelte";
+
+  onMount(() => pexelSearch.set(""));
 
   const { entityId } = routeParams;
 
@@ -55,7 +59,12 @@
 {/if}
 
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
-  <Input placeholder="Destination" name="destination" required />
+  <Input
+    placeholder="Destination"
+    name="destination"
+    required
+    on:input={updatePexelSearchOnInput}
+  />
   <div class="flex gap-4">
     <Datepicker name="start_date" placeholder="Departure" />
     <Datepicker name="end_date" placeholder="Return" />

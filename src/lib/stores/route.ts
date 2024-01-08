@@ -65,6 +65,8 @@ export const setRouteParams = (
 
   if (saveParams) {
     paramsHistory.set([...get(paramsHistory), { ...params, title: title ?? get(pageTitle) }]);
+  } else {
+    paramsHistory.set([]);
   }
   if ("parent" in params || "tripId" in params) load();
   if ("entityId" in params) loadSingle();

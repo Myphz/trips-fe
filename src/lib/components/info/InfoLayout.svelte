@@ -4,6 +4,7 @@
   import { updateCard } from "$lib/stores/api/update";
 
   import { Stars, PhotoViewer } from "..";
+  import Breadcrumbs from "../cards/Breadcrumbs.svelte";
   import { Textarea } from "../form";
 
   let description = $card?.description ?? "";
@@ -11,6 +12,8 @@
   const updateDescription = () => updateCard({ description }, { withToast: false });
   beforeNavigate(updateDescription);
 </script>
+
+<Breadcrumbs />
 
 {#if $card}
   <section class="flex flex-col gap-2 text-small">

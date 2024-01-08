@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { MAIN_PAGE_TITLE, activateMode, pageTitle } from "$lib/stores/route";
+  import { MAIN_PAGE_TITLE, pageTitle } from "$lib/stores/route";
   import { Plus, ArrowLeft } from "svelte-heros";
   import Pencil from "$lib/assets/icons/pencil.svg?raw";
-  import Move from "$lib/assets/icons/move.svg?raw";
 
   import { page } from "$app/stores";
   import { goBack } from "$utils/guard";
@@ -49,13 +48,6 @@
 
       {#if $page.route.id?.includes("info") && $card}
         <div class="ml-auto flex gap-4">
-          <button
-            on:click={activateMode}
-            class="ml-auto text-primary"
-            transition:blur={{ duration: 100 }}
-          >
-            {@html Move}
-          </button>
           <a
             href="/form/{$card.type === 'trip' && $card.parent ? 'subtrip' : $card.type}"
             class="ml-auto text-primary"

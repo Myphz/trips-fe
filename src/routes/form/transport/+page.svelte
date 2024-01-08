@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { setPageTitle } from "$lib/stores/route";
+  import { activateMode, setPageTitle } from "$lib/stores/route";
   import { Input, Form, MediaUploader, Datepicker, Select } from "$lib/components/form";
   import { routeParams } from "$lib/stores/routeParams";
   import { Trash } from "svelte-heros";
@@ -16,6 +16,7 @@
   import { MEANS_OF_TRANSPORT } from "../../../constants";
   import { pexelSearch } from "$lib/stores/pexels";
   import { onMount } from "svelte";
+  import Move from "$lib/assets/icons/move.svg?raw";
 
   const { entityId } = routeParams;
 
@@ -65,12 +66,14 @@
 </script>
 
 {#if isEdit}
-  <button
-    class="absolute right-0 top-0 flex h-12 items-center justify-center text-error"
-    on:click={() => toggleModal("deleteEntity")}
-  >
-    <Trash size="1.5rem" />
-  </button>
+  <div class="absolute right-0 top-0 flex justify-end gap-4">
+    <button on:click={activateMode} class="ml-auto text-primary">
+      {@html Move}
+    </button>
+    <button class="h-12 text-error" on:click={() => toggleModal("deleteEntity")}>
+      <Trash size="1.5rem" variation="solid" />
+    </button>
+  </div>
 {/if}
 
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>

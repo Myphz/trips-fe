@@ -19,6 +19,7 @@
     "@svelte-put/clickoutside": "^3.0.1",
     "@sveltejs/adapter-static": "^3.0.1",
     "@sveltejs/kit": "^2.0.6",
+    "@types/google-maps": "^3.2.6",
     "@typescript-eslint/eslint-plugin": "^6.17.0",
     "@typescript-eslint/parser": "^6.17.0",
     "@zerodevx/svelte-toast": "^0.9.5",
@@ -58,6 +59,7 @@
     "@supabase/supabase-js": "^2.39.2",
     "axios": "^1.6.3",
     "date-fns": "^3.0.6",
+    "google-maps": "^4.3.3",
     "svelte-headlessui": "^0.0.33",
     "svelte-heros": "^5.2.0"
   }

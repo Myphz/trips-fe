@@ -1,4 +1,5 @@
 <script lang="ts">
+  import type { Option } from "$lib/types/other";
   import { getContext, onMount } from "svelte";
   import { twMerge } from "tailwind-merge";
 
@@ -6,17 +7,13 @@
   import { fade } from "svelte/transition";
   import { Check, ChevronDown } from "svelte-heros";
 
-  type Option = {
-    label: string;
-    value: string;
-  };
-
   export let options: Option[];
   export let label: string;
   export let name = "";
   export let onSelect: (value: string) => unknown = () => true;
   export let multipleSelected: Array<string> = [];
   export let multiple = false;
+  export let onInput: (value: string) => unknown = () => 1;
 
   let inputRef: HTMLInputElement;
 
@@ -32,6 +29,11 @@
     else inputRef.value = "";
   };
 
+  const realOnInput = (e: Event) => {
+    const target = e.target || {};
+    if (!("value" in target) || typeof target.value !== "string") return;
+    onInput(target.value);
+  };
   onMount(() => {
     if (selected) inputRef.value = selected.label;
   });
@@ -58,7 +60,8 @@
         <input
           use:combobox.input
           on:select={realOnSelect}
-          class="z-30 px-3 text-black"
+          on:input={realOnInput}
+          class="z-30 w-[90%] text-ellipsis px-3 text-black"
           bind:this={inputRef}
           on:focusout={() => {
             inputRef.value = multiple ? "" : $combobox.selected?.label ?? "";

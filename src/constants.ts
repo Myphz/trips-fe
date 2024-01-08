@@ -50,3 +50,5 @@ export const THEME_OPTIONS = [
     value: "dark",
   },
 ];
+
+export const GOOGLE_MAPS_API_KEY = "AIzaSyB9AdZwaUaWuKbBSWdpZpIehlyUVpYOufk";

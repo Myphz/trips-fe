@@ -110,7 +110,7 @@ export async function downloadImage(photo: string) {
   const jpegData = await blobToBase64(jpegBlob);
 
   await Filesystem.writeFile({
-    path: `Download/trips/${photo}.jpeg`,
+    path: `Download/tripsphoexa/${photo}.jpeg`,
     data: jpegData,
     recursive: true,
     directory: Directory.ExternalStorage,

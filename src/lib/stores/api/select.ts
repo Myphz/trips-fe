@@ -52,17 +52,28 @@ async function getAll() {
     return [filt];
   })();
 
-  return data
-    .map((row) => convertRPCRow(row))
-    .filter((val) => !!val)
-    .filter((row) => toFilter.includes(row!.type))
-    .sort((card1, card2) => {
-      if (card1?.type !== card2?.type) {
-        if (card1?.type === "trip") return -1;
-        if (card2?.type === "trip") return 1;
-      }
-      return 0;
-    }) as GetRowTypes[];
+  return (
+    data
+      .map((row) => convertRPCRow(row))
+      .filter((val) => !!val)
+      .filter((row) => toFilter.includes(row!.type))
+      .sort((card1, card2) => {
+        if (card1?.type !== card2?.type) {
+          if (card1?.type === "trip") return -1;
+          if (card2?.type === "trip") return 1;
+        }
+        return 0;
+      })
+      // Sort by start date
+      .sort((card1, card2) => {
+        let time1 = 0;
+        let time2 = 0;
+        if (card1 && "start" in card1) time1 = +new Date(card1.start);
+        if (card2 && "start" in card2) time2 = +new Date(card2.start);
+
+        return time2 - time1;
+      }) as GetRowTypes[]
+  );
 }
 
 export async function filterOnly(type: EntityType) {

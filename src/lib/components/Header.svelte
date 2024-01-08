@@ -1,6 +1,6 @@
 <script lang="ts">
   import { MAIN_PAGE_TITLE, pageTitle } from "$lib/stores/route";
-  import { Plus, ArrowLeft } from "svelte-heros";
+  import { Plus, ArrowLeft, MapPin } from "svelte-heros";
   import Pencil from "$lib/assets/icons/pencil.svg?raw";
 
   import { page } from "$app/stores";
@@ -48,6 +48,15 @@
 
       {#if $page.route.id?.includes("info") && $card}
         <div class="ml-auto flex gap-4">
+          {#if $card.mapsId}
+            <a
+              href="https://www.google.com/maps/place/?q=place_id:{$card.mapsId}"
+              class="ml-auto text-primary"
+              transition:blur={{ duration: 100 }}
+            >
+              <MapPin variation="solid" />
+            </a>
+          {/if}
           <a
             href="/form/{$card.type === 'trip' && $card.parent ? 'subtrip' : $card.type}"
             class="ml-auto text-primary"

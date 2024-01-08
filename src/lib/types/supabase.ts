@@ -342,6 +342,7 @@ export interface Database {
           parent: number
           photo: string
           created_at: string
+          maps_id: string
           trip_destination: string
           trip_start: string
           trip_end: string
@@ -375,6 +376,7 @@ export interface Database {
           parent: number
           photo: string
           created_at: string
+          maps_id: string
           trip_destination: string
           trip_start: string
           trip_end: string

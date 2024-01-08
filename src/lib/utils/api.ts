@@ -35,6 +35,7 @@ function filterObject<T extends EntityType>(startsWith: T, row: RPCRow): GetRowT
     parent: row.parent,
     photo: row.photo,
     createdAt: datetimeToISO(row.created_at),
+    mapsId: row.maps_id,
   };
 
   return {

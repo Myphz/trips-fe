@@ -132,15 +132,13 @@ export async function downloadOrViewFile(file: UnwrapWritable<typeof photos>[num
   const path = `Download/tripsphoexa/${file.name}`;
   const { uri } = await Filesystem.getUri({ directory: Directory.ExternalStorage, path });
 
-  const exists = await fileExists(path);
-  if (exists)
+  if (await fileExists(path))
     return await FileOpener.open({
       filePath: uri,
     });
 
   const res = await fetch(`${SERVER_URL}/download?id=${file.id}`);
-  const blob = await res.blob();
-  const data = await blobToBase64(blob);
+  const data = await blobToBase64(await res.blob());
 
   await Filesystem.writeFile({
     path,

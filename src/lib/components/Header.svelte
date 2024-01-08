@@ -57,7 +57,7 @@
             {@html Move}
           </button>
           <a
-            href="/form/{$card.type}"
+            href="/form/{$card.type === 'trip' && $card.parent ? 'subtrip' : $card.type}"
             class="ml-auto text-primary"
             transition:blur={{ duration: 100 }}
           >

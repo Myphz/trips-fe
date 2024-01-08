@@ -6,7 +6,7 @@
   import { card, photos } from "$lib/stores/api/select";
 
   $: placeDetails = {
-    ...rename(pickCard("place", ["name", "date", "createdAt", "address", "price"]), {
+    ...rename(pickCard("place", ["date", "createdAt", "address", "price"]), {
       createdAt: "Created at",
     }),
     photos: $photos.length + ($card?.photo ? 1 : 0),

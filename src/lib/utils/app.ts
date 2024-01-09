@@ -27,6 +27,7 @@ export function saveStateToLocalStorage() {
   if (
     window.location.pathname.includes("auth") ||
     window.location.pathname.includes("old") ||
+    window.location.pathname.includes("profile") ||
     !get(myId)
   )
     return;

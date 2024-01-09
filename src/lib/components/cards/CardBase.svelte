@@ -1,12 +1,10 @@
 <script lang="ts">
   import { getName } from "$utils/format";
-  import { InformationCircle } from "svelte-heros";
   import { Redirect, Stars } from "../";
   import type { GetRowTypes } from "$lib/types/api";
   import { getPhotoURL, getPlaceholderImage } from "$utils/files";
   import Loading from "./Loading.svelte";
   import { fade } from "svelte/transition";
-  import { addOptionals } from "$utils/objects";
 
   export let data: GetRowTypes;
 
@@ -67,7 +65,7 @@
                 currency: data.currency,
               }}
             >
-              <InformationCircle size="2rem" />
+              <span class="material-symbols-outlined text-[2rem]">info</span>
             </Redirect>
           {/if}
         </div>

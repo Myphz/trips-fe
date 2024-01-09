@@ -4,7 +4,6 @@
 
   import { createListbox } from "svelte-headlessui";
   import { fade } from "svelte/transition";
-  import { Check, ChevronDown } from "svelte-heros";
 
   type Option = {
     label: string;
@@ -57,7 +56,7 @@
             $listbox.expanded && "-translate-x-1/4 rotate-180",
           )}
         >
-          <ChevronDown />
+          <span class="material-symbols-outlined text-[2rem]">expand_more</span>
         </span>
       </button>
 
@@ -81,7 +80,7 @@
               </span>
               {#if selected}
                 <span class="absolute inset-y-0 left-0 flex items-center pl-3">
-                  <Check />
+                  <span class="material-symbols-outlined text-[1.5rem]">done</span>
                 </span>
               {/if}
             </li>

@@ -5,22 +5,13 @@
   import { isModalOpen } from "$lib/stores/ui";
   import { Redirect } from ".";
 
-  import { Icon } from "@steeze-ui/svelte-icon";
-  import {
-    Bed,
-    Folder,
-    PinDrop,
-    Train,
-    type IconSource,
-  } from "@steeze-ui/material-design-icons";
-
   export let icon: EntityType;
 
-  const iconComponents: Record<EntityType, IconSource> = {
-    lodging: Bed,
-    place: PinDrop,
-    trip: Folder,
-    transport: Train,
+  const iconComponents: Record<EntityType, string> = {
+    lodging: "bed",
+    place: "location_on",
+    trip: "folder",
+    transport: "train",
   };
 
   let clicked = false;
@@ -47,7 +38,9 @@
     <div
       class="flex aspect-square w-20 items-center justify-center rounded-full bg-primary p-4 [&>*]:h-full [&>*]:w-full"
     >
-      <Icon src={iconComponents[icon]} />
+      <span class="material-symbols-outlined filled text-[3rem]">
+        {iconComponents[icon]}
+      </span>
     </div>
     <div class="capitalize">{label}</div>
   </Redirect>

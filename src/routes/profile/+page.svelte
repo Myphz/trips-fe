@@ -1,15 +1,4 @@
 <script lang="ts">
-  import {
-    ArrowLeftOnRectangle,
-    ChevronRight,
-    Envelope,
-    EnvelopeOpen,
-    Key,
-    Moon,
-    PlusCircle,
-    Trash,
-    User,
-  } from "svelte-heros";
   import { invitesN, logout, myId, myProfile, setMe } from "$lib/stores/api/select";
   import Select from "$lib/components/form/Select.svelte";
   import { toggleModal } from "$lib/stores/modals";
@@ -52,7 +41,7 @@
       <div
         class="absolute bottom-[15%] right-0 flex aspect-square w-5 items-center justify-center rounded-full bg-primary"
       >
-        <PlusCircle size="1rem" />
+        <span class="material-symbols-outlined text-[1rem]">add_circle</span>
       </div>
     </button>
 
@@ -69,7 +58,7 @@
     <a class="flex justify-between" href="/profile/invites">
       <div class="flex items-center gap-2">
         <div class="relative text-primary">
-          <EnvelopeOpen size="1.5rem" />
+          <span class="material-symbols-outlined text-[1.5rem]">drafts</span>
           {#if $invitesN}
             <div
               class="absolute -right-[2px] -top-[2px] flex aspect-square w-3 justify-center rounded-full bg-error text-[7px] leading-none text-white dark:text-black"
@@ -81,7 +70,7 @@
 
         <div>Invites</div>
       </div>
-      <ChevronRight />
+      <span class="material-symbols-outlined text-[1.5rem]">chevron_right</span>
     </a>
   </section>
 
@@ -90,34 +79,34 @@
     <a class="flex justify-between" href="/profile/name">
       <div class="flex items-center gap-2">
         <div class="text-primary">
-          <User size="1.5rem" />
+          <span class="material-symbols-outlined text-[1.5rem]">person</span>
         </div>
 
         <div>Change username</div>
       </div>
-      <ChevronRight />
+      <span class="material-symbols-outlined text-[1.5rem]">chevron_right</span>
     </a>
 
     <a class="flex justify-between" href="/profile/email">
       <div class="flex items-center gap-2">
         <div class="text-primary">
-          <Envelope size="1.5rem" />
+          <span class="material-symbols-outlined text-[1.5rem]">mail</span>
         </div>
 
         <div>Change email</div>
       </div>
-      <ChevronRight />
+      <span class="material-symbols-outlined text-[1.5rem]">chevron_right</span>
     </a>
 
     <a class="flex justify-between" href="/profile/password">
       <div class="flex items-center gap-2">
         <div class="text-primary">
-          <Key size="1.5rem" />
+          <span class="material-symbols-outlined text-[1.5rem]">key</span>
         </div>
 
         <div>Change password</div>
       </div>
-      <ChevronRight />
+      <span class="material-symbols-outlined text-[1.5rem]">chevron_right</span>
     </a>
   </section>
 
@@ -126,7 +115,7 @@
     <div class="flex justify-between">
       <div class="flex items-center gap-2">
         <div class="text-primary">
-          <Moon size="1.5rem" />
+          <span class="material-symbols-outlined text-[1.5rem]">dark_mode</span>
         </div>
 
         <div>Theme</div>
@@ -147,14 +136,14 @@
   <section class="flex flex-col gap-4">
     <header class="mt-2 font-headers text-h3">Other</header>
     <button class="flex items-center gap-2 text-primary" on:click={logout}>
-      <ArrowLeftOnRectangle />
+      <span class="material-symbols-outlined text-[1.5rem]">logout</span>
       <span>Logout</span>
     </button>
     <button
       class="flex items-center gap-2 text-error"
       on:click={() => toggleModal("deleteAccount")}
     >
-      <Trash />
+      <span class="material-symbols-outlined text-[1.5rem]">delete</span>
       <span>Delete account</span>
     </button>
   </section>

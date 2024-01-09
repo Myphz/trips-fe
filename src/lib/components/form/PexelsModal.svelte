@@ -2,7 +2,6 @@
   import { fade } from "svelte/transition";
   import { clickoutside } from "@svelte-put/clickoutside";
   import Input from "./Input.svelte";
-  import { MagnifyingGlass } from "svelte-heros";
   import { getPexelsPhoto } from "$utils/pexels";
   import { BarLoader } from "svelte-loading-spinners";
   import { getName } from "$utils/format";
@@ -59,7 +58,7 @@
         <button
           class="mt-2 aspect-square h-full p-1 text-primary [&>*]:aspect-square [&>*]:h-full"
         >
-          <MagnifyingGlass />
+          <span class="material-symbols-outlined text-[2rem]">search</span>
         </button>
       </form>
 

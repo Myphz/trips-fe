@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { ArrowDownTray, ArrowLeft, Trash, XMark } from "svelte-heros";
   import { downloadImage, getPhotoURL } from "$utils/files";
   import { twMerge } from "tailwind-merge";
   import Loading from "./cards/Loading.svelte";
@@ -53,7 +52,7 @@
             class="absolute right-1 top-1 text-primary"
             on:click={onCrossClick}
           >
-            <XMark size="2rem" />
+            <span class="material-symbols-outlined text-[2rem] text-error">close</span>
           </button>
         {/if}
       </button>
@@ -68,12 +67,12 @@
         class="fixed top-0 flex h-24 w-full items-center justify-between bg-black bg-opacity-10 px-4 pt-6 text-white dark:bg-[#000]"
       >
         <button on:click={() => (fullScreen = false)} class="dark:text-black">
-          <ArrowLeft size="2rem" />
+          <span class="material-symbols-outlined text-[2rem]">arrow_back</span>
         </button>
 
         <div class="flex gap-4">
           <button class="text-primary" on:click={() => downloadImage(photo)}>
-            <ArrowDownTray size="2rem" />
+            <span class="material-symbols-outlined text-[2rem]">download</span>
           </button>
           {#if withDelete}
             <button
@@ -84,7 +83,7 @@
                 loadPhotos();
               }}
             >
-              <Trash size="2rem" />
+              <span class="material-symbols-outlined text-[2rem]">delete</span>
             </button>
           {/if}
         </div>

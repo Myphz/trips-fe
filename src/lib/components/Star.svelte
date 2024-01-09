@@ -1,10 +1,12 @@
 <script lang="ts">
-  import { Star } from "svelte-heros";
-
   export let filled = true;
   export let size: "small" | "big" = "small";
 </script>
 
 <div class={filled ? "text-accent" : "text-off"}>
-  <Star variation="solid" size={size === "small" ? "1rem" : "2rem"} />
+  <span
+    class="material-symbols-outlined filled {size === 'small' ? 'text-[1rem]' : 'text-[2rem]'}"
+  >
+    star
+  </span>
 </div>

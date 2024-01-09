@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { CheckCircle, XCircle } from "svelte-heros";
-
   export let msg: string;
   export let title: string;
 
@@ -21,9 +19,9 @@
 >
   <div class="text-small {textColor} flex gap-2">
     {#if variant === "success"}
-      <CheckCircle size="1.5rem" />
+      <span class="material-symbols-outlined text-[1.5rem]">check_circle</span>
     {:else}
-      <XCircle size="1.5rem" />
+      <span class="material-symbols-outlined text-[1.5rem]">cancel</span>
     {/if}
     <div>{title}</div>
   </div>

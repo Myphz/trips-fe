@@ -5,7 +5,6 @@
 
   import { createCombobox } from "svelte-headlessui";
   import { fade } from "svelte/transition";
-  import { Check, ChevronDown } from "svelte-heros";
 
   export let options: Option[];
   export let label: string;
@@ -91,7 +90,7 @@
             $combobox.expanded && "-translate-x-1/4 rotate-180",
           )}
         >
-          <ChevronDown />
+          <span class="material-symbols-outlined text-[2rem]">expand_more</span>
         </button>
       </div>
 
@@ -132,7 +131,7 @@
                   class="absolute inset-y-0 left-0 flex items-center pl-3 {active &&
                     'text-white'}"
                 >
-                  <Check />
+                  <span class="material-symbols-outlined text-[1.5rem]">done</span>
                 </span>
               {/if}
             </li>

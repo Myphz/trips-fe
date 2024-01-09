@@ -3,7 +3,6 @@
   import { DatePicker } from "@capacitor-community/date-picker";
   import { format } from "date-fns";
   import { getContext } from "svelte";
-  import { Calendar } from "svelte-heros";
   import { twMerge } from "tailwind-merge";
 
   export let placeholder: string;
@@ -56,7 +55,7 @@
     </div>
 
     <div class="flex h-full flex-1 items-center justify-center px-2">
-      <Calendar size="1.25rem" />
+      <span class="material-symbols-outlined text-[1.25rem]">calendar_today</span>
     </div>
   </button>
 </div>

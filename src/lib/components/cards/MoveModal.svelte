@@ -1,7 +1,6 @@
 <script lang="ts">
   import { history, pageTitle } from "$lib/stores/route";
   import { moveEntity } from "$lib/stores/routeParams";
-  import { ArrowRight } from "svelte-heros";
   import Button from "../form/Button.svelte";
   import { move } from "$lib/stores/api/update";
 </script>
@@ -13,7 +12,7 @@
   >
     <div class="flex items-center gap-2 text-h3">
       <span>{$moveEntity?.name}</span>
-      <ArrowRight />
+      <span class="material-symbols-outlined text-[2rem]">arrow_forward</span>
       <span>{$pageTitle}</span>
     </div>
     <div class="flex w-full justify-between gap-2">

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { ChevronRight } from "svelte-heros";
   import { history } from "$lib/stores/route";
 </script>
 
@@ -10,7 +9,7 @@
     {#each $history.slice(1) as slot (slot.entityId)}
       <div class="flex items-center gap-1 text-ellipsis">
         <span>{slot.title}</span>
-        <ChevronRight size="0.8rem" />
+        <span class="material-symbols-outlined text-[1rem]">chevron_right</span>
       </div>
     {/each}
   </header>

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { XMark } from "svelte-heros";
   import { Button, Input } from ".";
   import { myId, select } from "$lib/stores/api/select";
   import { routeParams } from "$lib/stores/routeParams";
@@ -46,7 +45,7 @@
   };
 </script>
 
-<div class="flex flex-col gap-2">
+<div class="mb-4 flex flex-col gap-2">
   <input type="hidden" value={JSON.stringify(selected.map((user) => user.username))} {name} />
 
   <div class="flex flex-col gap-1">
@@ -74,7 +73,7 @@
           class="text-primary"
           on:click={() => deletePerson(person.username)}
         >
-          <XMark />
+          <span class="material-symbols-outlined text-[1.5rem] text-error">close</span>
         </button>
       </div>
     {/each}

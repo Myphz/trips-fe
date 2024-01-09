@@ -4,7 +4,6 @@
   import { del } from "$lib/stores/api/delete";
   import { getInvites, invitesN } from "$lib/stores/api/select";
   import { update } from "$lib/stores/api/update";
-  import { Check, XMark } from "svelte-heros";
 
   let invites: Awaited<ReturnType<typeof getInvites>> = [];
   let isLoading = true;
@@ -58,10 +57,10 @@
       </div>
       <div class="flex gap-2 text-white dark:text-black">
         <button class="rounded-lg bg-primary p-1" on:click={() => acceptInvite(invite.id)}>
-          <Check />
+          <span class="material-symbols-outlined text-[1.5rem]">done</span>
         </button>
         <button class="rounded-lg bg-error p-1" on:click={() => kotowaruInvite(invite.id)}>
-          <XMark />
+          <span class="material-symbols-outlined text-[1.5rem]">close</span>
         </button>
       </div>
     </article>

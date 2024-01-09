@@ -1,6 +1,5 @@
 <script lang="ts">
   import { card, loadPhotos, photos } from "$lib/stores/api/select";
-  import { Plus } from "svelte-heros";
   import FilePicker from "./form/FilePicker.svelte";
   import { createPhotos } from "$lib/stores/api/create";
   import { PhotoViewer } from ".";
@@ -14,7 +13,7 @@
   <div class="flex items-center justify-between">
     <header class="text-h3 capitalize">Photos</header>
     <button class="text-primary" on:click={() => ref.showPicker()}>
-      <Plus />
+      <span class="material-symbols-outlined text-[2rem]">add</span>
     </button>
   </div>
 

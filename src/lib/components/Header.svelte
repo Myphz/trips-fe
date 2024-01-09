@@ -12,7 +12,7 @@
 
 {#if !$page.route.id?.startsWith("/profile") && $page.route.id !== "/old"}
   <div
-    class="mb-9 flex w-full items-center justify-between"
+    class="mb-6 mt-4 flex w-full items-center justify-between"
     transition:blur={{ duration: 100 }}
   >
     <div class="flex w-full items-center gap-6">

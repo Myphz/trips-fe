@@ -8,11 +8,8 @@
   import { isDarkMode } from "$lib/stores/route";
   import { setAppearancePref } from "../../config";
   import { THEME_OPTIONS } from "../../constants";
-  import { setContext } from "svelte";
-  import { writable } from "svelte/store";
 
   let ref: HTMLInputElement;
-  setContext("defaultValues", writable({}));
 
   const updatePhoto = async (photos: Record<string, string>) => {
     const photo = photos[Object.keys(photos)?.[0]];

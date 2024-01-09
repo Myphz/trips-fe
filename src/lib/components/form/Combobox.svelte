@@ -5,7 +5,7 @@
 
   import { createCombobox } from "svelte-headlessui";
   import { fade } from "svelte/transition";
-  import type { Writable } from "svelte/store";
+  import { writable, type Writable } from "svelte/store";
 
   export let options: Option[];
   export let label: string;
@@ -17,7 +17,7 @@
 
   let inputRef: HTMLInputElement;
 
-  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? {};
+  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? writable({});
   const selected = $ctx[name] ? options.find((opt) => opt.value === $ctx[name]) : null;
   const combobox = createCombobox(selected ? { selected } : {});
 

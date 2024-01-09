@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
-  import type { Writable } from "svelte/store";
+  import { writable, type Writable } from "svelte/store";
   import { twMerge } from "tailwind-merge";
 
   export let placeholder: string;
@@ -9,7 +9,7 @@
   export let type = "text";
   export let numeric = false;
 
-  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? {};
+  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? writable({});
 
   let ref: HTMLInputElement;
   $: startValue = $ctx[name];

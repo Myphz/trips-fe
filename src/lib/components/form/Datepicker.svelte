@@ -3,14 +3,14 @@
   import { DatePicker } from "@capacitor-community/date-picker";
   import { format } from "date-fns";
   import { getContext } from "svelte";
-  import type { Writable } from "svelte/store";
+  import { writable, type Writable } from "svelte/store";
   import { twMerge } from "tailwind-merge";
 
   export let placeholder: string;
   export let name: string;
   export let mode: "date" | "dateAndTime" = "date";
 
-  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? {};
+  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? writable({});
   const DATE_FORMAT = mode === "date" ? "yyyy-MM-dd" : "yyy-MM-dd HH:mm";
 
   let value = $ctx[name];

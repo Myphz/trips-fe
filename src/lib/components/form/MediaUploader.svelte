@@ -4,14 +4,15 @@
   import FilePicker from "./FilePicker.svelte";
   import PexelsModal from "./PexelsModal.svelte";
   import { uploadFileFromURL } from "$lib/stores/files/upload";
-  import type { Writable } from "svelte/store";
+  import { writable, type Writable } from "svelte/store";
 
   export let mediaType: "image" | "video" | "both";
   export let name: string;
   export let multiple = false;
 
   const ctx =
-    getContext<Writable<Record<string, Record<string, string>>>>("defaultValues") ?? {};
+    getContext<Writable<Record<string, Record<string, string>>>>("defaultValues") ??
+    writable({});
   let photos = $ctx[name] ?? {};
   if (typeof photos === "string") photos = { unknown: photos };
 

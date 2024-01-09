@@ -8,6 +8,7 @@
   import { card } from "$lib/stores/api/select";
   import { setContext } from "svelte";
   import { pexelSearch } from "$lib/stores/pexels";
+  import { writable, type Writable } from "svelte/store";
 
   export let open = false;
   export let onImageSelect: (src: string) => unknown;
@@ -16,7 +17,10 @@
   let loading = false;
 
   $: startSearch = $pexelSearch || getName($card);
-  $: setContext("defaultValues", { search: startSearch });
+  const defaultValues = writable({ search: startSearch });
+  $: defaultValues.set({ search: startSearch });
+
+  setContext("defaultValues", defaultValues);
 
   let photos: Awaited<ReturnType<typeof getPexelsPhoto>> = [];
 

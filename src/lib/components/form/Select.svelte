@@ -4,7 +4,7 @@
 
   import { createListbox } from "svelte-headlessui";
   import { fade } from "svelte/transition";
-  import type { Writable } from "svelte/store";
+  import { writable, type Writable } from "svelte/store";
 
   type Option = {
     label: string;
@@ -17,7 +17,7 @@
   export let onSelect: (value: string) => unknown = () => {};
   export let startValue: string | null = null;
 
-  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? {};
+  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? writable({});
   const selected =
     $ctx[name] || startValue
       ? options.find((opt) => opt.value === ($ctx[name] || startValue))

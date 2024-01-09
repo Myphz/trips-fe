@@ -21,6 +21,8 @@
   const selected = ctx[name] ? options.find((opt) => opt.value === ctx[name]) : null;
   const combobox = createCombobox(selected ? { selected } : {});
 
+  let isInputFilled = false;
+
   const realOnSelect = (e: Event) => {
     const selected = (e as CustomEvent).detail.selected;
     const displaySelected = onSelect(selected.value);
@@ -32,10 +34,15 @@
   const realOnInput = (e: Event) => {
     const target = e.target || {};
     if (!("value" in target) || typeof target.value !== "string") return;
+    isInputFilled = !!target.value;
     onInput(target.value);
   };
   onMount(() => {
     if (selected) inputRef.value = selected.label;
+    if (ctx[name] && !selected) {
+      inputRef.value = ctx[name];
+      isInputFilled = true;
+    }
   });
 
   $: filtered = options.filter((option) =>
@@ -70,7 +77,8 @@
         <span
           class={twMerge(
             "epic-transition absolute top-1 mx-3 flex w-fit items-center truncate bg-white group-focus-within:-top-2 group-focus-within:text-xs",
-            ($combobox.selected?.value || $combobox.expanded) && "-top-2 text-xs",
+            ($combobox.selected?.value || $combobox.expanded || isInputFilled) &&
+              "-top-2 text-xs",
           )}
         >
           {label}
@@ -98,10 +106,22 @@
             {@const selected = multiple
               ? multipleSelected.includes(option.value)
               : $combobox.selected === option}
+            <!-- svelte-ignore a11y-click-events-have-key-events -->
+            <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
             <li
               class="relative cursor-pointer select-none py-1 pl-10 pr-4 {active || selected
                 ? 'bg-primary text-white'
                 : ''}"
+              on:click={() => {
+                if (multiple) return;
+                // Unfocus input element
+                setTimeout(() => {
+                  const tmp = document.createElement("input");
+                  document.body.appendChild(tmp);
+                  tmp.focus();
+                  document.body.removeChild(tmp);
+                }, 50);
+              }}
               use:combobox.item={{ value: option }}
             >
               <span class="block truncate {selected ? 'font-medium' : 'font-normal'}">
@@ -109,9 +129,8 @@
               </span>
               {#if selected}
                 <span
-                  class="absolute inset-y-0 left-0 flex items-center pl-3 {active
-                    ? 'text-white'
-                    : 'text-teal-600'}"
+                  class="absolute inset-y-0 left-0 flex items-center pl-3 {active &&
+                    'text-white'}"
                 >
                   <Check />
                 </span>

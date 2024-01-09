@@ -13,6 +13,7 @@
   import type { FormParams } from "$lib/types/forms";
   import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
 
   onMount(() => pexelSearch.set(""));
 
@@ -21,13 +22,14 @@
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a lodging");
 
-  $: defaultValues =
+  $: defaultValues = writable(
     isEdit && $card
       ? pick(
           rename($card as GetRowType<"lodging">, { start: "start_date", end: "end_date" }),
           ["name", "start_date", "end_date", "photo", "price"],
         )
-      : {};
+      : {},
+  );
 
   const onSubmit = async (data: FormParams<"lodgings">) => {
     if (data.start_date && data.end_date) {
@@ -66,7 +68,14 @@
     <Datepicker name="start_date" placeholder="Start date" />
     <Datepicker name="end_date" placeholder="End date" />
   </div>
-  <MapsCombobox label="Address" name="address" />
+  <MapsCombobox
+    label="Address"
+    name="address"
+    onSelect={(option) => {
+      const main = option.split(",")[0];
+      $defaultValues = { ...$defaultValues, name: main };
+    }}
+  />
   <Input placeholder="Total price" name="price" numeric />
 
   <MediaUploader name="photo" mediaType="image" />

@@ -1,4 +1,6 @@
 <script lang="ts" generics="T extends object">
+  import { writable, type Writable } from "svelte/store";
+
   import { isUploading } from "$lib/stores/files/upload";
 
   import { setContext } from "svelte";
@@ -6,7 +8,7 @@
   import { BarLoader } from "svelte-loading-spinners";
 
   export let isEdit = false;
-  export let defaultValues: Record<string, string> = {};
+  export let defaultValues: Writable<Record<string, string>> = writable({});
   export let onSubmit: (data: T) => unknown;
   export let autocomplete = "off";
   export let buttonText: string;

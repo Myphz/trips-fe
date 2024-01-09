@@ -20,6 +20,7 @@
   import currencies from "$lib/assets/currencies.json";
   import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
 
   const { entityId } = routeParams;
 
@@ -28,7 +29,7 @@
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a trip");
 
-  $: defaultValues =
+  $: defaultValues = writable(
     isEdit && $card
       ? pick(rename($card as GetRowType<"trip">, { start: "start_date", end: "end_date" }), [
           "destination",
@@ -37,7 +38,8 @@
           "photo",
           "currency",
         ])
-      : {};
+      : {},
+  );
 
   const onSubmit = async (
     data: Tables["entities"]["Insert"] & Tables["trips"]["Insert"] & { people: string[] },

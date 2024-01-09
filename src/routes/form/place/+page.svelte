@@ -12,6 +12,7 @@
   import { fail } from "$utils/toasts";
   import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
 
   onMount(() => pexelSearch.set(""));
 
@@ -20,8 +21,9 @@
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add an activity");
 
-  $: defaultValues =
-    isEdit && $card ? pickCard("place", ["name", "address", "date", "price", "photo"]) : {};
+  $: defaultValues = writable(
+    isEdit && $card ? pickCard("place", ["name", "address", "date", "price", "photo"]) : {},
+  );
 
   const onSubmit = async (data: FormParams<"places">) => {
     if (data.price) {
@@ -48,7 +50,14 @@
 
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Name" name="name" required on:input={updatePexelSearchOnInput} />
-  <MapsCombobox label="Address" name="address" />
+  <MapsCombobox
+    label="Address"
+    name="address"
+    onSelect={(option) => {
+      const main = option.split(",")[0];
+      $defaultValues = { ...$defaultValues, name: main };
+    }}
+  />
   <div class="flex gap-4">
     <Datepicker name="date" placeholder="Date" />
     <Input placeholder="Price" name="price" numeric />

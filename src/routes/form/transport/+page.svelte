@@ -14,6 +14,7 @@
   import { MEANS_OF_TRANSPORT } from "../../../constants";
   import { pexelSearch } from "$lib/stores/pexels";
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
 
   const { entityId } = routeParams;
 
@@ -22,7 +23,7 @@
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a transport");
 
-  $: defaultValues =
+  $: defaultValues = writable(
     isEdit && $card
       ? pick(
           rename($card as GetRowType<"transport">, {
@@ -41,7 +42,8 @@
             "price",
           ],
         )
-      : {};
+      : {},
+  );
 
   const onSubmit = async (data: FormParams<"transports">) => {
     if (data.price) {

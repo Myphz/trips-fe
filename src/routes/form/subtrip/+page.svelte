@@ -12,6 +12,7 @@
   import { addEntity } from "$lib/stores/api/create";
   import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
   import { onMount } from "svelte";
+  import { writable } from "svelte/store";
 
   onMount(() => pexelSearch.set(""));
 
@@ -20,7 +21,7 @@
   $: isEdit = !!$entityId;
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add a group");
 
-  $: defaultValues =
+  $: defaultValues = writable(
     isEdit && $card
       ? pick(rename($card as GetRowType<"trip">, { start: "start_date", end: "end_date" }), [
           "destination",
@@ -28,7 +29,8 @@
           "end_date",
           "photo",
         ])
-      : {};
+      : {},
+  );
 
   const onSubmit = async (data: Tables["entities"]["Insert"] & Tables["trips"]["Insert"]) => {
     if (data.start_date && data.end_date) {

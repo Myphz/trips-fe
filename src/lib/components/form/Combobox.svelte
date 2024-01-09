@@ -5,6 +5,7 @@
 
   import { createCombobox } from "svelte-headlessui";
   import { fade } from "svelte/transition";
+  import type { Writable } from "svelte/store";
 
   export let options: Option[];
   export let label: string;
@@ -16,14 +17,15 @@
 
   let inputRef: HTMLInputElement;
 
-  const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
-  const selected = ctx[name] ? options.find((opt) => opt.value === ctx[name]) : null;
+  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? {};
+  const selected = $ctx[name] ? options.find((opt) => opt.value === $ctx[name]) : null;
   const combobox = createCombobox(selected ? { selected } : {});
 
   let isInputFilled = false;
 
-  const realOnSelect = (e: Event) => {
-    const selected = (e as CustomEvent).detail.selected;
+  const realOnSelect = (e?: Event) => {
+    const selected = e ? (e as CustomEvent).detail.selected : $combobox.selected;
+    if (!selected) return;
     const displaySelected = onSelect(selected.value);
 
     if (displaySelected) inputRef.value = selected.label;
@@ -38,8 +40,8 @@
   };
   onMount(() => {
     if (selected) inputRef.value = selected.label;
-    if (ctx[name] && !selected) {
-      inputRef.value = ctx[name];
+    if ($ctx[name] && !selected) {
+      inputRef.value = $ctx[name];
       isInputFilled = true;
     }
   });
@@ -112,6 +114,7 @@
                 ? 'bg-primary text-white'
                 : ''}"
               on:click={() => {
+                realOnSelect();
                 if (multiple) return;
                 // Unfocus input element
                 setTimeout(() => {

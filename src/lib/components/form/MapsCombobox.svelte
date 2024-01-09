@@ -6,6 +6,7 @@
 
   export let name: string;
   export let label: string;
+  export let onSelect: (value: string) => unknown = () => true;
 
   onMount(() => {
     generateToken();
@@ -14,17 +15,21 @@
   let options: Option[] = [];
   async function setOptions(search: string) {
     const predictions = await getPredictions(search);
-    options = predictions.map((predict) => {
-      const label = `${predict.structured_formatting.main_text}, ${
-        predict.terms.at(-2)?.value
-      }, ${predict.terms.at(-1)?.value}`;
-
+    options = predictions.map(({ id, label }) => {
       return {
         label,
-        value: JSON.stringify({ maps_id: predict.place_id, [name]: label }),
+        value: JSON.stringify({ maps_id: id, [name]: label }),
       };
     });
   }
 </script>
 
-<Combobox onInput={setOptions} {name} {label} {options} />
+<Combobox
+  onInput={setOptions}
+  {name}
+  {label}
+  {options}
+  onSelect={(opt) => {
+    onSelect(JSON.parse(opt).address);
+  }}
+/>

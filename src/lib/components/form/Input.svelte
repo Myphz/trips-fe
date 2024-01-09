@@ -1,5 +1,6 @@
 <script lang="ts">
   import { getContext, onMount } from "svelte";
+  import type { Writable } from "svelte/store";
   import { twMerge } from "tailwind-merge";
 
   export let placeholder: string;
@@ -8,17 +9,25 @@
   export let type = "text";
   export let numeric = false;
 
-  const ctx = getContext<Record<string, string>>("defaultValues") ?? {};
+  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? {};
 
   let ref: HTMLInputElement;
-  const startValue = ctx[name] ?? null;
+  $: startValue = $ctx[name];
 
   let invalid = false;
   let isFilled = !!startValue;
 
   onMount(() => {
-    ref.value = startValue;
+    if (startValue) ref.value = startValue;
+    isFilled = !!startValue;
   });
+
+  $: {
+    if (ref && !ref.value && startValue) {
+      ref.value = startValue;
+      isFilled = !!startValue;
+    }
+  }
 
   const onInput = () => {
     if (type === "text") ref.value = ref.value.trimStart();

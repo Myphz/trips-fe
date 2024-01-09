@@ -25,7 +25,7 @@ export const getPredictions = (search: string) => {
   const maps = get(google);
   const tok = get(token);
 
-  return new Promise<google.maps.places.AutocompletePrediction[]>((res, rej) => {
+  return new Promise<ReturnType<typeof formatPrediction>[]>((res, rej) => {
     if (!maps || !tok) return res([]);
 
     const service = new maps.maps.places.AutocompleteService();
@@ -35,8 +35,17 @@ export const getPredictions = (search: string) => {
         if (status !== maps.maps.places.PlacesServiceStatus.OK || !predictions) {
           return rej();
         }
-        res(predictions);
+        res(predictions.map(formatPrediction));
       },
     );
   });
+};
+
+export const formatPrediction = (predict: google.maps.places.AutocompletePrediction) => {
+  const mainText = predict.structured_formatting.main_text;
+  const otherText = [predict.terms.at(-2)?.value, predict.terms.at(-1)?.value].filter(Boolean);
+
+  const label = `${mainText}, ${otherText.join(", ")}`;
+
+  return { mainText, label, id: predict.place_id };
 };

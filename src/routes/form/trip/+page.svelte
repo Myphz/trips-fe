@@ -44,7 +44,7 @@
   const onSubmit = async (
     data: Tables["entities"]["Insert"] & Tables["trips"]["Insert"] & { people: string[] },
   ) => {
-    const { people, ...restData } = data;
+    const { people = [], ...restData } = data;
 
     if (restData.start_date && restData.end_date) {
       if (+new Date(restData.start_date) > +new Date(restData.end_date)) {

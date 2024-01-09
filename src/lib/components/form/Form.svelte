@@ -36,11 +36,13 @@
             if (typeof newValue === "number") throw new Error();
 
             if (typeof newValue !== "object") return [key, newValue];
+            if (Array.isArray(newValue)) return [key, newValue];
             return [...Object.entries(newValue)];
           } catch {
             return [key, val];
           }
         })
+        .filter((val) => val.length > 0)
         // If it's a nested array, flatten it
         .reduce((prev, curr) => {
           if (!Array.isArray(curr[0])) return [...prev, curr];

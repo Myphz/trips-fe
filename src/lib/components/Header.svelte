@@ -1,7 +1,5 @@
 <script lang="ts">
   import { MAIN_PAGE_TITLE, pageTitle } from "$lib/stores/route";
-  import { Plus, ArrowLeft, MapPin } from "svelte-heros";
-  import Pencil from "$lib/assets/icons/pencil.svg?raw";
 
   import { page } from "$app/stores";
   import { goBack } from "$utils/guard";
@@ -20,7 +18,7 @@
     <div class="flex w-full items-center gap-6">
       {#if advancedMode}
         <button on:click={goBack} transition:blur={{ duration: 100 }}>
-          <ArrowLeft size="2rem" />
+          <span class="material-symbols-outlined text-[2rem]">arrow_back</span>
         </button>
       {/if}
       <h1
@@ -37,11 +35,11 @@
             class="ml-auto text-primary"
             transition:blur={{ duration: 100 }}
           >
-            <Plus size="2rem" />
+            <span class="material-symbols-outlined text-[2rem]">add</span>
           </a>
         {:else if !$page.route.id?.includes("form")}
           <button class="ml-auto text-primary" use:modal transition:blur={{ duration: 100 }}>
-            <Plus size="2rem" />
+            <span class="material-symbols-outlined text-[2rem]">add</span>
           </button>
         {/if}
       {/if}
@@ -56,7 +54,7 @@
               class="ml-auto text-primary"
               transition:blur={{ duration: 100 }}
             >
-              <MapPin variation="solid" />
+              <span class="material-symbols-outlined text-[2rem]">location_on</span>
             </a>
           {/if}
           <a
@@ -64,7 +62,7 @@
             class="ml-auto text-primary"
             transition:blur={{ duration: 100 }}
           >
-            {@html Pencil}
+            <span class="material-symbols-outlined text-[2rem]">edit</span>
           </a>
         </div>
       {/if}

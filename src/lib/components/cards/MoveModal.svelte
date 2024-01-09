@@ -16,8 +16,8 @@
       <span>{$pageTitle}</span>
     </div>
     <div class="flex w-full justify-between gap-2">
-      <Button variant="error" on:click={() => ($moveEntity = null)}>CANCEL</Button>
-      <Button on:click={move}>MOVE</Button>
+      <Button variant="outlined-error" on:click={() => ($moveEntity = null)}>Cancel</Button>
+      <Button on:click={move}>Move</Button>
     </div>
   </div>
 {/if}

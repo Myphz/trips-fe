@@ -2,7 +2,7 @@ import { createThemes } from "tw-colors";
 
 const SHARED_COLORS = {
   success: "#E6F6F4",
-  error: "#F51900",
+  error: "#E9443F",
   tab: "#37E0C8",
   accent: "#FFCB45",
   off: "#CECECE",

@@ -2,13 +2,14 @@
   import { twMerge } from "tailwind-merge";
 
   export let submit = false;
-  export let variant: "primary" | "error" | "outlined" = "primary";
+  export let variant: "primary" | "error" | "outlined-primary" | "outlined-error" = "primary";
   export let disabled = false;
 
   const styleClasses: Record<typeof variant, string> = {
     primary: "bg-primary dark:text-black",
     error: "bg-error dark:text-black",
-    outlined: "border border-primary text-black",
+    "outlined-primary": "border border-primary text-primary",
+    "outlined-error": "border border-error text-error",
   };
 </script>
 

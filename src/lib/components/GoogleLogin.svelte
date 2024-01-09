@@ -30,8 +30,8 @@
   };
 </script>
 
-<Button variant="outlined" on:click={signIn}>
-  <div class="flex items-center justify-center gap-2">
+<Button variant="outlined-primary" on:click={signIn}>
+  <div class="flex items-center justify-center gap-2 text-black">
     <img src="/google.png" alt="Google" class="aspect-square h-6" />
     <span>Sign in with Google</span>
   </div>

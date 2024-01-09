@@ -18,7 +18,7 @@
   <div class="text-regular text-gray">This will delete all of your data.</div>
 
   <div class="mt-4 flex w-full gap-2 [&>*]:flex [&>*]:flex-1 [&>*]:justify-center">
-    <Button on:click={closeModal}>Cancel</Button>
+    <Button variant="outlined-primary" on:click={closeModal}>Cancel</Button>
     <Button variant="error" on:click={onDeleteClick}>Delete</Button>
   </div>
 </section>

@@ -7,8 +7,9 @@
   import { generateUsername } from "$utils/api";
   import { goBack } from "$utils/guard";
   import { fail, success } from "$utils/toasts";
+  import { writable } from "svelte/store";
 
-  $: defaultValues = { displayed: $myProfile?.displayed || "" };
+  $: defaultValues = writable({ displayed: $myProfile?.displayed || "" });
 
   const onSubmit = async (data: { displayed: string }) => {
     const { displayed } = data;

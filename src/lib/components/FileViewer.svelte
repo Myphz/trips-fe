@@ -8,7 +8,7 @@
 </script>
 
 <button class="flex w-full justify-between" on:click={() => downloadOrViewFile(file)}>
-  <div>{file.name}</div>
+  <div class="text-left">{file.name}</div>
   <div class="text-primary">
     <ArrowDownTray />
   </div>

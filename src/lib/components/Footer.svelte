@@ -1,6 +1,6 @@
 <script lang="ts">
   import { keyboardOpen } from "$lib/stores/ui";
-  import { filter, filterOnly } from "$lib/stores/api/select";
+  import { filter, filterCards, filterOnly, allCards } from "$lib/stores/api/select";
   import Redirect from "./Redirect.svelte";
   import { onMount } from "svelte";
   import { get } from "svelte/store";
@@ -12,6 +12,10 @@
     { icon: Bed, name: "lodging" },
     { icon: Train, name: "transport" },
   ] as const;
+
+  $: activeStatuses = TABS.map(
+    ({ name }) => filterCards({ filt: name, data: $allCards }).length > 0,
+  );
 
   onMount(() => {
     if (!get(filter)) filter.set("trip");
@@ -25,12 +29,17 @@
     <Redirect params={{ entityId: 0, parent: 0, tripId: 0 }} href="/" classes="text-tab">
       <Icon src={Home} size="2.25rem" />
     </Redirect>
-    {#each TABS as { icon, name }}
+    {#each TABS as { icon, name }, i}
+      {@const isActive = $filter === name}
+      {@const hasItems = activeStatuses[i]}
       <button
         on:click={() => filterOnly(name)}
-        class={$filter === name ? "text-white dark:text-black" : "text-tab"}
+        class={isActive ? "relative text-white dark:text-black" : "relative text-tab"}
       >
         <Icon src={icon} size="2.25rem" />
+        {#if hasItems}
+          <div class="absolute -right-1 top-0 aspect-square h-2 rounded-full bg-tab"></div>
+        {/if}
       </button>
     {/each}
   </nav>

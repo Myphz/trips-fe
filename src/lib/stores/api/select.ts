@@ -9,6 +9,7 @@ import { goto } from "$app/navigation";
 
 export const loading = writable(true);
 
+export const allCards = writable<GetRowTypes[]>([]);
 export const cards = writable<Awaited<ReturnType<typeof getAll>>>([]);
 export const card = writable<Awaited<ReturnType<typeof getAll>>[number] | null>(null);
 
@@ -38,6 +39,25 @@ export async function select<T extends keyof Tables>({ table, cond }: SelectPara
   return data;
 }
 
+export function filterCards({
+  filt,
+  data,
+}: {
+  filt?: UnwrapWritable<typeof filter>;
+  data?: GetRowTypes[];
+} = {}): GetRowTypes[] {
+  const rows = data || get(allCards);
+  const actualFilter = filt || get(filter);
+
+  const toFilter: EntityType[] = (() => {
+    if (actualFilter === "trip") return ["trip", "place"];
+    if (!actualFilter) return ["lodging", "place", "transport", "trip"];
+    return [actualFilter];
+  })();
+
+  return rows.filter((row) => toFilter.includes(row.type));
+}
+
 async function getAll() {
   const { tripId, parent } = routeParams;
   const { data, error } = await supabase.rpc(
@@ -45,35 +65,29 @@ async function getAll() {
     addOptionals({ tripid: get(tripId), parentid: get(parent) }),
   );
   if (error) throw new Error(`Supabase error: ${error.message}\nDetails: ${error.details}`);
-  const toFilter: EntityType[] = (() => {
-    const filt = get(filter);
-    if (filt === "trip") return ["trip", "place"];
-    if (!filt) return ["lodging", "place", "transport", "trip"];
-    return [filt];
-  })();
 
-  return (
-    data
-      .map((row) => convertRPCRow(row))
-      .filter((val) => !!val)
-      .filter((row) => toFilter.includes(row!.type))
-      .sort((card1, card2) => {
-        if (card1?.type !== card2?.type) {
-          if (card1?.type === "trip") return -1;
-          if (card2?.type === "trip") return 1;
-        }
-        return 0;
-      })
-      // Sort by start date
-      .sort((card1, card2) => {
-        let time1 = 0;
-        let time2 = 0;
-        if (card1 && "start" in card1) time1 = +new Date(card1.start);
-        if (card2 && "start" in card2) time2 = +new Date(card2.start);
+  const ret = data
+    .map((row) => convertRPCRow(row))
+    .filter((val) => !!val)
+    .sort((card1, card2) => {
+      if (card1?.type !== card2?.type) {
+        if (card1?.type === "trip") return -1;
+        if (card2?.type === "trip") return 1;
+      }
+      return 0;
+    })
+    // Sort by start date
+    .sort((card1, card2) => {
+      let time1 = 0;
+      let time2 = 0;
+      if (card1 && "start" in card1) time1 = +new Date(card1.start);
+      if (card2 && "start" in card2) time2 = +new Date(card2.start);
 
-        return time2 - time1;
-      }) as GetRowTypes[]
-  );
+      return time2 - time1;
+    }) as GetRowTypes[];
+
+  allCards.set(ret);
+  return filterCards({ data: ret });
 }
 
 export async function filterOnly(type: EntityType) {

@@ -1,9 +1,7 @@
 <script lang="ts">
-  import { activateMode, setPageTitle } from "$lib/stores/route";
+  import { setPageTitle } from "$lib/stores/route";
   import { Input, Form, MediaUploader, Datepicker, MapsCombobox } from "$lib/components/form";
   import { routeParams } from "$lib/stores/routeParams";
-  import { Trash } from "svelte-heros";
-  import { toggleModal } from "$lib/stores/modals";
   import { goBack } from "$utils/guard";
   import { card } from "$lib/stores/api/select";
   import { getName } from "$utils/format";
@@ -14,7 +12,6 @@
   import { fail } from "$utils/toasts";
   import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
   import { onMount } from "svelte";
-  import Move from "$lib/assets/icons/move.svg?raw";
 
   onMount(() => pexelSearch.set(""));
 
@@ -48,17 +45,6 @@
     goBack();
   };
 </script>
-
-{#if isEdit}
-  <div class="absolute right-0 top-0 flex justify-end gap-4">
-    <button on:click={activateMode} class="ml-auto text-primary">
-      {@html Move}
-    </button>
-    <button class="h-12 text-error" on:click={() => toggleModal("deleteEntity")}>
-      <Trash size="1.5rem" variation="solid" />
-    </button>
-  </div>
-{/if}
 
 <Form {onSubmit} {isEdit} buttonText={isEdit ? "UPDATE" : "ADD"} {defaultValues}>
   <Input placeholder="Name" name="name" required on:input={updatePexelSearchOnInput} />

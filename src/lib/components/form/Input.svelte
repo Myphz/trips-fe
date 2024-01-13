@@ -15,15 +15,19 @@
   $: startValue = $ctx[name];
 
   let invalid = false;
+  let hasBeenResettedToDefault = false;
   let isFilled = !!startValue;
 
   onMount(() => {
-    if (startValue) ref.value = startValue;
+    if (startValue) {
+      ref.value = startValue;
+      hasBeenResettedToDefault = true;
+    }
     isFilled = !!startValue;
   });
 
   $: {
-    if (ref && !ref.value && startValue) {
+    if (ref && !ref.value && startValue && !hasBeenResettedToDefault) {
       ref.value = startValue;
       isFilled = !!startValue;
     }

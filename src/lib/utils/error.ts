@@ -58,6 +58,13 @@ function handlePromiseRejection(event: PromiseRejectionEvent): void {
       message: error?.message || String(error),
       stack: error?.stack || "No stack trace available.",
     };
+
+    // HeadlessUI combobox error with no consequences (and no way to avoid it...)
+    if (
+      typeof errorDetails.details.message === "string" &&
+      errorDetails.details.message.includes("e.items[e.active]")
+    )
+      return;
   }
 
   failHandler(errorDetails);

@@ -29,6 +29,7 @@
   {name}
   {label}
   {options}
+  shouldFilter={false}
   onSelect={(opt) => {
     onSelect(JSON.parse(opt).address);
   }}

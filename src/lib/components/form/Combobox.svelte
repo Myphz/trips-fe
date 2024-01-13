@@ -14,6 +14,7 @@
   export let multipleSelected: Array<string> = [];
   export let multiple = false;
   export let onInput: (value: string) => unknown = () => 1;
+  export let shouldFilter = true;
 
   let inputRef: HTMLInputElement;
 
@@ -46,12 +47,14 @@
     }
   });
 
-  $: filtered = options.filter((option) =>
-    option.label
-      .toLowerCase()
-      .replace(/\s+/g, "")
-      .includes($combobox.filter.toLowerCase().replace(/\s+/g, "")),
-  );
+  $: filtered = shouldFilter
+    ? options.filter((option) =>
+        option.label
+          .toLowerCase()
+          .replace(/\s+/g, "")
+          .includes($combobox.filter.toLowerCase().replace(/\s+/g, "")),
+      )
+    : options;
 </script>
 
 <div class="group flex w-full flex-col items-center justify-center text-small text-gray">

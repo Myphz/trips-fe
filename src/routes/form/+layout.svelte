@@ -17,7 +17,7 @@
 {#if isEdit}
   <div class="absolute right-0 top-0 flex justify-end gap-4">
     <button on:click={activateMode} class="ml-auto text-primary">
-      <span class="material-symbols-outlined text-[2rem]">move_up</span>
+      <span class="material-symbols-outlined text-[2rem]">move_group</span>
     </button>
     <button class="h-12 text-error" on:click={() => toggleModal("deleteEntity")}>
       <span class="material-symbols-outlined text-[2rem]">delete</span>

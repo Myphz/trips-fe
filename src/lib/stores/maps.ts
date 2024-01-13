@@ -25,7 +25,7 @@ export const getPredictions = (search: string) => {
   const maps = get(google);
   const tok = get(token);
 
-  return new Promise<ReturnType<typeof formatPrediction>[]>((res, rej) => {
+  return new Promise<ReturnType<typeof formatPrediction>[]>((res) => {
     if (!maps || !tok) return res([]);
 
     const service = new maps.maps.places.AutocompleteService();
@@ -33,7 +33,7 @@ export const getPredictions = (search: string) => {
       { input: search, sessionToken: tok },
       (predictions, status) => {
         if (status !== maps.maps.places.PlacesServiceStatus.OK || !predictions) {
-          return rej();
+          return res([]);
         }
         res(predictions.map(formatPrediction));
       },

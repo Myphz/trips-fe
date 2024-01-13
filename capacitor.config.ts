@@ -7,6 +7,7 @@ const config: CapacitorConfig = {
   webDir: "build",
   server: {
     androidScheme: "https",
+    hostname: "phoexatrips"
   },
   plugins: {
     GoogleAuth: {

@@ -26,7 +26,7 @@
     isEdit && $card
       ? pick(
           rename($card as GetRowType<"lodging">, { start: "start_date", end: "end_date" }),
-          ["name", "start_date", "end_date", "photo", "price"],
+          ["name", "start_date", "end_date", "photo", "price", "address"],
         )
       : {},
   );

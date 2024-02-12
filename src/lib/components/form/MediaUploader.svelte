@@ -16,7 +16,7 @@
   if (typeof photos === "string")
     photos = { unknown: { id: photos, created_at: new Date().toISOString() } };
 
-  $: photo = photos[Object.keys(photos)?.[0]] ?? "";
+  $: photo = photos[Object.keys(photos)?.[0]]?.id ?? "";
 
   let ref: HTMLInputElement;
   let pexelsOpen = false;

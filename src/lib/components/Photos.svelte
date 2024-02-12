@@ -22,7 +22,7 @@
   <div class="mt-2 flex flex-wrap gap-4">
     {#if $photos.length || $card?.photo}
       {#each $photos as photo}
-        <PhotoViewer photo={photo.id} maxHeight={false} withDelete />
+        <PhotoViewer {photo} maxHeight={false} withDelete />
       {/each}
       {#if $card?.photo}
         <PhotoViewer photo={$card.photo} maxHeight={false} />

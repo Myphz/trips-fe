@@ -20,6 +20,11 @@ export function datetimeToISO(date: string) {
   return format(new Date(date), "yyy-MM-dd HH:mm");
 }
 
+export function datetimeToDDMMYYYY(date: string) {
+  if (!date) return "";
+  return format(new Date(date), "dd/MM/yyy HH:mm");
+}
+
 export function differenceBetweenDates(
   date1: string | number,
   date2: string | number,

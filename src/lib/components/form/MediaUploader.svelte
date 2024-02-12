@@ -61,7 +61,7 @@
     </button>
   </div>
 {:else}
-  <PhotoViewer withCross photo={photo.id} onCrossClick={() => (photos = {})} />
+  <PhotoViewer withCross {photo} onCrossClick={() => (photos = {})} />
 {/if}
 
 <PexelsModal bind:open={pexelsOpen} onImageSelect={onPexelImageSelect} />

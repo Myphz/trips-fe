@@ -16,8 +16,7 @@
   export let withDelete = false;
   export let onCrossClick: () => unknown = () => {};
 
-  const actualPhoto =
-    typeof photo === "string" ? { id: photo, created_at: new Date().toISOString() } : photo;
+  const actualPhoto = typeof photo === "string" ? { id: photo, created_at: "" } : photo;
 
   let fullScreen = false;
 
@@ -35,7 +34,11 @@
   };
 
   const showPhotoInfo = () => {
-    alert(`Photo taken on ${datetimeToDDMMYYYY(actualPhoto.created_at)}`);
+    alert(
+      actualPhoto.created_at
+        ? `Photo taken on ${datetimeToDDMMYYYY(actualPhoto.created_at)}`
+        : "No info for this photo",
+    );
   };
 </script>
 

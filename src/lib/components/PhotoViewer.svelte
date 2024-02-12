@@ -6,6 +6,7 @@
   import { loadPhotos } from "$lib/stores/api/select";
   import type { Photos } from "$lib/types/api";
   import { datetimeToDDMMYYYY } from "$utils/format";
+  import { isShowingImageFullscreen } from "$lib/stores/modals";
 
   export let photo: string | Photos[string];
 
@@ -40,6 +41,13 @@
         : "No info for this photo",
     );
   };
+
+  $: if (!$isShowingImageFullscreen) fullScreen = false;
+
+  const setFullscreen = (val: boolean) => {
+    fullScreen = val;
+    $isShowingImageFullscreen = val;
+  };
 </script>
 
 {#if actualPhoto?.id}
@@ -47,7 +55,7 @@
     {#if !isLoading}
       <button
         class="relative flex justify-center rounded-xl"
-        on:click={() => (fullScreen = true)}
+        on:click={() => setFullscreen(true)}
       >
         <img
           src={url}
@@ -79,7 +87,7 @@
       <div
         class="fixed top-0 flex h-24 w-full items-center justify-between bg-black bg-opacity-10 px-4 pt-6 text-white dark:bg-[#000]"
       >
-        <button on:click={() => (fullScreen = false)} class="dark:text-black">
+        <button on:click={() => setFullscreen(false)} class="dark:text-black">
           <span class="material-symbols-outlined text-[2rem]">arrow_back</span>
         </button>
 
@@ -95,7 +103,7 @@
               class="text-error"
               on:click={async () => {
                 await deletePhoto(actualPhoto.id);
-                fullScreen = false;
+                setFullscreen(false);
                 loadPhotos();
               }}
             >

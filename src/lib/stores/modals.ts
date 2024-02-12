@@ -1,5 +1,7 @@
 import { get, writable } from "svelte/store";
 
+export const isShowingImageFullscreen = writable(false);
+
 export const modalState = {
   deleteEntity: writable(false),
   deleteAccount: writable(false),

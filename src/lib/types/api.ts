@@ -1,3 +1,4 @@
+import type { uploadFiles } from "$lib/stores/files/upload";
 import type { Database } from "./supabase";
 
 export type RPCRow = Database["public"]["Functions"]["get_all"]["Returns"][number];
@@ -30,3 +31,5 @@ export type GetRowType<T extends EntityType> = EntityCommon & { type: T } & Filt
 export type GetRowTypes = {
   [K in EntityType]: GetRowType<K>;
 }[EntityType];
+
+export type Photos = Awaited<ReturnType<typeof uploadFiles>>;

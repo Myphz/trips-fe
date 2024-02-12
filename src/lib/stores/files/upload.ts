@@ -19,23 +19,27 @@ export const uploadFileChunk = async ({
   allowAny = false,
   onProgress,
 }: {
-  files: Blob[];
+  files: File[];
   allowAny?: boolean;
   onProgress: (progress: number) => unknown;
 }) => {
   uploadState.set("compressing");
+
+  const body: Record<string, File> = {};
   const formData = new FormData();
 
   for (const file of files) {
+    const name = "name" in file ? (file.name as string) : (+new Date()).toString();
     const blob = allowAny ? file : await blobToWebp(file);
-    formData.append("name" in file ? (file.name as string) : (+new Date()).toString(), blob);
+    formData.append(name, blob);
+    body[name] = file;
   }
 
-  let data: Record<string, string> = {};
+  let ret: Record<string, { id: string; created_at: string }> = {};
   uploadState.set("uploading");
 
   try {
-    ({ data } = await axios.post(`${SERVER_URL}/upload`, formData, {
+    const { data } = await axios.post(`${SERVER_URL}/upload`, formData, {
       onUploadProgress(progressEvent) {
         const percentCompleted =
           Math.round((progressEvent.loaded * 10000) / (progressEvent.total ?? 1)) / 100;
@@ -43,22 +47,33 @@ export const uploadFileChunk = async ({
 
         onProgress(percentCompleted);
       },
-    }));
+    });
+
+    ret = Object.fromEntries(
+      Object.entries(data).map(([filename, id]) => {
+        const file = body[filename];
+
+        return [
+          filename,
+          { id: id as string, created_at: new Date(file.lastModified).toISOString() },
+        ];
+      }),
+    );
   } catch (err) {
     fail({ msg: "Unexpected error", title: "Upload error" });
   }
 
-  return data;
+  return ret;
 };
 
 export const uploadFiles = async ({
   files,
   allowAny = false,
 }: {
-  files: Blob[];
+  files: File[];
   allowAny?: boolean;
 }) => {
-  if (!allowAny && [...files].some((file) => !file.type.includes("image"))) {
+  if (!allowAny && files.some((file) => !file.type.includes("image"))) {
     fail({ title: "Invalid file", msg: "Invalid file type" });
     throwError("Invalid filetype");
   }
@@ -66,7 +81,7 @@ export const uploadFiles = async ({
   uploadProgress.set(0);
   isUploading.set(true);
 
-  let data: Awaited<ReturnType<typeof uploadFileChunk>> = {};
+  let ret: Awaited<ReturnType<typeof uploadFileChunk>> = {};
   const chunks = splitArrayIntoChunks(files, CHUNK_SIZE);
   let uploaded = 0;
 
@@ -82,18 +97,18 @@ export const uploadFiles = async ({
         uploadProgress.set(+totalProgress.toFixed(2));
       },
     });
-    data = { ...data, ...chunkData };
+    ret = { ...ret, ...chunkData };
     uploaded += chunk.length;
   }
 
   isUploading.set(false);
-  return data;
+  return ret;
 };
 
 export const uploadFileFromURL = async (url: string) => {
   const res = await fetch(url);
   const blob = await res.blob();
-  return await uploadFiles({ files: [blob] });
+  return await uploadFiles({ files: [new File([blob], "pexelImage")] });
 };
 
 export const finishUpload = async () => {

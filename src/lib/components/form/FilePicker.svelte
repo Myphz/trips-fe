@@ -6,13 +6,14 @@
     uploadPromise,
     uploadState,
   } from "$lib/stores/files/upload";
+  import type { Photos } from "$lib/types/api";
   import { BarLoader } from "svelte-loading-spinners";
 
   export let mediaType: "image" | "video" | "both" | "any";
   export let multiple = false;
   export let ref: HTMLInputElement;
-  export let photos: Record<string, string> = {};
-  export let onNewPhotos: (photos: Record<string, string>) => unknown = () => {};
+  export let photos: Photos = {};
+  export let onNewPhotos: (files: typeof photos) => unknown = () => {};
 
   const typeToAccept: Record<typeof mediaType, string> = {
     both: "image/*,video/*",

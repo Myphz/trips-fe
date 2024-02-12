@@ -8,13 +8,14 @@
   import { isDarkMode } from "$lib/stores/route";
   import { setAppearancePref } from "../../config";
   import { THEME_OPTIONS } from "../../constants";
+  import type { Photos } from "$lib/types/api";
 
   let ref: HTMLInputElement;
 
-  const updatePhoto = async (photos: Record<string, string>) => {
+  const updatePhoto = async (photos: Photos) => {
     const photo = photos[Object.keys(photos)?.[0]];
     if (!photo) await update({ table: "profiles", id: $myId, params: { photo: "" } });
-    else await update({ table: "profiles", id: $myId, params: { photo } });
+    else await update({ table: "profiles", id: $myId, params: photo });
     await setMe($myId);
   };
 

@@ -5,16 +5,16 @@
   import PexelsModal from "./PexelsModal.svelte";
   import { uploadFileFromURL } from "$lib/stores/files/upload";
   import { writable, type Writable } from "svelte/store";
+  import type { Photos } from "$lib/types/api";
 
   export let mediaType: "image" | "video" | "both";
   export let name: string;
   export let multiple = false;
 
-  const ctx =
-    getContext<Writable<Record<string, Record<string, string>>>>("defaultValues") ??
-    writable({});
+  const ctx = getContext<Writable<Record<string, Photos>>>("defaultValues") ?? writable({});
   let photos = $ctx[name] ?? {};
-  if (typeof photos === "string") photos = { unknown: photos };
+  if (typeof photos === "string")
+    photos = { unknown: { id: photos, created_at: new Date().toISOString() } };
 
   $: photo = photos[Object.keys(photos)?.[0]] ?? "";
 
@@ -61,7 +61,7 @@
     </button>
   </div>
 {:else}
-  <PhotoViewer withCross {photo} onCrossClick={() => (photos = {})} />
+  <PhotoViewer withCross photo={photo.id} onCrossClick={() => (photos = {})} />
 {/if}
 
 <PexelsModal bind:open={pexelsOpen} onImageSelect={onPexelImageSelect} />

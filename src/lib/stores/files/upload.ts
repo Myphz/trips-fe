@@ -1,5 +1,5 @@
 import { SERVER_URL } from "../../../constants";
-import { blobToWebp, getMetadata } from "$utils/files";
+import { EMPTY_METADATA, blobToWebp, getMetadata } from "$utils/files";
 import axios from "axios";
 import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
@@ -33,8 +33,10 @@ export const uploadFileChunk = async ({
   const formData = new FormData();
 
   for (const file of files) {
-    const name = "name" in file ? (file.name as string) : (+new Date()).toString();
-    body[name] = await getMetadata(file);
+    const name = "name" in file ? (file.name as string) : new Date().toString();
+    body[name] = allowAny
+      ? { ...EMPTY_METADATA, created_at: new Date().toISOString() }
+      : await getMetadata(file);
 
     const blob = allowAny ? file : await blobToWebp(file);
     formData.append(name, blob);

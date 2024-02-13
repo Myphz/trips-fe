@@ -157,7 +157,7 @@ export async function downloadOrViewFile(file: UnwrapWritable<typeof photos>[num
 }
 
 export const EMPTY_METADATA: Metadata = {
-  created_at: new Date().toISOString(),
+  created_at: "",
   latitude: null,
   longitude: null,
 };

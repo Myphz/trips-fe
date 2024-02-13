@@ -17,10 +17,8 @@
   export let withDelete = false;
   export let onCrossClick: () => unknown = () => {};
 
-  const actualPhoto =
-    typeof photo === "string" ? { id: photo, ...EMPTY_METADATA, created_at: "" } : photo;
+  const actualPhoto = typeof photo === "string" ? { id: photo, ...EMPTY_METADATA } : photo;
 
-  $: console.log({ actualPhoto, photo });
   let fullScreen = false;
   let url = "";
 

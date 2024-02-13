@@ -9,7 +9,7 @@ export const modalState = {
 
 export const modalOpen = writable(false);
 
-const isModalActive = () => {
+export const isModalActive = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   return Object.entries(modalState).some(([_, v]) => get(v));
 };
@@ -30,4 +30,11 @@ export const getActiveModalName = (): keyof typeof modalState => {
   if (!activeModal) throw new Error("No modal is open");
 
   return activeModal[0] as keyof typeof modalState;
+};
+
+export const closeAllModals = () => {
+  Object.keys(modalState).forEach((key) => {
+    modalState[key as keyof typeof modalState].set(false);
+  });
+  modalOpen.set(false);
 };

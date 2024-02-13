@@ -1,11 +1,12 @@
 import { SERVER_URL } from "../../../constants";
-import { blobToWebp } from "$utils/files";
+import { blobToWebp, getMetadata } from "$utils/files";
 import axios from "axios";
 import { fail } from "$utils/toasts";
 import { throwError } from "$utils/error";
 import { get, writable } from "svelte/store";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { splitArrayIntoChunks } from "$utils/objects";
+import type { Metadata } from "$lib/types/other";
 
 export const isUploading = writable(false);
 export const uploadProgress = writable(0);
@@ -25,17 +26,18 @@ export const uploadFileChunk = async ({
 }) => {
   uploadState.set("compressing");
 
-  const body: Record<string, File> = {};
+  const body: Record<string, Metadata> = {};
   const formData = new FormData();
 
   for (const file of files) {
     const name = "name" in file ? (file.name as string) : (+new Date()).toString();
+    body[name] = await getMetadata(file);
+
     const blob = allowAny ? file : await blobToWebp(file);
     formData.append(name, blob);
-    body[name] = file;
   }
 
-  let ret: Record<string, { id: string; created_at: string }> = {};
+  let ret: Record<string, { id: string } & Metadata> = {};
   uploadState.set("uploading");
 
   try {
@@ -51,12 +53,8 @@ export const uploadFileChunk = async ({
 
     ret = Object.fromEntries(
       Object.entries(data).map(([filename, id]) => {
-        const file = body[filename];
-
-        return [
-          filename,
-          { id: id as string, created_at: new Date(file.lastModified).toISOString() },
-        ];
+        const metadata = body[filename];
+        return [filename, { id: id as string, ...metadata }];
       }),
     );
   } catch (err) {

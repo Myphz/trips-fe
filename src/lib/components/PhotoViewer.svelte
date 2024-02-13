@@ -5,7 +5,6 @@
   import { deletePhoto } from "$lib/stores/api/delete";
   import { loadPhotos } from "$lib/stores/api/select";
   import type { Photos } from "$lib/types/api";
-  import { datetimeToDDMMYYYY } from "$utils/format";
   import { isShowingImageFullscreen } from "$lib/stores/modals";
 
   export let photo: string | Photos[string];
@@ -35,11 +34,11 @@
   };
 
   const showPhotoInfo = () => {
-    alert(
-      actualPhoto.created_at
-        ? `Photo taken on ${datetimeToDDMMYYYY(actualPhoto.created_at)}`
-        : "No info for this photo",
-    );
+    // alert(
+    //   actualPhoto.created_at
+    //     ? `Photo taken on ${datetimeToDDMMYYYY(actualPhoto.created_at)}`
+    //     : "No info for this photo",
+    // );
   };
 
   $: if (!$isShowingImageFullscreen) fullScreen = false;

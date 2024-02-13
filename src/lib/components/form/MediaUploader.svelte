@@ -6,6 +6,7 @@
   import { uploadFileFromURL } from "$lib/stores/files/upload";
   import { writable, type Writable } from "svelte/store";
   import type { Photos } from "$lib/types/api";
+  import { EMPTY_METADATA } from "$utils/files";
 
   export let mediaType: "image" | "video" | "both";
   export let name: string;
@@ -13,8 +14,7 @@
 
   const ctx = getContext<Writable<Record<string, Photos>>>("defaultValues") ?? writable({});
   let photos = $ctx[name] ?? {};
-  if (typeof photos === "string")
-    photos = { unknown: { id: photos, created_at: new Date().toISOString() } };
+  if (typeof photos === "string") photos = { unknown: { id: photos, ...EMPTY_METADATA } };
 
   $: photo = photos[Object.keys(photos)?.[0]]?.id ?? "";
 

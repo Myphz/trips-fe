@@ -57,6 +57,7 @@
     "@supabase/supabase-js": "^2.39.3",
     "axios": "^1.6.7",
     "date-fns": "^3.3.1",
+    "exifreader": "^4.21.0",
     "google-maps": "^4.3.3",
     "svelte-headlessui": "^0.0.33"
   }

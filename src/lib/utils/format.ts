@@ -25,6 +25,13 @@ export function datetimeToDDMMYYYY(date: string) {
   return format(new Date(date), "dd/MM/yyy HH:mm");
 }
 
+export function metadataDateToISODate(metadataDate: string) {
+  const [datePart, timePart] = metadataDate.split(" ");
+  const [year, month, day] = datePart.split(":");
+  const [hour, minute, second] = timePart.split(":");
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
+}
+
 export function differenceBetweenDates(
   date1: string | number,
   date2: string | number,

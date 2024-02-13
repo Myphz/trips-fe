@@ -5,6 +5,9 @@ import { success } from "./toasts";
 import type { photos } from "$lib/stores/api/select";
 import { FileOpener } from "@capacitor-community/file-opener";
 import type { UnwrapWritable } from "$lib/types/route";
+import ExifReader from "exifreader";
+import { metadataDateToISODate } from "./format";
+import type { Metadata } from "$lib/types/other";
 
 const QUALITY = 0.75;
 const MAX_DIMENSION = 1500;
@@ -37,6 +40,7 @@ export async function blobToWebp(blob: Blob): Promise<Blob> {
   const canvas = new OffscreenCanvas(width, height);
   const context = canvas.getContext("2d")!;
   context.drawImage(imageBitmap, 0, 0, width, height);
+  imageBitmap.close();
   return await canvas.convertToBlob({ type: "image/webp", quality: QUALITY });
 }
 
@@ -150,4 +154,24 @@ export async function downloadOrViewFile(file: UnwrapWritable<typeof photos>[num
   await FileOpener.open({
     filePath: uri,
   });
+}
+
+export const EMPTY_METADATA: Metadata = {
+  created_at: new Date().toISOString(),
+  maps_link: null,
+};
+
+export async function getMetadata(file: File) {
+  const tags = await ExifReader.load(file);
+  const date = tags.DateTime?.description
+    ? metadataDateToISODate(tags.DateTime.description)
+    : new Date(file.lastModified).toISOString();
+
+  const lat = tags.GPSLatitude?.description;
+  const lng = tags.GPSLongitude?.description;
+
+  const mapsLink =
+    lat && lng ? `https://www.google.com/maps/search/?api=1&query=${lat},${lng}` : null;
+
+  return { created_at: date, maps_link: mapsLink };
 }

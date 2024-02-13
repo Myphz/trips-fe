@@ -34,8 +34,8 @@ function getResizedDimensions(originalWidth: number, originalHeight: number) {
   return { width, height };
 }
 
-export async function blobToWebp(blob: Blob): Promise<Blob> {
-  const imageBitmap = await createImageBitmap(blob);
+export async function blobToWebp(arrayBuffer: ArrayBuffer): Promise<Blob> {
+  const imageBitmap = await createImageBitmap(new Blob([arrayBuffer]));
   const { width, height } = getResizedDimensions(imageBitmap.width, imageBitmap.height);
   const canvas = new OffscreenCanvas(width, height);
   const context = canvas.getContext("2d")!;
@@ -162,11 +162,12 @@ export const EMPTY_METADATA: Metadata = {
   longitude: null,
 };
 
-export async function getMetadata(file: File) {
-  const tags = await ExifReader.load(file);
+export async function getMetadata(file: ArrayBuffer) {
+  const tags = ExifReader.load(file);
+
   const date = tags.DateTime?.description
     ? metadataDateToISODate(tags.DateTime.description)
-    : new Date(file.lastModified).toISOString();
+    : new Date().toISOString();
 
   const latitude = tags.GPSLatitude?.description || null;
   const longitude = tags.GPSLongitude?.description || null;

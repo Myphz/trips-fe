@@ -33,12 +33,14 @@ export const uploadFileChunk = async ({
   const formData = new FormData();
 
   for (const file of files) {
+    const arrayBuffer = await file.arrayBuffer();
     const name = "name" in file ? (file.name as string) : new Date().toString();
+
     body[name] = allowAny
       ? { ...EMPTY_METADATA, created_at: new Date().toISOString() }
-      : await getMetadata(file);
+      : await getMetadata(arrayBuffer);
+    const blob = allowAny ? file : await blobToWebp(arrayBuffer);
 
-    const blob = allowAny ? file : await blobToWebp(file);
     formData.append(name, blob);
   }
 

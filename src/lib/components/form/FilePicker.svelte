@@ -15,10 +15,22 @@
   export let photos: Photos = {};
   export let onNewPhotos: (files: typeof photos) => unknown = () => {};
 
+  // const typeToAccept: Record<typeof mediaType, string> = {
+  //   both: "image/*,video/*",
+  //   image: "image/*",
+  //   video: "video/*",
+  //   any: "",
+  // };
+
+  // Don't limit media types to avoid default android picker.
+  // If an image is uploaded with default android image picker,
+  // it won't send GPS metadata.
+  // The ONLY way to get around this is avoid the default android image picker,
+  // hence allowing all files.
   const typeToAccept: Record<typeof mediaType, string> = {
-    both: "image/*,video/*",
-    image: "image/*",
-    video: "video/*",
+    both: "",
+    image: "",
+    video: "",
     any: "",
   };
 

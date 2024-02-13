@@ -40,8 +40,8 @@ export async function authGuard(mustBeLogged = true) {
 }
 
 export function goBack() {
-  if (get(isShowingImageFullscreen)) return isShowingImageFullscreen.set(false);
   if (isModalActive()) return closeModal();
+  if (get(isShowingImageFullscreen)) return isShowingImageFullscreen.set(false);
 
   const inTrip =
     window.location.pathname === "/trip" ||

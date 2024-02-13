@@ -158,7 +158,8 @@ export async function downloadOrViewFile(file: UnwrapWritable<typeof photos>[num
 
 export const EMPTY_METADATA: Metadata = {
   created_at: new Date().toISOString(),
-  maps_link: null,
+  latitude: null,
+  longitude: null,
 };
 
 export async function getMetadata(file: File) {
@@ -167,11 +168,8 @@ export async function getMetadata(file: File) {
     ? metadataDateToISODate(tags.DateTime.description)
     : new Date(file.lastModified).toISOString();
 
-  const lat = tags.GPSLatitude?.description;
-  const lng = tags.GPSLongitude?.description;
+  const latitude = tags.GPSLatitude?.description || null;
+  const longitude = tags.GPSLongitude?.description || null;
 
-  const mapsLink =
-    lat && lng ? `https://www.google.com/maps/search/?api=1&query=${lat},${lng}` : null;
-
-  return { created_at: date, maps_link: mapsLink };
+  return { created_at: date, latitude, longitude };
 }

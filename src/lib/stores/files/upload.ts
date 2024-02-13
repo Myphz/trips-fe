@@ -7,11 +7,14 @@ import { get, writable } from "svelte/store";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { splitArrayIntoChunks } from "$utils/objects";
 import type { Metadata } from "$lib/types/other";
+import type { Photos } from "$lib/types/api";
 
 export const isUploading = writable(false);
 export const uploadProgress = writable(0);
 export const uploadState = writable<"compressing" | "uploading" | "waiting">("compressing");
 export const uploadPromise = writable<Promise<unknown>>(new Promise(() => {}));
+
+export const currentPhoto = writable<Photos[string]>();
 
 const CHUNK_SIZE = 10;
 

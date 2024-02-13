@@ -4,7 +4,7 @@ import { fail } from "./toasts";
 import { showWarningRedirect, undo } from "$lib/stores/route";
 import { load, setMe } from "$lib/stores/api/select";
 import { get } from "svelte/store";
-import { closeAllModals, isModalActive, isShowingImageFullscreen } from "$lib/stores/modals";
+import { closeModal, isModalActive, isShowingImageFullscreen } from "$lib/stores/modals";
 
 function redirect(isLogged: boolean, mustBeLogged: boolean) {
   const redirectTo = mustBeLogged ? "/old" : "/";
@@ -41,7 +41,7 @@ export async function authGuard(mustBeLogged = true) {
 
 export function goBack() {
   if (get(isShowingImageFullscreen)) return isShowingImageFullscreen.set(false);
-  if (isModalActive()) return closeAllModals();
+  if (isModalActive()) return closeModal();
 
   const inTrip =
     window.location.pathname === "/trip" ||

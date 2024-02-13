@@ -149,7 +149,8 @@ export type Database = {
           created_at: string
           entity_id: number
           id: string
-          maps_link: string | null
+          latitude: string | null
+          longitude: string | null
           name: string | null
           user_id: string
         }
@@ -157,7 +158,8 @@ export type Database = {
           created_at?: string
           entity_id: number
           id: string
-          maps_link?: string | null
+          latitude?: string | null
+          longitude?: string | null
           name?: string | null
           user_id?: string
         }
@@ -165,7 +167,8 @@ export type Database = {
           created_at?: string
           entity_id?: number
           id?: string
-          maps_link?: string | null
+          latitude?: string | null
+          longitude?: string | null
           name?: string | null
           user_id?: string
         }

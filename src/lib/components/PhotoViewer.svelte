@@ -1,11 +1,12 @@
 <script lang="ts">
-  import { downloadImage, getPhotoURL } from "$utils/files";
+  import { EMPTY_METADATA, downloadImage, getPhotoURL } from "$utils/files";
   import { twMerge } from "tailwind-merge";
   import Loading from "./cards/Loading.svelte";
   import { deletePhoto } from "$lib/stores/api/delete";
   import { loadPhotos } from "$lib/stores/api/select";
   import type { Photos } from "$lib/types/api";
-  import { isShowingImageFullscreen } from "$lib/stores/modals";
+  import { isShowingImageFullscreen, toggleModal } from "$lib/stores/modals";
+  import { currentPhoto } from "$lib/stores/files/upload";
 
   export let photo: string | Photos[string];
 
@@ -16,17 +17,14 @@
   export let withDelete = false;
   export let onCrossClick: () => unknown = () => {};
 
-  const actualPhoto = typeof photo === "string" ? { id: photo, created_at: "" } : photo;
+  const actualPhoto =
+    typeof photo === "string" ? { id: photo, ...EMPTY_METADATA, created_at: "" } : photo;
 
+  $: console.log({ actualPhoto, photo });
   let fullScreen = false;
-
-  let isLoading = true;
   let url = "";
 
-  getPhotoURL(actualPhoto.id).then((l) => {
-    url = l;
-    isLoading = false;
-  });
+  getPhotoURL(actualPhoto.id).then((l) => (url = l));
 
   const onLoad = (e: Event) => {
     const image = e.target as HTMLImageElement;
@@ -34,11 +32,7 @@
   };
 
   const showPhotoInfo = () => {
-    // alert(
-    //   actualPhoto.created_at
-    //     ? `Photo taken on ${datetimeToDDMMYYYY(actualPhoto.created_at)}`
-    //     : "No info for this photo",
-    // );
+    toggleModal("photoInfo");
   };
 
   $: if (!$isShowingImageFullscreen) fullScreen = false;
@@ -46,12 +40,13 @@
   const setFullscreen = (val: boolean) => {
     fullScreen = val;
     $isShowingImageFullscreen = val;
+    $currentPhoto = actualPhoto;
   };
 </script>
 
 {#if actualPhoto?.id}
   {#if !fullScreen}
-    {#if !isLoading}
+    {#if url}
       <button
         class="relative flex justify-center rounded-xl"
         on:click={() => setFullscreen(true)}

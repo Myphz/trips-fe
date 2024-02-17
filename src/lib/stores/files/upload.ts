@@ -113,7 +113,9 @@ export const uploadFiles = async ({
 export const uploadFileFromURL = async (url: string) => {
   const res = await fetch(url);
   const blob = await res.blob();
-  return await uploadFiles({ files: [new File([blob], "pexelImage")] });
+  return await uploadFiles({
+    files: [new File([blob], "pexelImage", { type: "image/jpeg" })],
+  });
 };
 
 export const finishUpload = async () => {

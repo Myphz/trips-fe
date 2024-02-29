@@ -125,7 +125,7 @@ export async function downloadImage(photo: string) {
 
 async function fileExists(path: string) {
   try {
-    await Filesystem.stat({ path });
+    await Filesystem.stat({ path, directory: Directory.ExternalStorage });
     return true;
   } catch {
     return false;

@@ -34,7 +34,8 @@ export const uploadFileChunk = async ({
 
   for (const file of files) {
     const arrayBuffer = await file.arrayBuffer();
-    const name = "name" in file ? (file.name as string) : new Date().toString();
+    let name = "name" in file ? (file.name as string) : new Date().toString();
+    if (allowAny) name += `-${+new Date()}`;
 
     body[name] = allowAny
       ? { ...EMPTY_METADATA, created_at: new Date().toISOString() }

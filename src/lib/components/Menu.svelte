@@ -8,9 +8,9 @@
   $: {
     if (browser) {
       if ($isModalOpen) {
-        window.addEventListener("scroll", preventDefault);
+        window.addEventListener("touchmove", preventDefault);
       } else {
-        window.removeEventListener("scroll", preventDefault);
+        window.removeEventListener("touchmove", preventDefault);
       }
     }
   }

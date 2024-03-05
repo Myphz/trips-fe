@@ -5,6 +5,7 @@ import { showWarningRedirect, undo } from "$lib/stores/route";
 import { load, setMe } from "$lib/stores/api/select";
 import { get } from "svelte/store";
 import { closeModal, isModalActive, isShowingImageFullscreen } from "$lib/stores/modals";
+import { isModalOpen } from "$lib/stores/ui";
 
 function redirect(isLogged: boolean, mustBeLogged: boolean) {
   const redirectTo = mustBeLogged ? "/old" : "/";
@@ -40,6 +41,7 @@ export async function authGuard(mustBeLogged = true) {
 }
 
 export function goBack() {
+  if (get(isModalOpen)) return isModalOpen.set(false);
   if (isModalActive()) return closeModal();
   if (get(isShowingImageFullscreen)) return isShowingImageFullscreen.set(false);
 

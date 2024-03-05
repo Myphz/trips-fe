@@ -8,6 +8,7 @@ import type { UnwrapWritable } from "$lib/types/route";
 import ExifReader from "exifreader";
 import { metadataDateToISODate } from "./format";
 import type { Metadata } from "$lib/types/other";
+import { Share } from "@capacitor/share";
 
 const QUALITY = 0.75;
 const MAX_DIMENSION = 1500;
@@ -107,7 +108,19 @@ export function getPlaceholderTransportImage(card: GetRowType<"transport">) {
   }.webp`;
 }
 
-export async function downloadImage(photo: string) {
+export async function shareImage(photo: string) {
+  await downloadImage(photo, false);
+  const { uri } = await Filesystem.getUri({
+    directory: Directory.ExternalStorage,
+    path: `Download/tripsphoexa/${photo}.jpeg`,
+  });
+
+  await Share.share({
+    url: uri,
+  });
+}
+
+export async function downloadImage(photo: string, withSuccess = true) {
   const res = await fetch(`${SERVER_URL}/download?id=${photo}`);
   const blob = await res.blob();
   const jpegBlob = await blobToJpeg(blob);
@@ -120,7 +133,7 @@ export async function downloadImage(photo: string) {
     directory: Directory.ExternalStorage,
   });
 
-  success({ title: "Image saved", msg: "Image saved successfully" });
+  withSuccess && success({ title: "Image saved", msg: "Image saved successfully" });
 }
 
 async function fileExists(path: string) {

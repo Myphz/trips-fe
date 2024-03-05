@@ -84,6 +84,12 @@
         </button>
 
         <div class="flex gap-4">
+          <button
+            class="text-white dark:text-black"
+            on:click={() => downloadImage(actualPhoto.id)}
+          >
+            <span class="material-symbols-outlined text-[2rem]">share</span>
+          </button>
           <button class="text-primary" on:click={() => downloadImage(actualPhoto.id)}>
             <span class="material-symbols-outlined text-[2rem]">download</span>
           </button>

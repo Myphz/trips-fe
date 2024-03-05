@@ -165,9 +165,17 @@ export const EMPTY_METADATA: Metadata = {
 export async function getMetadata(file: ArrayBuffer) {
   const tags = ExifReader.load(file);
 
-  const date = tags.DateTime?.description
-    ? metadataDateToISODate(tags.DateTime.description)
-    : new Date().toISOString();
+  const date = (() => {
+    const baseDate = tags.DateTime?.description
+      ? metadataDateToISODate(tags.DateTime.description)
+      : new Date().toISOString();
+
+    const offset = tags.OffsetTime?.description;
+
+    if (!offset || !tags.DateTime?.description) return baseDate;
+    // Add timezone to ISO string!
+    return `${baseDate.slice(0, -1)}${offset}`;
+  })();
 
   const latitude = tags.GPSLatitude?.description || null;
   const longitude = tags.GPSLongitude?.description || null;

@@ -29,7 +29,7 @@ export function metadataDateToISODate(metadataDate: string) {
   const [datePart, timePart] = metadataDate.split(" ");
   const [year, month, day] = datePart.split(":");
   const [hour, minute, second] = timePart.split(":");
-  return `${year}-${month}-${day}T${hour}:${minute}:${second}`;
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}.000`;
 }
 
 export function differenceBetweenDates(

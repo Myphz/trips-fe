@@ -35,7 +35,12 @@ export const uploadFileChunk = async ({
   for (const file of files) {
     const arrayBuffer = await file.arrayBuffer();
     let name = "name" in file ? (file.name as string) : new Date().toString();
-    if (allowAny) name += `-${+new Date()}`;
+    if (allowAny) {
+      // test.pdf -> test-4353453.pdf (prevent name duplicates on phone file system)
+      const lastDotIdx = name.lastIndexOf(".");
+      if (lastDotIdx === -1) name += `-${+new Date()}`;
+      else name = `${name.slice(0, lastDotIdx)}-${+new Date()}${name.slice(lastDotIdx)}`;
+    }
 
     body[name] = allowAny
       ? { ...EMPTY_METADATA, created_at: new Date().toISOString() }

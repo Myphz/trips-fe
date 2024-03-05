@@ -121,13 +121,18 @@ export async function shareImage(photo: string) {
 }
 
 export async function downloadImage(photo: string, withSuccess = true) {
+  const path = `Download/tripsphoexa/${photo}.jpeg`;
+
+  if (await fileExists(path))
+    return withSuccess && success({ title: "Image saved", msg: "Image saved successfully" });
+
   const res = await fetch(`${SERVER_URL}/download?id=${photo}`);
   const blob = await res.blob();
   const jpegBlob = await blobToJpeg(blob);
   const jpegData = await blobToBase64(jpegBlob);
 
   await Filesystem.writeFile({
-    path: `Download/tripsphoexa/${photo}.jpeg`,
+    path,
     data: jpegData,
     recursive: true,
     directory: Directory.ExternalStorage,

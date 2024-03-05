@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { EMPTY_METADATA, downloadImage, getPhotoURL } from "$utils/files";
+  import { EMPTY_METADATA, downloadImage, getPhotoURL, shareImage } from "$utils/files";
   import { twMerge } from "tailwind-merge";
   import Loading from "./cards/Loading.svelte";
   import { deletePhoto } from "$lib/stores/api/delete";
@@ -86,7 +86,7 @@
         <div class="flex gap-4">
           <button
             class="text-white dark:text-black"
-            on:click={() => downloadImage(actualPhoto.id)}
+            on:click={() => shareImage(actualPhoto.id)}
           >
             <span class="material-symbols-outlined text-[2rem]">share</span>
           </button>

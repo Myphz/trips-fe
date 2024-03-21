@@ -9,8 +9,9 @@
   import { setAppearancePref } from "../../config";
   import { THEME_OPTIONS } from "../../constants";
   import type { Photos } from "$lib/types/api";
+  import type { FilePickerRef } from "$lib/types/other";
 
-  let ref: HTMLInputElement;
+  let ref: FilePickerRef;
 
   const updatePhoto = async (photos: Photos) => {
     const photo = photos[Object.keys(photos)?.[0]];

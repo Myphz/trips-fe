@@ -48,12 +48,14 @@ const toTrip = (row: RPCRow) => filterObject("trip", row);
 const toPlace = (row: RPCRow) => filterObject("place", row);
 const toLodging = (row: RPCRow) => filterObject("lodging", row);
 const toTransport = (row: RPCRow) => filterObject("transport", row);
+const toFood = (row: RPCRow) => filterObject("food", row);
 
 export function convertRPCRow(row: RPCRow): GetRowTypes | null {
   if (row.place_name) return toPlace(row);
   if (row.trip_destination) return toTrip(row);
   if (row.lodging_name) return toLodging(row);
   if (row.transport_departure_place) return toTransport(row);
+  if (row.food_name) return toFood(row);
   console.warn(`Couldn't determine entity role? ${JSON.stringify(row)}`);
   del({ table: "entities", id: row.id, withToast: false });
   return null;

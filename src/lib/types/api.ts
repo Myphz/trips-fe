@@ -25,7 +25,7 @@ export type EntityCommon = {
   mapsId: string;
 };
 
-export type EntityType = "trip" | "place" | "transport" | "lodging";
+export type EntityType = "trip" | "place" | "transport" | "lodging" | "food";
 export type GetRowType<T extends EntityType> = EntityCommon & { type: T } & FilterRow<T>;
 
 export type GetRowTypes = {

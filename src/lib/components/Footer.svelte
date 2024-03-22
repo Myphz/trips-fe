@@ -1,12 +1,12 @@
 <script lang="ts">
   import { keyboardOpen } from "$lib/stores/ui";
   import { filter, filterCards, filterOnly, allCards } from "$lib/stores/api/select";
-  import Redirect from "./Redirect.svelte";
   import { onMount } from "svelte";
   import { get } from "svelte/store";
 
   const TABS = [
     { icon: "location_on", name: "trip" },
+    { icon: "lunch_dining", name: "food" },
     { icon: "bed", name: "lodging" },
     { icon: "train", name: "transport" },
   ] as const;
@@ -24,9 +24,6 @@
   <nav
     class="fixed bottom-0 left-0 z-50 flex h-16 w-full items-center justify-between bg-primary px-9"
   >
-    <Redirect params={{ entityId: 0, parent: 0, tripId: 0 }} href="/" classes="text-tab">
-      <span class="material-symbols-outlined filled text-[2.25rem]">home</span>
-    </Redirect>
     {#each TABS as { icon, name }, i}
       {@const isActive = $filter === name}
       {@const hasItems = activeStatuses[i]}

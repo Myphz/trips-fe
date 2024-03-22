@@ -4,6 +4,8 @@
   import Lodging from "./Lodging.svelte";
   import Transport from "./Transport.svelte";
   import Loading from "./Loading.svelte";
+  import Food from "./Food.svelte";
+
   import type { EntityType } from "$lib/types/api";
   import type { ComponentType } from "svelte";
   import { cards, loading } from "$lib/stores/api/select";
@@ -15,6 +17,7 @@
     place: Place,
     lodging: Lodging,
     transport: Transport,
+    food: Food,
   };
 </script>
 
@@ -32,7 +35,6 @@
       <Empty />
     {/if}
   {:else}
-    <Loading />
     <Loading />
   {/if}
 </main>

@@ -31,6 +31,9 @@
         <MenuButton icon="transport" />
         <MenuButton icon="lodging" />
       </div>
+      <div class="flex gap-24">
+        <MenuButton icon="food" />
+      </div>
     </div>
   </dialog>
 {/if}

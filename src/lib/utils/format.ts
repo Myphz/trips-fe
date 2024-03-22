@@ -68,6 +68,7 @@ export function getName(card: GetRowTypes | null) {
   if (card.type === "trip") return card.destination;
   if (card.type === "lodging") return card.name;
   if (card.type === "place") return card.name;
+  if (card.type === "food") return card.name;
   if (card.type === "transport") return `${card.departurePlace} - ${card.arrivalPlace}`;
   return "";
 }

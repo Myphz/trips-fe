@@ -1,5 +1,11 @@
 <script lang="ts">
-  import { TripInfo, LodgingInfo, PlaceInfo, TransportInfo } from "$lib/components/info";
+  import {
+    TripInfo,
+    LodgingInfo,
+    PlaceInfo,
+    TransportInfo,
+    FoodInfo,
+  } from "$lib/components/info";
 
   import { card } from "$lib/stores/api/select";
   import { setPageTitle } from "$lib/stores/route";
@@ -28,6 +34,9 @@
     {/if}
     {#if $card.type === "transport"}
       <TransportInfo />
+    {/if}
+    {#if $card.type === "food"}
+      <FoodInfo />
     {/if}
   </div>
 {/if}

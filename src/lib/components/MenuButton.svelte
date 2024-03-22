@@ -12,6 +12,7 @@
     place: "location_on",
     trip: "folder",
     transport: "train",
+    food: "lunch_dining",
   };
 
   let clicked = false;

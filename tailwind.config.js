@@ -53,6 +53,7 @@ export default {
           white: "#F5F5F5",
           gray: "#606060",
           skeleton: "#B4B4B4",
+          footer: "#FFFFFF",
           ...SHARED_COLORS,
         },
 
@@ -62,6 +63,7 @@ export default {
           white: "#1A1A1A",
           gray: "#EAEAEA",
           skeleton: "#202020",
+          footer: "#121413",
           ...SHARED_COLORS,
         },
       },

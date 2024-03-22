@@ -28,20 +28,10 @@
         {$pageTitle}
       </h1>
 
-      {#if !advancedMode || $page.route.id?.endsWith("/trip")}
-        {#if !advancedMode}
-          <a
-            href="/form/trip"
-            class="ml-auto text-primary"
-            transition:blur={{ duration: 100 }}
-          >
-            <span class="material-symbols-outlined text-[2rem]">add</span>
-          </a>
-        {:else if !$page.route.id?.includes("form")}
-          <button class="ml-auto text-primary" use:modal transition:blur={{ duration: 100 }}>
-            <span class="material-symbols-outlined text-[2rem]">add</span>
-          </button>
-        {/if}
+      {#if !advancedMode}
+        <a href="/form/trip" class="ml-auto text-primary" transition:blur={{ duration: 100 }}>
+          <span class="material-symbols-outlined text-[2rem]">add</span>
+        </a>
       {/if}
 
       {#if $page.route.id?.includes("info") && $card}

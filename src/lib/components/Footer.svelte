@@ -1,8 +1,10 @@
 <script lang="ts">
   import { keyboardOpen } from "$lib/stores/ui";
-  import { filter, filterCards, filterOnly, allCards } from "$lib/stores/api/select";
+  import { filter } from "$lib/stores/api/select";
+  import FooterTabs from "./FooterTabs.svelte";
   import { onMount } from "svelte";
   import { get } from "svelte/store";
+  import { modal } from "$utils/modal";
 
   const TABS = [
     { icon: "location_on", name: "trip" },
@@ -11,10 +13,6 @@
     { icon: "train", name: "transport" },
   ] as const;
 
-  $: activeStatuses = TABS.map(
-    ({ name }) => filterCards({ filt: name, data: $allCards }).length > 0,
-  );
-
   onMount(() => {
     if (!get(filter)) filter.set("trip");
   });
@@ -22,23 +20,23 @@
 
 {#if !$keyboardOpen}
   <nav
-    class="fixed bottom-0 left-0 z-50 flex h-16 w-full items-center justify-between bg-primary px-9"
+    class="fixed bottom-0 left-0 z-50 flex h-16 w-full items-center justify-center gap-6 bg-footer px-6"
   >
-    {#each TABS as { icon, name }, i}
-      {@const isActive = $filter === name}
-      {@const hasItems = activeStatuses[i]}
-      <button
-        on:click={() => filterOnly(name)}
-        class={isActive ? "relative text-white dark:text-black" : "relative text-tab"}
-      >
-        <span class="material-symbols-outlined filled text-[2.25rem]">
-          {icon}
-        </span>
+    <FooterTabs tabs={TABS.slice(0, 2)} />
 
-        {#if hasItems}
-          <div class="absolute -right-1 top-0 aspect-square h-2 rounded-full bg-tab"></div>
-        {/if}
-      </button>
-    {/each}
+    <button
+      use:modal
+      class="aspect-square w-16 -translate-y-1/2 rounded-full border-2 border-white bg-primary"
+    >
+      <span class="material-symbols-outlined text-[2.5rem] text-white">add</span>
+    </button>
+
+    <FooterTabs tabs={TABS.slice(2)} />
   </nav>
 {/if}
+
+<style>
+  nav {
+    box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.5);
+  }
+</style>

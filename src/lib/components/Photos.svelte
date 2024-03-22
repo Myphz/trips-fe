@@ -4,9 +4,8 @@
   import { createPhotos } from "$lib/stores/api/create";
   import { PhotoViewer } from ".";
   import Empty from "./cards/Empty.svelte";
-  import type { FilePickerRef } from "$lib/types/other";
 
-  let ref: FilePickerRef;
+  let ref: HTMLInputElement;
   loadPhotos();
 </script>
 

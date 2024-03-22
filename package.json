@@ -54,7 +54,6 @@
     "@capacitor/share": "^5.0.7",
     "@capacitor/status-bar": "^5.0.7",
     "@capawesome/capacitor-background-task": "^5.0.0",
-    "@capawesome/capacitor-file-picker": "^5.3.0",
     "@codetrix-studio/capacitor-google-auth": "^3.3.6",
     "@supabase/supabase-js": "^2.39.3",
     "axios": "^1.6.7",

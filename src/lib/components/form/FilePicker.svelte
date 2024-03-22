@@ -8,10 +8,10 @@
   } from "$lib/stores/files/upload";
   import type { Photos } from "$lib/types/api";
   import { BarLoader } from "svelte-loading-spinners";
-  import { FilePicker } from "@capawesome/capacitor-file-picker";
 
   export let mediaType: "image" | "video" | "both" | "any";
   export let multiple = false;
+  export let ref: HTMLInputElement;
   export let photos: Photos = {};
   export let onNewPhotos: (files: typeof photos) => unknown = () => {};
 
@@ -34,7 +34,8 @@
     any: "",
   };
 
-  const onChange = async (files: File[]) => {
+  const onChange = async (e: Event) => {
+    const files = (e.currentTarget as HTMLInputElement).files;
     if (!files?.length) return;
 
     $uploadPromise = (async () => {
@@ -42,16 +43,6 @@
       await onNewPhotos(photos);
     })();
     await $uploadPromise;
-  };
-
-  export const ref = {
-    showPicker: async () => {
-      const { files } = await FilePicker.pickFiles({
-        multiple,
-      });
-
-      await onChange(files as unknown as File[]);
-    },
   };
 
   const getStateLabel = (progress: number | null, state: string) => {
@@ -65,6 +56,15 @@
 
   $: stateLabel = getStateLabel($uploadProgress, $uploadState);
 </script>
+
+<input
+  class="visually-hidden"
+  type="file"
+  accept={typeToAccept[mediaType]}
+  {...multiple && { multiple }}
+  bind:this={ref}
+  on:change={onChange}
+/>
 
 {#if $isUploading}
   <div class="my-8 flex flex-col items-center justify-center gap-2">

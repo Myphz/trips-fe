@@ -6,7 +6,3 @@ export type Option = {
 };
 
 export type Metadata = Awaited<ReturnType<typeof getMetadata>>;
-
-export type FilePickerRef = {
-  showPicker: () => Promise<void>;
-};

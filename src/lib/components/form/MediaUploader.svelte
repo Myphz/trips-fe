@@ -7,7 +7,6 @@
   import { writable, type Writable } from "svelte/store";
   import type { Photos } from "$lib/types/api";
   import { EMPTY_METADATA } from "$utils/files";
-  import type { FilePickerRef } from "$lib/types/other";
 
   export let mediaType: "image" | "video" | "both";
   export let name: string;
@@ -19,7 +18,7 @@
 
   $: photo = photos[Object.keys(photos)?.[0]]?.id ?? "";
 
-  let ref: FilePickerRef;
+  let ref: HTMLInputElement;
   let pexelsOpen = false;
 
   const pickFile = () => ref.showPicker();

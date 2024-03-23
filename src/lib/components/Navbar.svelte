@@ -13,7 +13,7 @@
   });
 </script>
 
-<header
+<nav
   class="sticky top-0 z-50 mb-12 flex items-center justify-between bg-gradient px-4 pt-6 text-white dark:text-black"
 >
   <Redirect
@@ -39,4 +39,4 @@
       </div>
     {/if}
   </a>
-</header>
+</nav>

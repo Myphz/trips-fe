@@ -16,7 +16,7 @@
 <Breadcrumbs />
 
 {#if $card}
-  <section class="flex flex-col gap-2 text-small">
+  <section class="flex flex-col gap-6 text-small">
     <div class="flex justify-center">
       <Stars
         rating={$card.rating || 0}
@@ -28,7 +28,7 @@
 
     <Textarea bind:value={description} on:blur={updateDescription} />
 
-    <div class="mb-8 mt-6 flex flex-col gap-4">
+    <div class="mb-8 mt-2 flex flex-col gap-4">
       <slot />
     </div>
 

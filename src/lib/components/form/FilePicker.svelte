@@ -63,7 +63,7 @@
   accept={typeToAccept[mediaType]}
   {...multiple && { multiple }}
   bind:this={ref}
-  on:change={onChange}
+  on:input={onChange}
 />
 
 {#if $isUploading}

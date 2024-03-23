@@ -21,7 +21,7 @@
         </button>
       {/if}
       <h1
-        class="truncate font-headers text-h1 {advancedMode ? 'max-w-[60%]' : 'max-w-[70%]'}"
+        class="truncate font-headers text-h1 {advancedMode ? 'max-w-[50%]' : 'max-w-[70%]'}"
         transition:blur={{ duration: 100 }}
       >
         {$pageTitle}

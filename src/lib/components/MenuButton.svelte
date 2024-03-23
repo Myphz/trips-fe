@@ -1,13 +1,5 @@
-<script lang="ts">
-  import { clickoutside } from "@svelte-put/clickoutside";
-
-  import type { EntityType } from "$lib/types/api";
-  import { isMenuOpen } from "$lib/stores/ui";
-  import { Redirect } from ".";
-
-  export let icon: EntityType;
-
-  const iconComponents: Record<EntityType, string> = {
+<script lang="ts" context="module">
+  const ICON_COMPONENTS: Record<EntityType, string> = {
     lodging: "bed",
     place: "location_on",
     trip: "folder",
@@ -15,12 +7,26 @@
     food: "lunch_dining",
   };
 
-  let clicked = false;
+  const MENU_DESCRIPTIONS: Record<EntityType, string> = {
+    lodging: "Hotels, B&Bs",
+    place: "Events, monuments",
+    trip: "Folder for multiple entities",
+    transport: "Travel from one place to another",
+    food: "Restaurants and food",
+  };
+</script>
 
-  function closeModal() {
-    if (!clicked) return (clicked = true);
-    isMenuOpen.set(false);
-  }
+<script lang="ts">
+  import { isMenuOpen } from "$lib/stores/ui";
+
+  import type { EntityType } from "$lib/types/api";
+  import { Redirect } from ".";
+
+  export let icon: EntityType;
+
+  const closeModal = () => {
+    $isMenuOpen = false;
+  };
 
   const label = (() => {
     if (icon === "trip") return "group";
@@ -29,20 +35,20 @@
   })();
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
-<div use:clickoutside on:clickoutside={closeModal} on:click={closeModal}>
+<!-- svelte-ignore a11y-no-static-element-interactions a11y-click-events-have-key-events -->
+<div on:click={closeModal}>
   <Redirect
     href="/form/{icon === 'trip' ? 'subtrip' : icon}"
     params={{ entityId: 0 }}
-    classes="flex flex-col items-center gap-1 text-small"
+    classes="flex items-center justify-between px-4 py-2 w-full rounded-xl bg-primary"
   >
-    <div
-      class="flex aspect-square w-20 items-center justify-center rounded-full bg-primary p-4 [&>*]:h-full [&>*]:w-full"
-    >
-      <span class="material-symbols-outlined filled text-[3rem]">
-        {iconComponents[icon]}
-      </span>
+    <div class="flex flex-col">
+      <div class="text-h3 capitalize">{label}</div>
+      <div class="text-xs">{MENU_DESCRIPTIONS[icon]}</div>
     </div>
-    <div class="capitalize">{label}</div>
+
+    <span class="material-symbols-outlined filled text-[3rem]">
+      {ICON_COMPONENTS[icon]}
+    </span>
   </Redirect>
 </div>

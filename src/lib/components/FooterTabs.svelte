@@ -23,7 +23,7 @@
     >
       <span
         class={twMerge(
-          "material-symbols-outlined text-[2.25rem] transition-all duration-100",
+          "material-symbols-outlined text-[2rem] transition-all duration-100",
           isActive && "filled",
         )}
       >

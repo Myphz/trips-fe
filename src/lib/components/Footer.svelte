@@ -1,10 +1,9 @@
 <script lang="ts">
-  import { keyboardOpen } from "$lib/stores/ui";
+  import { isMenuOpen, keyboardOpen } from "$lib/stores/ui";
   import { filter } from "$lib/stores/api/select";
   import FooterTabs from "./FooterTabs.svelte";
   import { onMount } from "svelte";
   import { get } from "svelte/store";
-  import { modal } from "$utils/modal";
 
   const TABS = [
     { icon: "location_on", name: "trip" },
@@ -12,6 +11,10 @@
     { icon: "bed", name: "lodging" },
     { icon: "train", name: "transport" },
   ] as const;
+
+  const openMenu = () => {
+    isMenuOpen.set(true);
+  };
 
   onMount(() => {
     if (!get(filter)) filter.set("trip");
@@ -25,7 +28,7 @@
     <FooterTabs tabs={TABS.slice(0, 2)} />
 
     <button
-      use:modal
+      on:click={openMenu}
       class="aspect-square w-16 -translate-y-1/2 rounded-full border-2 border-white bg-primary"
     >
       <span class="material-symbols-outlined text-[2.5rem] text-white">add</span>

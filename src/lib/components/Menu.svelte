@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { isModalOpen } from "$lib/stores/ui";
+  import { isMenuOpen } from "$lib/stores/ui";
   import MenuButton from "./MenuButton.svelte";
   import { browser } from "$app/environment";
   import { fade } from "svelte/transition";
@@ -7,7 +7,7 @@
   const preventDefault = (e: Event) => e.preventDefault();
   $: {
     if (browser) {
-      if ($isModalOpen) {
+      if ($isMenuOpen) {
         window.addEventListener("touchmove", preventDefault);
       } else {
         window.removeEventListener("touchmove", preventDefault);
@@ -16,7 +16,7 @@
   }
 </script>
 
-{#if $isModalOpen}
+{#if $isMenuOpen}
   <dialog
     class="fixed inset-0 z-[60] flex h-full w-full items-center justify-center bg-black bg-opacity-70 text-white dark:bg-[#000000B3] dark:text-black"
     open={true}

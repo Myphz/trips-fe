@@ -2,7 +2,7 @@
   import { clickoutside } from "@svelte-put/clickoutside";
 
   import type { EntityType } from "$lib/types/api";
-  import { isModalOpen } from "$lib/stores/ui";
+  import { isMenuOpen } from "$lib/stores/ui";
   import { Redirect } from ".";
 
   export let icon: EntityType;
@@ -19,7 +19,7 @@
 
   function closeModal() {
     if (!clicked) return (clicked = true);
-    isModalOpen.set(false);
+    isMenuOpen.set(false);
   }
 
   const label = (() => {

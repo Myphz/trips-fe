@@ -92,7 +92,7 @@ const IMAGES_NUMBER = {
   transport: 2,
   lodging: 3,
   trip: 11,
-  food: 1,
+  food: 4,
 } as const;
 
 export function getPlaceholderImage(card: GetRowTypes) {

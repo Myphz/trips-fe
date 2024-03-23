@@ -26,12 +26,19 @@
       withCurrency
       header="Price"
       data={rename(
-        pick(info, ["lodging_cost", "place_cost", "total_cost", "transport_cost"]),
+        pick(info, [
+          "lodging_cost",
+          "place_cost",
+          "total_cost",
+          "transport_cost",
+          "food_cost",
+        ]),
         {
           total_cost: "Total",
           lodging_cost: "Lodgings",
           place_cost: "Activities",
           transport_cost: "Transports",
+          food_cost: "Food",
         },
       )}
     />
@@ -42,6 +49,7 @@
         pick(info, [
           "num_places",
           "num_lodgings",
+          "num_foods",
           "num_transports",
           "num_trips",
           "num_photos",
@@ -52,6 +60,7 @@
           num_trips: "Groups",
           num_transports: "Transports",
           num_photos: "Photos",
+          num_foods: "Foods",
         },
       )}
     />

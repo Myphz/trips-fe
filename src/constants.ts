@@ -15,7 +15,7 @@ export const GOOGLE_CLIENT_ID_WEB =
 
 export const MEANS_OF_TRANSPORT = [
   {
-    label: "Autobus",
+    label: "Bus",
     value: "Autobus",
   },
   {

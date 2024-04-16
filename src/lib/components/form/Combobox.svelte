@@ -19,7 +19,11 @@
   let inputRef: HTMLInputElement;
 
   const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? writable({});
-  const selected = $ctx[name] ? options.find((opt) => opt.value === $ctx[name]) : null;
+  const selected = $ctx[name]
+    ? typeof $ctx[name] === "object"
+      ? options.find((opt) => opt.value === $ctx[name])
+      : { value: $ctx[name], label: $ctx[name] }
+    : null;
   const combobox = createCombobox(selected ? { selected } : {});
 
   let isInputFilled = false;

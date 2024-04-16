@@ -95,3 +95,10 @@ export const toISOStringWithTimezone = (date: Date) => {
     pad(tzOffset % 60)
   );
 };
+
+export function formatPrice(price: number | string) {
+  const priceNum = typeof price === "string" ? parseFloat(price) : price;
+
+  if (Number.isInteger(priceNum)) return priceNum.toFixed(0);
+  return priceNum.toFixed(2);
+}

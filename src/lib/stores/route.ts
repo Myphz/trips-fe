@@ -35,6 +35,7 @@ export const restore = async (
   _routeParams: RoutesUnwrapped,
   _paramsHistory: UnwrapWritable<typeof paramsHistory>,
   _filter: UnwrapWritable<typeof filter>,
+  _tripCurrency: UnwrapWritable<typeof tripCurrency>,
 ) => {
   const { entityId, parent, tripId } = _routeParams;
   routeParams.entityId.set(entityId);
@@ -43,6 +44,7 @@ export const restore = async (
 
   paramsHistory.set(_paramsHistory);
   filter.set(_filter);
+  tripCurrency.set(_tripCurrency);
 
   load();
   await loadSingle();

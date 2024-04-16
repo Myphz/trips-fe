@@ -4,6 +4,7 @@ import { paramsHistory, restore } from "$lib/stores/route";
 import { routeParams } from "$lib/stores/routeParams";
 import { BackgroundTask } from "@capawesome/capacitor-background-task";
 import { get } from "svelte/store";
+import { tripCurrency } from "$lib/stores/route";
 
 export const restoreAppState = () => {
   if (!localStorage.getItem("paramsHistory")) return;
@@ -11,8 +12,9 @@ export const restoreAppState = () => {
   const paramsHistory = JSON.parse(localStorage.getItem("paramsHistory")!);
   const filter = localStorage.getItem("filter");
   const currentURL = localStorage.getItem("currentURL")!;
+  const tripCurrency = localStorage.getItem("tripCurrency")!;
 
-  restore(routeParams, paramsHistory, filter as Parameters<typeof restore>[2]);
+  restore(routeParams, paramsHistory, filter as Parameters<typeof restore>[2], tripCurrency);
   goto(currentURL);
   setTimeout(() => sessionStorage.setItem("hasRestored", "yes"), 500);
 };
@@ -42,6 +44,8 @@ export function saveStateToLocalStorage() {
   localStorage.setItem("currentRouteParams", JSON.stringify(currentRouteParams));
   localStorage.setItem("paramsHistory", JSON.stringify(get(paramsHistory)));
   get(filter) && localStorage.setItem("filter", get(filter)!);
+  get(tripCurrency) && localStorage.setItem("tripCurrency", get(tripCurrency)!);
+
   localStorage.setItem("currentURL", window.location.pathname);
 }
 

@@ -55,7 +55,8 @@
     name="address"
     onSelect={(option) => {
       const main = option.split(",")[0];
-      $defaultValues = { ...$defaultValues, name: main };
+      if ("name" in $defaultValues && !$defaultValues.name)
+        $defaultValues = { ...$defaultValues, name: main };
     }}
   />
   <div class="flex gap-4">

@@ -13,9 +13,9 @@
   let ref: HTMLInputElement;
 
   const updatePhoto = async (photos: Photos) => {
-    const photo = photos[Object.keys(photos)?.[0]];
+    const photo = photos[Object.keys(photos)?.[0]]?.id;
     if (!photo) await update({ table: "profiles", id: $myId, params: { photo: "" } });
-    else await update({ table: "profiles", id: $myId, params: photo });
+    else await update({ table: "profiles", id: $myId, params: { photo } });
     await setMe($myId);
   };
 

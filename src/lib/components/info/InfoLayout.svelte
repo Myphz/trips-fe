@@ -11,6 +11,19 @@
 
   const updateDescription = () => updateCard({ description }, { withToast: false });
   beforeNavigate(updateDescription);
+
+  const debounce = (func: () => unknown, timeout = 300) => {
+    let timer: ReturnType<typeof setTimeout> | null = null;
+    return () => {
+      if (timer) return;
+      timer = setTimeout(() => {
+        func();
+        timer = null;
+      }, timeout);
+    };
+  };
+
+  const debouncedUpdate = debounce(updateDescription);
 </script>
 
 <Breadcrumbs />
@@ -26,7 +39,7 @@
       />
     </div>
 
-    <Textarea bind:value={description} on:blur={updateDescription} />
+    <Textarea bind:value={description} on:input={debouncedUpdate} />
 
     <div class="mb-8 mt-2 flex flex-col gap-4">
       <slot />

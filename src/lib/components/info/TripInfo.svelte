@@ -34,11 +34,11 @@
           "food_cost",
         ]),
         {
-          total_cost: "Total",
-          lodging_cost: "Lodgings",
           place_cost: "Activities",
-          transport_cost: "Transports",
           food_cost: "Food",
+          transport_cost: "Transports",
+          lodging_cost: "Lodgings",
+          total_cost: "Total",
         },
       )}
     />

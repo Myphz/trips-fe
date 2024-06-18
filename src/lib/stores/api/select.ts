@@ -6,6 +6,7 @@ import { supabase } from "./client";
 import { routeParams } from "../routeParams";
 import type { UnwrapWritable } from "$lib/types/route";
 import { goto } from "$app/navigation";
+import { getStart } from "$utils/format";
 
 export const loading = writable(true);
 
@@ -69,21 +70,42 @@ async function getAll() {
   const ret = data
     .map((row) => convertRPCRow(row))
     .filter((val) => !!val)
+
+    // Sort by start date (closest to current)
     .sort((card1, card2) => {
+      const now = +new Date();
+
+      const time1 = getStart(card1);
+      const time2 = getStart(card2);
+
+      // If no times are set, mantain current order.
+      if (!time1 && !time2) return 0;
+
+      // If a time is set, but not in the other card
+      // always show the card with a time first.
+      if (time1 && !time2) return -1;
+      if (time2 && !time1) return 1;
+
+      const diff1 = time1 - now;
+      const diff2 = time2 - now;
+
+      // If both cards are already passed, sort by latest
+      if (diff1 < 0 && diff2 < 0) return diff2 < diff1 ? -1 : 1;
+
+      // If one card is passed, but not the other, always displayed the one not passed first.
+      if (diff1 < 0) return 1;
+      if (diff2 < 0) return -1;
+
+      // If both cards are future, display the closest one
+      return diff2 < diff1 ? 1 : -1;
+    })
+    .sort((card1, card2) => {
+      // Always show trips before anything else
       if (card1?.type !== card2?.type) {
         if (card1?.type === "trip") return -1;
         if (card2?.type === "trip") return 1;
       }
       return 0;
-    })
-    // Sort by start date
-    .sort((card1, card2) => {
-      let time1 = 0;
-      let time2 = 0;
-      if (card1 && "start" in card1) time1 = +new Date(card1.start);
-      if (card2 && "start" in card2) time2 = +new Date(card2.start);
-
-      return time2 - time1;
     }) as GetRowTypes[];
 
   allCards.set(ret);

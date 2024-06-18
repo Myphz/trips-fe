@@ -30,6 +30,7 @@
     if (ref && !ref.value && startValue && !hasBeenResettedToDefault) {
       ref.value = startValue;
       isFilled = !!startValue;
+      hasBeenResettedToDefault = true;
     }
   }
 

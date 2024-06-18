@@ -55,7 +55,7 @@
     name="address"
     onSelect={(option) => {
       const main = option.split(",")[0];
-      if ("name" in $defaultValues && !$defaultValues.name)
+      if (!("name" in $defaultValues) || !$defaultValues.name)
         $defaultValues = { ...$defaultValues, name: main };
     }}
   />

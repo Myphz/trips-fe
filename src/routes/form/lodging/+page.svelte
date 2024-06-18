@@ -73,7 +73,8 @@
     name="address"
     onSelect={(option) => {
       const main = option.split(",")[0];
-      $defaultValues = { ...$defaultValues, name: main };
+      if (!("name" in $defaultValues) || !$defaultValues.name)
+        $defaultValues = { ...$defaultValues, name: main };
     }}
   />
   <Input placeholder="Total price" name="price" numeric />

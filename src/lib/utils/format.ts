@@ -96,9 +96,20 @@ export const toISOStringWithTimezone = (date: Date) => {
   );
 };
 
-export function formatPrice(price: number | string) {
+export const formatPrice = (price: number | string) => {
   const priceNum = typeof price === "string" ? parseFloat(price) : price;
+  return priceNum.toLocaleString("en-US", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
+};
 
-  if (Number.isInteger(priceNum)) return priceNum.toFixed(0);
-  return priceNum.toFixed(2);
-}
+export const getStart = (card: GetRowTypes | null) => {
+  if (!card) return 0;
+  if (card.type === "trip") return +new Date(card.start);
+  if (card.type === "lodging") return +new Date(card.start);
+  if (card.type === "place") return +new Date(card.date);
+  if (card.type === "food") return +new Date(card.date);
+  if (card.type === "transport") return +new Date(card.departure);
+  return 0;
+};

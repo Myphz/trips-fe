@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+3&family=Nunito&display=swap");
+@import url("/css/fonts/loader.css");
 
 @tailwind base;
 @tailwind components;

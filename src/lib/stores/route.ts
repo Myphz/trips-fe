@@ -14,6 +14,7 @@ export const history = derived(paramsHistory, ($paramsHistory) =>
   $paramsHistory.slice($paramsHistory.findLastIndex((history) => history.entityId === 0) + 1),
 );
 export const tripCurrency = writable("");
+export const tripCurrencyRatio = writable(0);
 
 export const isDarkMode = writable(false);
 export const showWarningRedirect = writable(false);
@@ -36,6 +37,7 @@ export const restore = async (
   _paramsHistory: UnwrapWritable<typeof paramsHistory>,
   _filter: UnwrapWritable<typeof filter>,
   _tripCurrency: UnwrapWritable<typeof tripCurrency>,
+  _tripCurrencyRatio: string,
 ) => {
   const { entityId, parent, tripId } = _routeParams;
   routeParams.entityId.set(entityId);
@@ -45,6 +47,7 @@ export const restore = async (
   paramsHistory.set(_paramsHistory);
   filter.set(_filter);
   tripCurrency.set(_tripCurrency);
+  tripCurrencyRatio.set(parseFloat(_tripCurrencyRatio));
 
   load();
   await loadSingle();
@@ -57,13 +60,14 @@ export const setRouteParams = (
   opts?: { saveParams?: boolean; paramsRedirect?: boolean },
 ) => {
   const { saveParams = true, paramsRedirect = true } = opts ?? {};
-  const { title, currency, ...rest } = params;
+  const { title, currency, currencyRatio, ...rest } = params;
 
   Object.entries(rest).map(([key, val]) => {
     routeParams[key as keyof typeof routeParams].set(val);
   });
 
   if (currency || !get(routeParams.tripId)) tripCurrency.set(currency || "");
+  if (currencyRatio || !get(routeParams.tripId)) tripCurrencyRatio.set(currencyRatio || 0);
 
   if (saveParams) {
     paramsHistory.set([...get(paramsHistory), { ...params, title: title ?? get(pageTitle) }]);

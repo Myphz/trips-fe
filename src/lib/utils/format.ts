@@ -99,7 +99,7 @@ export const toISOStringWithTimezone = (date: Date) => {
 export const formatPrice = (price: number | string) => {
   const priceNum = typeof price === "string" ? parseFloat(price) : price;
   return priceNum.toLocaleString("en-US", {
-    minimumFractionDigits: 2,
+    minimumFractionDigits: Number.isInteger(priceNum) ? 0 : 2,
     maximumFractionDigits: 2,
   });
 };

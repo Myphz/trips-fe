@@ -332,6 +332,7 @@ export type Database = {
       trips: {
         Row: {
           currency: string | null
+          currency_ratio: number | null
           destination: string
           end_date: string | null
           id: number
@@ -339,6 +340,7 @@ export type Database = {
         }
         Insert: {
           currency?: string | null
+          currency_ratio?: number | null
           destination: string
           end_date?: string | null
           id: number
@@ -346,6 +348,7 @@ export type Database = {
         }
         Update: {
           currency?: string | null
+          currency_ratio?: number | null
           destination?: string
           end_date?: string | null
           id?: number
@@ -388,6 +391,7 @@ export type Database = {
           trip_start: string
           trip_end: string
           trip_currency: string
+          trip_currency_ratio: number
           place_name: string
           place_date: string
           place_address: string
@@ -426,6 +430,7 @@ export type Database = {
           trip_start: string
           trip_end: string
           trip_currency: string
+          trip_currency_ratio: number
           place_name: string
           place_date: string
           place_address: string
@@ -454,15 +459,15 @@ export type Database = {
         Returns: {
           total_cost: number
           place_cost: number
+          food_cost: number
           transport_cost: number
           lodging_cost: number
-          food_cost: number
+          num_trips: number
           num_places: number
+          num_foods: number
           num_transports: number
           num_lodgings: number
-          num_trips: number
           num_photos: number
-          num_foods: number
         }[]
       }
       get_tripid: {

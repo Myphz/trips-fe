@@ -31,13 +31,14 @@
 
   $: defaultValues = writable(
     isEdit && $card
-      ? pick(rename($card as GetRowType<"trip">, { start: "start_date", end: "end_date" }), [
-          "destination",
-          "start_date",
-          "end_date",
-          "photo",
-          "currency",
-        ])
+      ? pick(
+          rename($card as GetRowType<"trip">, {
+            start: "start_date",
+            end: "end_date",
+            currencyRatio: "currency_ratio",
+          }),
+          ["destination", "start_date", "end_date", "photo", "currency", "currency_ratio"],
+        )
       : {},
   );
 
@@ -77,7 +78,10 @@
     <Datepicker name="end_date" placeholder="Return" />
   </div>
 
-  <Combobox name="currency" label="Currency" options={currencies} />
+  <div class="flex gap-4">
+    <Combobox name="currency" label="Currency" options={currencies} />
+    <Input placeholder="EUR Ratio" name="currency_ratio" />
+  </div>
 
   <PeopleSelector name="people" />
   <MediaUploader name="photo" mediaType="image" />

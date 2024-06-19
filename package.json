@@ -9,7 +9,7 @@
     "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "lint": "prettier --check . && eslint .",
-    "generate-types": "npx supabase gen types typescript --project-id 'osbnntqdwcamhqbpdzwz' --schema public > src/lib/types/supabase.ts",
+    "generate-types": "npx -y supabase gen types typescript --project-id 'osbnntqdwcamhqbpdzwz' --schema public > src/lib/types/supabase.ts",
     "format": "prettier --write .",
     "android-debug": "bash android-debug.sh",
     "android-release": "bash android.sh"

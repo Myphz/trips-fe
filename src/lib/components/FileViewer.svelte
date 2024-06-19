@@ -7,7 +7,7 @@
 </script>
 
 <button class="flex w-full justify-between" on:click={() => downloadOrViewFile(file)}>
-  <div class="text-left">{file.name}</div>
+  <div class="max-w-full break-all text-left">{file.name}</div>
   <div class="text-primary">
     <span class="material-symbols-outlined">download</span>
   </div>

@@ -1,6 +1,5 @@
 <script lang="ts">
-  import type { _ } from "$env/static/private";
-  import { tripCurrency } from "$lib/stores/route";
+  import { tripCurrency, tripCurrencyRatio } from "$lib/stores/route";
   import { differenceBetweenDates, formatPrice } from "$utils/format";
 
   export let data: Record<string, string | number>;
@@ -47,6 +46,11 @@
             {isPrice ? formatPrice(value) : value}
             {#if isPrice}
               {$tripCurrency}
+              {#if $tripCurrencyRatio}
+                ({formatPrice(
+                  (typeof value === "string" ? parseFloat(value) : value) * $tripCurrencyRatio,
+                )} €)
+              {/if}
             {/if}
           </span>
         </div>

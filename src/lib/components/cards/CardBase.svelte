@@ -28,7 +28,10 @@
     entityId: data.id,
     parent: data.id,
     tripId: data.tripId || data.id,
-    ...(data.type === "trip" && { currency: data.currency }),
+    ...(data.type === "trip" && {
+      currency: data.currency,
+      currencyRatio: data.currencyRatio,
+    }),
   }}
   {#if !isLoading}
     <article
@@ -63,6 +66,7 @@
               params={{
                 entityId: data.id,
                 currency: data.currency,
+                currencyRatio: data.currencyRatio,
               }}
             >
               <span class="material-symbols-outlined text-[2rem]">info</span>

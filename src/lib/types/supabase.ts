@@ -471,6 +471,7 @@ export type Database = {
           num_transports: number
           num_lodgings: number
           num_photos: number
+          favourite_photos: string[]
         }[]
       }
       get_tripid: {

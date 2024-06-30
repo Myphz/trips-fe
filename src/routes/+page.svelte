@@ -4,9 +4,9 @@
   import { MAIN_PAGE_TITLE, setPageTitle } from "$lib/stores/route";
   import { deleteAppState } from "$utils/app";
   import { authGuard } from "$utils/guard";
-  import { onMount } from "svelte";
+  import { afterUpdate } from "svelte";
 
-  onMount(() => {
+  afterUpdate(() => {
     authGuard();
     if (sessionStorage.getItem("hasRestored")) deleteAppState();
     setPageTitle(MAIN_PAGE_TITLE);

@@ -2,6 +2,7 @@
   import { getTripInfo } from "$lib/stores/api/select";
   import { pick, pickCard, rename } from "$utils/objects";
   import { fail } from "$utils/toasts";
+  import PhotoViewer from "../PhotoViewer.svelte";
   import Details from "./Details.svelte";
   import InfoLayout from "./InfoLayout.svelte";
 
@@ -64,5 +65,19 @@
         },
       )}
     />
+
+    <section class="mt-4">
+      <div class="flex items-center justify-between">
+        <header class="text-h3 capitalize">Highlights</header>
+      </div>
+
+      <div class="mt-2 flex flex-wrap gap-4">
+        {#if info.favourite_photos.length}
+          {#each info.favourite_photos.flat(99) as photo}
+            <PhotoViewer {photo} maxHeight={false} withDelete />
+          {/each}
+        {/if}
+      </div>
+    </section>
   {/if}
 </InfoLayout>

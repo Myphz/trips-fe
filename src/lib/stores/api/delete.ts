@@ -1,6 +1,6 @@
 import type { Tables } from "$lib/types/api";
 import { fail, success } from "$utils/toasts";
-import { get } from "svelte/store";
+import { get, writable } from "svelte/store";
 import { routeParams } from "../routeParams";
 import { supabase } from "./client";
 import { myId } from "./select";
@@ -11,6 +11,8 @@ type DeleteParams<T extends keyof Tables> = {
   withToast?: boolean;
   withErrorToast?: boolean;
 };
+
+export const photoId = writable("");
 
 export async function del<T extends keyof Tables>({
   table,
@@ -31,8 +33,8 @@ export async function del<T extends keyof Tables>({
   return true;
 }
 
-export async function deletePhoto(photo: string) {
-  return await del({ table: "photos", id: photo });
+export async function deletePhoto(photo?: string) {
+  return await del({ table: "photos", id: photo || get(photoId) });
 }
 
 export async function deleteGroup(tripId: number) {

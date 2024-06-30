@@ -184,7 +184,7 @@ export type Database = {
           created_at: string
           entity_id: number
           id: string
-          is_favourite: boolean | null
+          is_favourite: boolean
           latitude: string | null
           longitude: string | null
           name: string | null
@@ -194,7 +194,7 @@ export type Database = {
           created_at?: string
           entity_id: number
           id: string
-          is_favourite?: boolean | null
+          is_favourite?: boolean
           latitude?: string | null
           longitude?: string | null
           name?: string | null
@@ -204,7 +204,7 @@ export type Database = {
           created_at?: string
           entity_id?: number
           id?: string
-          is_favourite?: boolean | null
+          is_favourite?: boolean
           latitude?: string | null
           longitude?: string | null
           name?: string | null

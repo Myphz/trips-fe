@@ -6,6 +6,7 @@ export const modalState = {
   deleteEntity: writable(false),
   deleteAccount: writable(false),
   photoInfo: writable(false),
+  deletePhoto: writable(false),
 };
 
 export const modalOpen = writable(false);

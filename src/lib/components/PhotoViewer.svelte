@@ -2,11 +2,12 @@
   import { EMPTY_METADATA, downloadImage, getPhotoURL, shareImage } from "$utils/files";
   import { twMerge } from "tailwind-merge";
   import Loading from "./cards/Loading.svelte";
-  import { deletePhoto } from "$lib/stores/api/delete";
-  import { loadPhotos } from "$lib/stores/api/select";
+  import { photoId } from "$lib/stores/api/delete";
   import type { Photos } from "$lib/types/api";
   import { isShowingImageFullscreen, toggleModal } from "$lib/stores/modals";
   import { currentPhoto } from "$lib/stores/files/upload";
+  import { update } from "$lib/stores/api/update";
+  import { loadPhotos } from "$lib/stores/api/select";
 
   export let photo: string | Photos[string];
 
@@ -15,6 +16,7 @@
   export let isPortrait = false;
   export let withCross = false;
   export let withDelete = false;
+
   export let onCrossClick: () => unknown = () => {};
 
   const actualPhoto = typeof photo === "string" ? { id: photo, ...EMPTY_METADATA } : photo;
@@ -31,6 +33,23 @@
 
   const showPhotoInfo = () => {
     toggleModal("photoInfo");
+  };
+
+  const showDeletePhotoModal = () => {
+    photoId.set(actualPhoto.id);
+    toggleModal("deletePhoto");
+  };
+
+  const toggleFavourite = async () => {
+    const isFavourite = ("is_favourite" in actualPhoto && actualPhoto.is_favourite) || false;
+
+    await update({
+      table: "photos",
+      id: actualPhoto.id,
+      params: { is_favourite: !isFavourite },
+    });
+
+    loadPhotos();
   };
 
   $: if (!$isShowingImageFullscreen) fullScreen = false;
@@ -93,18 +112,24 @@
           <button class="text-primary" on:click={() => downloadImage(actualPhoto.id)}>
             <span class="material-symbols-outlined text-[2rem]">download</span>
           </button>
+          {#if "is_favourite" in actualPhoto && typeof actualPhoto.is_favourite === "boolean"}
+            <button class="text-white dark:text-black" on:click={toggleFavourite}>
+              <span
+                class={twMerge(
+                  "material-symbols-outlined text-[2rem]",
+                  actualPhoto.is_favourite && "filled text-accent",
+                )}
+              >
+                star
+              </span>
+            </button>
+          {/if}
+
           <button class="text-white dark:text-black" on:click={showPhotoInfo}>
             <span class="material-symbols-outlined text-[2rem]">info</span>
           </button>
           {#if withDelete}
-            <button
-              class="text-error"
-              on:click={async () => {
-                await deletePhoto(actualPhoto.id);
-                setFullscreen(false);
-                loadPhotos();
-              }}
-            >
+            <button class="text-error" on:click={showDeletePhotoModal}>
               <span class="material-symbols-outlined text-[2rem]">delete</span>
             </button>
           {/if}

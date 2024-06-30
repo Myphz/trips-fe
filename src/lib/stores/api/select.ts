@@ -201,5 +201,12 @@ export async function getTripInfo() {
   const data = (await supabase.rpc("get_trip_info", { _trip_id: tripId })).data?.[0];
   if (!data) return;
 
-  return data;
+  return {
+    ...data,
+    // Load full photos data from id
+    favourite_photos: data.favourite_photos.length
+      ? (await supabase.from("photos").select("*").in("id", data.favourite_photos.flat(99)))
+          .data || []
+      : [],
+  };
 }

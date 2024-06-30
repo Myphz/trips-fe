@@ -73,7 +73,7 @@
 
       <div class="mt-2 flex flex-wrap gap-4">
         {#if info.favourite_photos.length}
-          {#each info.favourite_photos.flat(99) as photo}
+          {#each info.favourite_photos as photo}
             <PhotoViewer {photo} maxHeight={false} withDelete />
           {/each}
         {/if}

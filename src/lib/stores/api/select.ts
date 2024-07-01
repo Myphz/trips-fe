@@ -204,7 +204,7 @@ export async function getTripInfo() {
   return {
     ...data,
     // Load full photos data from id
-    favourite_photos: data.favourite_photos.length
+    favourite_photos: data.favourite_photos?.length
       ? (await supabase.from("photos").select("*").in("id", data.favourite_photos.flat(99)))
           .data || []
       : [],

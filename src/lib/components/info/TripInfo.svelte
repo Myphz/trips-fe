@@ -65,19 +65,18 @@
         },
       )}
     />
+    {#if info.favourite_photos.length}
+      <section class="mt-4">
+        <div class="flex items-center justify-between">
+          <header class="text-h3 capitalize">Highlights</header>
+        </div>
 
-    <section class="mt-4">
-      <div class="flex items-center justify-between">
-        <header class="text-h3 capitalize">Highlights</header>
-      </div>
-
-      <div class="mt-2 flex flex-wrap gap-4">
-        {#if info.favourite_photos.length}
+        <div class="mt-2 flex flex-wrap gap-4">
           {#each info.favourite_photos as photo}
             <PhotoViewer {photo} maxHeight={false} withDelete />
           {/each}
-        {/if}
-      </div>
-    </section>
+        </div>
+      </section>
+    {/if}
   {/if}
 </InfoLayout>

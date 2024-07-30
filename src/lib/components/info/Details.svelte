@@ -47,7 +47,7 @@
             {isPrice ? formatPrice(value) : value}
             {#if isPrice}
               {$tripCurrency}
-              {#if $tripCurrencyRatio}
+              {#if $tripCurrencyRatio && $tripCurrencyRatio !== 1}
                 ({formatPrice(
                   (typeof value === "string" ? parseFloat(value) : value) * $tripCurrencyRatio,
                 )} €)

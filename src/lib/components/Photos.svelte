@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { card, loadPhotos, photos } from "$lib/stores/api/select";
+  import { loadPhotos, photos } from "$lib/stores/api/select";
   import FilePicker from "./form/FilePicker.svelte";
   import { createPhotos } from "$lib/stores/api/create";
   import { PhotoViewer } from ".";
@@ -20,13 +20,10 @@
   <FilePicker mediaType="both" multiple bind:ref onNewPhotos={createPhotos} />
 
   <div class="mt-2 flex flex-wrap gap-4">
-    {#if $photos.length || $card?.photo}
+    {#if $photos.length}
       {#each $photos as photo}
         <PhotoViewer {photo} maxHeight={false} withDelete />
       {/each}
-      {#if $card?.photo}
-        <PhotoViewer photo={$card.photo} maxHeight={false} />
-      {/if}
     {:else}
       <Empty customDescription="No photos uploaded yet..." />
     {/if}

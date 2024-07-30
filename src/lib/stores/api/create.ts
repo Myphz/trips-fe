@@ -39,7 +39,7 @@ export async function addEntity<T extends keyof Tables>(
   params: Tables["entities"]["Insert"] & Tables[T]["Insert"],
 ) {
   const { parent, tripId } = routeParams;
-  const { photo, maps_id, ...rest } = params;
+  const { thumbnail, maps_id, ...rest } = params;
 
   if (!get(tripId) && type !== "trips")
     throw new Error("Can't create something that's not a trip without a tripid");
@@ -47,7 +47,7 @@ export async function addEntity<T extends keyof Tables>(
   // Create entity
   const entity = await create({
     table: "entities",
-    params: addOptionals({ parent: get(parent), trip_id: get(tripId), photo, maps_id }),
+    params: addOptionals({ parent: get(parent), trip_id: get(tripId), thumbnail, maps_id }),
   });
 
   const rowParams = { id: entity.id, ...addOptionals(rest) };
@@ -64,14 +64,17 @@ export async function addEntity<T extends keyof Tables>(
   return row;
 }
 
-export async function createPhotos(photos: Photos) {
+export async function createPhotos(
+  photos: Photos,
+  extraData: Partial<CreateParams<"photos">["params"]>,
+) {
   const entityId = get(card)!.id;
 
   await Promise.all(
     Object.entries(photos).map(([name, values]) =>
       create({
         table: "photos",
-        params: { entity_id: entityId, name, ...values },
+        params: { entity_id: entityId, name, ...values, ...extraData },
         withToast: false,
       }),
     ),

@@ -3,6 +3,7 @@
   import { differenceBetweenDates, formatPrice } from "$utils/format";
 
   export let data: Record<string, string | number>;
+
   export let header: string;
   export let withCurrency = false;
 

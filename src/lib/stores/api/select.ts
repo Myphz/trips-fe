@@ -72,7 +72,7 @@ async function getAll() {
     .filter((val) => !!val)
 
     // Sort by start date (closest to current)
-    .sort((card1, card2) => {
+    .toSorted((card1, card2) => {
       const now = +new Date();
 
       const time1 = getStart(card1);
@@ -99,7 +99,7 @@ async function getAll() {
       // If both cards are future, display the closest one
       return diff2 < diff1 ? 1 : -1;
     })
-    .sort((card1, card2) => {
+    .toSorted((card1, card2) => {
       // Always show trips before anything else
       if (card1?.type !== card2?.type) {
         if (card1?.type === "trip") return -1;
@@ -144,8 +144,12 @@ export async function loadPhotos() {
   if (!cardData) return;
 
   photos.set(
-    (await select({ table: "photos", cond: { entity_id: cardData.id } })).sort(
-      (p1, p2) => +new Date(p2.created_at) - +new Date(p1.created_at),
+    (await select({ table: "photos", cond: { entity_id: cardData.id } })).toSorted(
+      (p1, p2) => {
+        if (p1.is_thumbnail && !p2.is_thumbnail) return -1;
+        if (!p1.is_thumbnail && p2.is_thumbnail) return 1;
+        return +new Date(p2.created_at) - +new Date(p1.created_at);
+      },
     ),
   );
 }

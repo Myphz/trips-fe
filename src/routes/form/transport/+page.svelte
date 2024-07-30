@@ -15,6 +15,7 @@
   import { pexelSearch } from "$lib/stores/pexels";
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
+  import { deletePhoto } from "$lib/stores/api/delete";
 
   const { entityId } = routeParams;
 
@@ -38,7 +39,7 @@
             "departure_datetime",
             "arrival_datetime",
             "mean",
-            "photo",
+            "thumbnail",
             "price",
           ],
         )
@@ -55,8 +56,15 @@
     }
 
     if (isEdit) {
-      const { photo, ...rest } = data;
-      await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
+      const { thumbnail, ...rest } = data;
+      if (!thumbnail && $card?.thumbnail) await deletePhoto($card.thumbnail);
+
+      await update({
+        table: "entities",
+        params: emptyToNull({ thumbnail }),
+        id: $entityId,
+        withToast: false,
+      });
       await update({ table: "transports", params: emptyToNull(rest), id: $entityId });
     } else await addEntity("transports", data);
 
@@ -76,5 +84,5 @@
   <Input placeholder="Price" name="price" numeric />
   <Select name="mean" label="Mean of transport" options={MEANS_OF_TRANSPORT} />
 
-  <MediaUploader name="photo" mediaType="image" />
+  <MediaUploader name="thumbnail" mediaType="image" />
 </Form>

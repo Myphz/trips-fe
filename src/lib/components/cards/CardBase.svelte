@@ -12,8 +12,8 @@
 
   let url = "";
 
-  if (data.photo) {
-    getPhotoURL(data.photo).then((l) => {
+  if (data.thumbnail) {
+    getPhotoURL(data.thumbnail).then((l) => {
       url = l;
       isLoading = false;
     });

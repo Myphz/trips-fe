@@ -9,21 +9,13 @@ export function addOptionals<T extends object>(optionals: T) {
   >;
 }
 
-type RenameBy<T, U> = {
-  [K in keyof U as K extends keyof T
-    ? T[K] extends string
-      ? T[K]
-      : never
-    : K]: K extends keyof U ? U[K] : never;
-};
-
-export function rename<T extends object, K extends Record<keyof T, string>>(
-  obj: T,
-  renames: Partial<K>,
-): RenameBy<T, K> {
+export function rename<
+  T extends Record<string, unknown>,
+  K extends Partial<Record<keyof T, string>>,
+>(obj: T, renames: K) {
   return Object.fromEntries(
     Object.entries(obj).map(([key, val]) => [renames[key as keyof T] ?? key, val]),
-  ) as RenameBy<T, K>;
+  ) as Omit<T, keyof K> & { [P in NonNullable<K[keyof K]>]: T[K[P] & keyof T] };
 }
 
 export function pick<T extends object, K extends keyof T>(obj: T, keys: K[]): Pick<T, K> {

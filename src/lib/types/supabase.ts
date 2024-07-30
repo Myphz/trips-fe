@@ -16,8 +16,8 @@ export type Database = {
           id: number
           maps_id: string | null
           parent: number | null
-          photo: string | null
           rating: number | null
+          thumbnail: string | null
           trip_id: number | null
           updated_at: string
           user_id: string
@@ -28,8 +28,8 @@ export type Database = {
           id?: number
           maps_id?: string | null
           parent?: number | null
-          photo?: string | null
           rating?: number | null
+          thumbnail?: string | null
           trip_id?: number | null
           updated_at?: string
           user_id?: string
@@ -40,8 +40,8 @@ export type Database = {
           id?: number
           maps_id?: string | null
           parent?: number | null
-          photo?: string | null
           rating?: number | null
+          thumbnail?: string | null
           trip_id?: number | null
           updated_at?: string
           user_id?: string
@@ -52,6 +52,13 @@ export type Database = {
             columns: ["parent"]
             isOneToOne: false
             referencedRelation: "entities"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "entities_thumbnail_fkey"
+            columns: ["thumbnail"]
+            isOneToOne: false
+            referencedRelation: "photos"
             referencedColumns: ["id"]
           },
           {
@@ -185,6 +192,7 @@ export type Database = {
           entity_id: number
           id: string
           is_favourite: boolean
+          is_thumbnail: boolean
           latitude: string | null
           longitude: string | null
           name: string | null
@@ -195,6 +203,7 @@ export type Database = {
           entity_id: number
           id: string
           is_favourite?: boolean
+          is_thumbnail?: boolean
           latitude?: string | null
           longitude?: string | null
           name?: string | null
@@ -205,6 +214,7 @@ export type Database = {
           entity_id?: number
           id?: string
           is_favourite?: boolean
+          is_thumbnail?: boolean
           latitude?: string | null
           longitude?: string | null
           name?: string | null
@@ -387,7 +397,7 @@ export type Database = {
           rating: number
           main_id: number
           parent: number
-          photo: string
+          thumbnail: string
           created_at: string
           maps_id: string
           trip_destination: string
@@ -426,7 +436,7 @@ export type Database = {
           rating: number
           main_id: number
           parent: number
-          photo: string
+          thumbnail: string
           created_at: string
           maps_id: string
           trip_destination: string

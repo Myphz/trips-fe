@@ -13,6 +13,7 @@
   import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
+  import { deletePhoto } from "$lib/stores/api/delete";
 
   onMount(() => pexelSearch.set(""));
 
@@ -22,7 +23,9 @@
   $: setPageTitle(isEdit ? `Edit ${getName($card)}` : "Add an activity");
 
   $: defaultValues = writable(
-    isEdit && $card ? pickCard("place", ["name", "address", "date", "price", "photo"]) : {},
+    isEdit && $card
+      ? pickCard("place", ["name", "address", "date", "price", "thumbnail"])
+      : {},
   );
 
   const onSubmit = async (data: FormParams<"places">) => {
@@ -34,10 +37,12 @@
       delete data.price;
     }
     if (isEdit) {
-      const { photo, maps_id, ...rest } = data;
+      const { thumbnail, maps_id, ...rest } = data;
+      if (!thumbnail && $card?.thumbnail) await deletePhoto($card.thumbnail);
+
       await update({
         table: "entities",
-        params: { photo, maps_id },
+        params: emptyToNull({ thumbnail, maps_id }),
         id: $entityId,
         withToast: false,
       });
@@ -63,5 +68,5 @@
     <Datepicker name="date" placeholder="Date" />
     <Input placeholder="Price" name="price" numeric />
   </div>
-  <MediaUploader name="photo" mediaType="image" />
+  <MediaUploader name="thumbnail" mediaType="image" />
 </Form>

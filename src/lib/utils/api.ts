@@ -33,7 +33,7 @@ function filterObject<T extends EntityType>(startsWith: T, row: RPCRow): GetRowT
     tripId: row.main_id,
     rating: row.rating,
     parent: row.parent,
-    photo: row.photo,
+    thumbnail: row.thumbnail,
     createdAt: datetimeToISO(row.created_at),
     mapsId: row.maps_id,
   };

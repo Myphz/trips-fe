@@ -13,6 +13,7 @@
   export let multiple = false;
   export let ref: HTMLInputElement;
   export let photos: Photos = {};
+
   export let onNewPhotos: (files: typeof photos) => unknown = () => {};
 
   // const typeToAccept: Record<typeof mediaType, string> = {

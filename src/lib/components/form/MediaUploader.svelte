@@ -5,18 +5,22 @@
   import PexelsModal from "./PexelsModal.svelte";
   import { uploadFileFromURL } from "$lib/stores/files/upload";
   import { writable, type Writable } from "svelte/store";
+  import { EMPTY_METADATA, thumbnailStringToPhoto } from "$utils/files";
   import type { Photos } from "$lib/types/api";
-  import { EMPTY_METADATA } from "$utils/files";
+  import { createPhotos } from "$lib/stores/api/create";
 
   export let mediaType: "image" | "video" | "both";
   export let name: string;
-  export let multiple = false;
 
-  const ctx = getContext<Writable<Record<string, Photos>>>("defaultValues") ?? writable({});
-  let photos = $ctx[name] ?? {};
-  if (typeof photos === "string") photos = { unknown: { id: photos, ...EMPTY_METADATA } };
+  const ctx = getContext<Writable<Record<string, string>>>("defaultValues") ?? writable({});
+  let photo = $ctx[name] ?? "";
 
-  $: photo = photos[Object.keys(photos)?.[0]]?.id ?? "";
+  let filePickerPhoto: Photos =
+    Object.keys(photo)?.length > 0
+      ? {
+          [photo]: { id: photo, ...EMPTY_METADATA, is_favourite: false },
+        }
+      : {};
 
   let ref: HTMLInputElement;
   let pexelsOpen = false;
@@ -25,12 +29,19 @@
   const openPexels = () => (pexelsOpen = true);
 
   const onPexelImageSelect = async (src: string) => {
-    photos = await uploadFileFromURL(src);
+    filePickerPhoto = await uploadFileFromURL(src);
   };
+
+  $: photo = filePickerPhoto[Object.keys(filePickerPhoto)[0]]?.id || "";
 </script>
 
 <input type="hidden" {name} value={photo} />
-<FilePicker bind:ref {mediaType} {multiple} bind:photos />
+<FilePicker
+  bind:ref
+  {mediaType}
+  bind:photos={filePickerPhoto}
+  onNewPhotos={(photos) => createPhotos(photos, { is_thumbnail: true })}
+/>
 
 {#if !photo}
   <div class="flex flex-col gap-2">
@@ -61,7 +72,8 @@
     </button>
   </div>
 {:else}
-  <PhotoViewer withCross {photo} onCrossClick={() => (photos = {})} />
+  {@const fullPhoto = { id: photo, ...EMPTY_METADATA, is_favourite: false }}
+  <PhotoViewer withCross photo={fullPhoto} onCrossClick={() => (photo = "")} />
 {/if}
 
 <PexelsModal bind:open={pexelsOpen} onImageSelect={onPexelImageSelect} />

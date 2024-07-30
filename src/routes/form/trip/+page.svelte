@@ -21,6 +21,7 @@
   import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
+  import { deletePhoto } from "$lib/stores/api/delete";
 
   const { entityId } = routeParams;
 
@@ -37,7 +38,7 @@
             end: "end_date",
             currencyRatio: "currency_ratio",
           }),
-          ["destination", "start_date", "end_date", "photo", "currency", "currency_ratio"],
+          ["destination", "start_date", "end_date", "thumbnail", "currency", "currency_ratio"],
         )
       : {},
   );
@@ -55,8 +56,15 @@
 
     let tripId = $entityId;
     if (isEdit) {
-      const { photo, ...rest } = restData;
-      await update({ table: "entities", params: { photo }, id: $entityId, withToast: false });
+      const { thumbnail, ...rest } = restData;
+      if (!thumbnail && $card?.thumbnail) await deletePhoto($card.thumbnail);
+
+      await update({
+        table: "entities",
+        params: emptyToNull({ thumbnail }),
+        id: $entityId,
+        withToast: false,
+      });
       await update({ table: "trips", params: emptyToNull(rest), id: $entityId });
     } else tripId = (await addEntity("trips", restData)).id;
 
@@ -84,5 +92,5 @@
   </div>
 
   <PeopleSelector name="people" />
-  <MediaUploader name="photo" mediaType="image" />
+  <MediaUploader name="thumbnail" mediaType="image" />
 </Form>

@@ -9,7 +9,7 @@
     ...rename(pickCard("place", ["date", "createdAt", "address", "price"]), {
       createdAt: "Created at",
     }),
-    photos: $photos.length + ($card?.photo ? 1 : 0),
+    photos: $photos.length,
   };
 </script>
 

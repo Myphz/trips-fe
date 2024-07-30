@@ -11,6 +11,41 @@
     if (!value) return fail({ title: "Error", msg: "Couldn't load trip info" });
     info = value;
   });
+
+  // Typescript types don't work well with both `pick()` and `rename()`...
+  $: priceDetails =
+    info &&
+    (pick(
+      rename(info, {
+        place_cost: "Activities",
+        lodging_cost: "Lodgings",
+        food_cost: "Food",
+        transport_cost: "Transports",
+        total_cost: "Total",
+      }),
+      ["Activities", "Lodgings", "Food", "Transports", "Total"],
+    ) as unknown as Record<string, string | number>);
+
+  $: statisticsDetails =
+    info &&
+    (rename(
+      pick(info, [
+        "num_places",
+        "num_lodgings",
+        "num_foods",
+        "num_transports",
+        "num_trips",
+        "num_photos",
+      ]),
+      {
+        num_places: "Activities",
+        num_lodgings: "Lodgings",
+        num_foods: "Foods",
+        num_transports: "Transports",
+        num_trips: "Groups",
+        num_photos: "Photos",
+      },
+    ) as unknown as Record<string, string | number>);
 </script>
 
 <InfoLayout>
@@ -22,49 +57,10 @@
       createdAt: "Created at",
     })}
   />
-  {#if info}
-    <Details
-      withCurrency
-      header="Price"
-      data={rename(
-        pick(info, [
-          "lodging_cost",
-          "place_cost",
-          "total_cost",
-          "transport_cost",
-          "food_cost",
-        ]),
-        {
-          place_cost: "Activities",
-          food_cost: "Food",
-          transport_cost: "Transports",
-          lodging_cost: "Lodgings",
-          total_cost: "Total",
-        },
-      )}
-    />
+  {#if info && priceDetails && statisticsDetails}
+    <Details withCurrency header="Price" data={priceDetails} />
 
-    <Details
-      header="Statistics"
-      data={rename(
-        pick(info, [
-          "num_places",
-          "num_lodgings",
-          "num_foods",
-          "num_transports",
-          "num_trips",
-          "num_photos",
-        ]),
-        {
-          num_places: "Activities",
-          num_lodgings: "Lodgings",
-          num_trips: "Groups",
-          num_transports: "Transports",
-          num_photos: "Photos",
-          num_foods: "Foods",
-        },
-      )}
-    />
+    <Details header="Statistics" data={statisticsDetails} />
     {#if info.favourite_photos.length}
       <section class="mt-4">
         <div class="flex items-center justify-between">

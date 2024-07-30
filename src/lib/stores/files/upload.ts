@@ -50,7 +50,7 @@ export const uploadFileChunk = async ({
     formData.append(name, blob);
   }
 
-  let ret: Record<string, { id: string } & Metadata> = {};
+  let ret: Record<string, { id: string; is_favourite: boolean } & Metadata> = {};
   uploadState.set("uploading");
 
   try {
@@ -67,7 +67,7 @@ export const uploadFileChunk = async ({
     ret = Object.fromEntries(
       Object.entries(data).map(([filename, id]) => {
         const metadata = body[filename];
-        return [filename, { id: id as string, ...metadata }];
+        return [filename, { id: id as string, ...metadata, is_favourite: false }];
       }),
     );
   } catch (err) {

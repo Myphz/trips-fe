@@ -2,13 +2,14 @@ import type { GetRowType, GetRowTypes } from "$lib/types/api";
 import { Directory, Filesystem } from "@capacitor/filesystem";
 import { MEANS_OF_TRANSPORT, SERVER_URL } from "../../constants";
 import { success } from "./toasts";
-import type { photos } from "$lib/stores/api/select";
+import { select, type photos } from "$lib/stores/api/select";
 import { FileOpener } from "@capacitor-community/file-opener";
 import type { UnwrapWritable } from "$lib/types/route";
 import ExifReader from "exifreader";
 import { metadataDateToISODate } from "./format";
 import type { Metadata } from "$lib/types/other";
 import { Share } from "@capacitor/share";
+import { throwError } from "./error";
 
 const QUALITY = 0.75;
 const MAX_DIMENSION = 1500;
@@ -201,3 +202,10 @@ export async function getMetadata(file: ArrayBuffer) {
 
   return { created_at: date, latitude, longitude };
 }
+
+export const thumbnailStringToPhoto = async (thumbnail: string) => {
+  return (
+    (await select({ table: "photos", cond: { id: thumbnail } }))?.[0] ||
+    throwError(`Can't find photo for thumbail ${thumbnail}`)
+  );
+};

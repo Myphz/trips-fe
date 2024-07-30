@@ -2,6 +2,7 @@
   import { beforeNavigate } from "$app/navigation";
   import { card } from "$lib/stores/api/select";
   import { updateCard } from "$lib/stores/api/update";
+  import { thumbnailStringToPhoto } from "$utils/files";
 
   import { Stars, PhotoViewer } from "..";
   import Breadcrumbs from "../cards/Breadcrumbs.svelte";
@@ -45,8 +46,10 @@
       <slot />
     </div>
 
-    {#if $card.photo && $card.type !== "place" && $card.type !== "lodging" && $card.type !== "food"}
-      <PhotoViewer photo={$card.photo} maxHeight={false} />
+    {#if $card.thumbnail && $card.type !== "place" && $card.type !== "lodging" && $card.type !== "food"}
+      {#await thumbnailStringToPhoto($card.thumbnail) then thumbnailPhoto}
+        <PhotoViewer photo={thumbnailPhoto} maxHeight={false} />
+      {/await}
     {/if}
   </section>
 {/if}

@@ -14,6 +14,7 @@
   import { pexelSearch, updatePexelSearchOnInput } from "$lib/stores/pexels";
   import { onMount } from "svelte";
   import { writable } from "svelte/store";
+  import { deletePhoto } from "$lib/stores/api/delete";
 
   onMount(() => pexelSearch.set(""));
 
@@ -26,7 +27,7 @@
     isEdit && $card
       ? pick(
           rename($card as GetRowType<"lodging">, { start: "start_date", end: "end_date" }),
-          ["name", "start_date", "end_date", "photo", "price", "address"],
+          ["name", "start_date", "end_date", "thumbnail", "price", "address"],
         )
       : {},
   );
@@ -47,10 +48,12 @@
     }
 
     if (isEdit) {
-      const { photo, maps_id, ...rest } = data;
+      const { thumbnail, maps_id, ...rest } = data;
+      if (!thumbnail && $card?.thumbnail) await deletePhoto($card.thumbnail);
+
       await update({
         table: "entities",
-        params: { photo, maps_id },
+        params: emptyToNull({ thumbnail, maps_id }),
         id: $entityId,
         withToast: false,
       });
@@ -79,5 +82,5 @@
   />
   <Input placeholder="Total price" name="price" numeric />
 
-  <MediaUploader name="photo" mediaType="image" />
+  <MediaUploader name="thumbnail" mediaType="image" />
 </Form>

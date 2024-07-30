@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { EMPTY_METADATA, downloadImage, getPhotoURL, shareImage } from "$utils/files";
+  import { downloadImage, getPhotoURL, shareImage } from "$utils/files";
   import { twMerge } from "tailwind-merge";
   import Loading from "./cards/Loading.svelte";
   import { photoId } from "$lib/stores/api/delete";
@@ -9,7 +9,7 @@
   import { update } from "$lib/stores/api/update";
   import { loadPhotos } from "$lib/stores/api/select";
 
-  export let photo: string | Photos[string];
+  export let photo: Photos[string];
 
   export let maxHeight = true;
   export let small = false;
@@ -19,12 +19,10 @@
 
   export let onCrossClick: () => unknown = () => {};
 
-  const actualPhoto = typeof photo === "string" ? { id: photo, ...EMPTY_METADATA } : photo;
-
   let fullScreen = false;
   let url = "";
 
-  getPhotoURL(actualPhoto.id).then((l) => (url = l));
+  photo?.id && getPhotoURL(photo.id).then((l) => (url = l));
 
   const onLoad = (e: Event) => {
     const image = e.target as HTMLImageElement;
@@ -36,16 +34,16 @@
   };
 
   const showDeletePhotoModal = () => {
-    photoId.set(actualPhoto.id);
+    photoId.set(photo.id);
     toggleModal("deletePhoto");
   };
 
   const toggleFavourite = async () => {
-    const isFavourite = ("is_favourite" in actualPhoto && actualPhoto.is_favourite) || false;
+    const isFavourite = photo.is_favourite;
 
     await update({
       table: "photos",
-      id: actualPhoto.id,
+      id: photo.id,
       params: { is_favourite: !isFavourite },
     });
 
@@ -57,17 +55,14 @@
   const setFullscreen = (val: boolean) => {
     fullScreen = val;
     $isShowingImageFullscreen = val;
-    $currentPhoto = actualPhoto;
+    $currentPhoto = photo;
   };
 </script>
 
-{#if actualPhoto?.id}
+{#if photo?.id}
   {#if !fullScreen}
     {#if url}
-      <button
-        class="relative flex justify-center rounded-xl"
-        on:click={() => setFullscreen(true)}
-      >
+      <div class="relative flex justify-center rounded-xl">
         <img
           src={url}
           alt="Trip"
@@ -81,13 +76,14 @@
         {#if withCross}
           <button
             type="button"
-            class="absolute right-1 top-1 text-primary"
+            class="absolute right-1 top-1 z-10 text-primary"
             on:click={onCrossClick}
           >
             <span class="material-symbols-outlined text-[2rem] text-error">close</span>
           </button>
         {/if}
-      </button>
+        <button on:click={() => setFullscreen(true)} class="absolute inset-0" />
+      </div>
     {:else}
       <Loading />
     {/if}
@@ -103,27 +99,22 @@
         </button>
 
         <div class="flex gap-4">
-          <button
-            class="text-white dark:text-black"
-            on:click={() => shareImage(actualPhoto.id)}
-          >
+          <button class="text-white dark:text-black" on:click={() => shareImage(photo.id)}>
             <span class="material-symbols-outlined text-[2rem]">share</span>
           </button>
-          <button class="text-primary" on:click={() => downloadImage(actualPhoto.id)}>
+          <button class="text-primary" on:click={() => downloadImage(photo.id)}>
             <span class="material-symbols-outlined text-[2rem]">download</span>
           </button>
-          {#if "is_favourite" in actualPhoto && typeof actualPhoto.is_favourite === "boolean"}
-            <button class="text-white dark:text-black" on:click={toggleFavourite}>
-              <span
-                class={twMerge(
-                  "material-symbols-outlined text-[2rem]",
-                  actualPhoto.is_favourite && "filled text-accent",
-                )}
-              >
-                star
-              </span>
-            </button>
-          {/if}
+          <button class="text-white dark:text-black" on:click={toggleFavourite}>
+            <span
+              class={twMerge(
+                "material-symbols-outlined text-[2rem]",
+                photo.is_favourite && "filled text-accent",
+              )}
+            >
+              star
+            </span>
+          </button>
 
           <button class="text-white dark:text-black" on:click={showPhotoInfo}>
             <span class="material-symbols-outlined text-[2rem]">info</span>

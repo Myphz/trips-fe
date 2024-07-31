@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { supabase } from "$lib/stores/api/client";
   import { setMe } from "$lib/stores/api/select";
   import { createProfile } from "$lib/stores/api/user";
+  import { gotoWithScroll } from "$utils/goto";
   import { fail, success } from "$utils/toasts";
   import { Button } from "./form";
   import { GoogleAuth } from "@codetrix-studio/capacitor-google-auth";
@@ -23,7 +23,7 @@
         await createProfile({ id: userId, displayed: response.givenName });
       }
       success({ title: "Logged in", msg: "Logged in successfully!" });
-      goto("/");
+      gotoWithScroll("/");
     } catch (err) {
       fail({ title: "Error", msg: "Something went wrong. Please retry" });
     }

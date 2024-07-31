@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { Form, Input } from "$lib/components/form";
   import { register } from "$lib/stores/api/user";
   import { setPageTitle } from "$lib/stores/route";
+  import { gotoWithScroll } from "$utils/goto";
 
   import { fail, success } from "$utils/toasts";
 
@@ -25,7 +25,7 @@
       });
 
     if (await register({ email, password, displayed })) {
-      goto("/");
+      gotoWithScroll("/");
       success({ title: "User Registered", msg: "Verify your email!" });
     }
   };

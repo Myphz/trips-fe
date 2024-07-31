@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { GoogleLogin } from "$lib/components";
   import { Form, Input } from "$lib/components/form";
   import { supabase } from "$lib/stores/api/client";
   import { setMe } from "$lib/stores/api/select";
   import { setPageTitle } from "$lib/stores/route";
+  import { gotoWithScroll } from "$utils/goto";
 
   import { fail, success } from "$utils/toasts";
 
@@ -29,7 +29,7 @@
 
     await setMe(data.user.id);
     success({ title: "Logged in", msg: "Logged in successfully!" });
-    goto("/");
+    gotoWithScroll("/");
   };
 </script>
 

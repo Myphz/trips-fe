@@ -1,4 +1,3 @@
-import { goto } from "$app/navigation";
 import { supabase } from "$lib/stores/api/client";
 import { fail } from "./toasts";
 import { showWarningRedirect, undo } from "$lib/stores/route";
@@ -6,6 +5,7 @@ import { load, setMe } from "$lib/stores/api/select";
 import { get } from "svelte/store";
 import { closeModal, isModalActive, isShowingImageFullscreen } from "$lib/stores/modals";
 import { isMenuOpen } from "$lib/stores/ui";
+import { gotoWithScroll } from "./goto";
 
 function redirect(isLogged: boolean, mustBeLogged: boolean) {
   const redirectTo = mustBeLogged ? "/old" : "/";
@@ -17,7 +17,7 @@ function redirect(isLogged: boolean, mustBeLogged: boolean) {
         if (!get(showWarningRedirect)) showWarningRedirect.set(true);
         else fail({ msg: "Login to continue", title: "Auth required" });
       }
-      goto(redirectTo);
+      gotoWithScroll(redirectTo);
     }
   }
 }
@@ -52,7 +52,7 @@ export function goBack() {
 
   if (inTrip && undo()) return;
   if (inTrip) {
-    goto("/");
+    gotoWithScroll("/");
   } else {
     history.back();
   }

@@ -30,6 +30,7 @@
 
   const onPexelImageSelect = async (src: string) => {
     filePickerPhoto = await uploadFileFromURL(src);
+    await createPhotos(filePickerPhoto, { is_thumbnail: true });
   };
 
   $: photo = filePickerPhoto[Object.keys(filePickerPhoto)[0]]?.id || "";

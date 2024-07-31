@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import { Button } from "$lib/components/form";
+  import { gotoWithScroll } from "$utils/goto";
   import { authGuard } from "$utils/guard";
   import { onMount } from "svelte";
 
@@ -55,5 +55,5 @@
     </div>
   </section>
 
-  <Button on:click={() => goto("/auth/login")}>GET STARTED</Button>
+  <Button on:click={() => gotoWithScroll("/auth/login")}>GET STARTED</Button>
 </section>

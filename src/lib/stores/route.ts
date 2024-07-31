@@ -1,10 +1,10 @@
 import { derived, get, writable, type Writable } from "svelte/store";
 import { loadSingle, load, card, filter } from "./api/select";
-import { goto } from "$app/navigation";
 import { moveEntity, routeParams } from "./routeParams";
 import { getName } from "$utils/format";
 import type { RoutesUnwrapped, UnwrapWritable } from "$lib/types/route";
 import { goBack } from "$utils/guard";
+import { gotoWithScroll } from "$utils/goto";
 
 export const MAIN_PAGE_TITLE = "My Trips";
 export const pageTitle = writable(MAIN_PAGE_TITLE);
@@ -24,7 +24,10 @@ export const undo = () => {
   paramsHistory.set(get(paramsHistory).slice(0, -2));
 
   if (!last) {
-    setRouteParams({ entityId: 0, parent: 0, tripId: 0 }, { saveParams: false });
+    setRouteParams(
+      { entityId: 0, parent: 0, tripId: 0, currency: "", currencyRatio: 0 },
+      { saveParams: false },
+    );
     return false;
   }
 
@@ -67,18 +70,20 @@ export const setRouteParams = (
   });
 
   if (currency || !get(routeParams.tripId)) tripCurrency.set(currency || "");
-  if (currencyRatio || !get(routeParams.tripId)) tripCurrencyRatio.set(currencyRatio || 0);
+  if (currencyRatio !== undefined || !get(routeParams.tripId))
+    tripCurrencyRatio.set(currencyRatio || 0);
 
   if (saveParams) {
     paramsHistory.set([...get(paramsHistory), { ...params, title: title ?? get(pageTitle) }]);
   } else {
     paramsHistory.set([]);
   }
+
   if ("parent" in params || "tripId" in params) load();
   if ("entityId" in params) loadSingle();
   if (window.location.pathname !== "/trip" && paramsRedirect) {
-    if (params.tripId) goto("/trip");
-    else goto("/");
+    if (params.tripId) gotoWithScroll("/trip");
+    else gotoWithScroll("/");
   }
 };
 

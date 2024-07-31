@@ -1,10 +1,10 @@
 <script lang="ts">
-  import { goto } from "$app/navigation";
   import Form from "$lib/components/form/Form.svelte";
   import Input from "$lib/components/form/Input.svelte";
   import { supabase } from "$lib/stores/api/client";
   import { myId, myProfile, setMe } from "$lib/stores/api/select";
   import { generateUsername } from "$utils/api";
+  import { gotoWithScroll } from "$utils/goto";
   import { goBack } from "$utils/guard";
   import { fail, success } from "$utils/toasts";
   import { writable } from "svelte/store";
@@ -32,7 +32,7 @@
     }
 
     await setMe($myId);
-    goto("/");
+    gotoWithScroll("/");
     success({ title: "Name updated", msg: "Name successfully updated" });
   };
 </script>

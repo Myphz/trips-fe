@@ -12,7 +12,10 @@
   class={classes}
   on:click={() => {
     if (href === "/")
-      return setRouteParams({ entityId: 0, parent: 0, tripId: 0 }, { saveParams: false });
+      return setRouteParams(
+        { entityId: 0, parent: 0, tripId: 0, currency: "", currencyRatio: 0 },
+        { saveParams: false },
+      );
 
     setRouteParams(params, { paramsRedirect });
   }}

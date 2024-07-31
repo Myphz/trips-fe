@@ -41,7 +41,7 @@
     <div class="mt-4 flex flex-col gap-1">
       {#each entries as [key, value]}
         {@const isPrice = withCurrency || key.includes("price")}
-        <div class="flex justify-between whitespace-nowrap">
+        <div class="flex justify-between gap-12">
           <span class="capitalize-first">{key}</span>
           <span class="capitalize-first text-right">
             {isPrice ? formatPrice(value) : value}

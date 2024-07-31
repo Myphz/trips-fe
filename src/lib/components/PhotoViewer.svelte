@@ -8,6 +8,7 @@
   import { currentPhoto } from "$lib/stores/files/upload";
   import { update } from "$lib/stores/api/update";
   import { loadPhotos } from "$lib/stores/api/select";
+  import { useZoomImageWheel } from "@zoom-image/svelte";
 
   export let photo: Photos[string];
 
@@ -57,6 +58,11 @@
     $isShowingImageFullscreen = val;
     $currentPhoto = photo;
   };
+
+  let container: HTMLDivElement;
+  const { createZoomImage } = useZoomImageWheel();
+
+  $: container && createZoomImage(container);
 </script>
 
 {#if photo?.id}
@@ -126,7 +132,10 @@
           {/if}
         </div>
       </div>
-      <img src={url} alt="Trip" class="h-full w-full object-contain" />
+
+      <div bind:this={container}>
+        <img src={url} alt="Trip" class="h-full w-full object-contain" />
+      </div>
     </div>
   {/if}
 {/if}
